@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 const WhatsAppButton = () => (
   <a
     href="tel:0473875350"
-    className="fixed bottom-6 right-6 z-50 bg-green-deep text-accent-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 group"
+    className="fixed bottom-6 right-6 z-50 bg-green-whatsapp text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 group"
     aria-label="Contactez-nous"
     title="Contactez-nous"
   >

@@ -48,7 +48,7 @@ const BlogArticlePage = () => {
       <section className="container-main section-padding">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-sm font-subtitle font-semibold text-gold">{article.cat}</span>
+            <span className="bg-primary text-primary-foreground text-sm font-subtitle font-semibold px-2 py-0.5 rounded">{article.cat}</span>
             <span className="text-sm text-muted-foreground font-body">{article.date}</span>
           </div>
           <div className="prose prose-lg max-w-none">
@@ -59,12 +59,12 @@ const BlogArticlePage = () => {
             ))}
           </div>
 
-          <div className="mt-12 bg-gold rounded-xl p-8 text-center">
-            <h3 className="text-xl font-heading text-secondary-foreground mb-2">Besoin d'un diagnostic ?</h3>
-            <p className="text-secondary-foreground/80 font-body mb-4">Contactez EQUATION pour un devis gratuit</p>
+          <div className="mt-12 bg-primary rounded-xl p-8 text-center">
+            <h3 className="text-xl font-heading text-primary-foreground mb-2">Besoin d'un diagnostic ?</h3>
+            <p className="text-primary-foreground/80 font-body mb-4">Contactez EQUATION pour un devis gratuit</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="btn-navy">Contactez-nous</Link>
-              <a href="tel:0473875350" className="flex items-center gap-2 text-secondary-foreground font-subtitle font-semibold">
+              <Link to="/contact" className="btn-noir">Contactez-nous</Link>
+              <a href="tel:0473875350" className="flex items-center gap-2 text-primary-foreground font-subtitle font-semibold">
                 <Phone className="w-4 h-4" /> 04 73 87 53 50
               </a>
             </div>

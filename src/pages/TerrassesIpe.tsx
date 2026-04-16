@@ -7,26 +7,22 @@ import ipeImg from "@/assets/ipe-terrace.jpg";
 
 const sections = [
   {
-    id: "lames",
-    title: "Lames IPE",
+    id: "lames", title: "Lames IPE",
     desc: "Lames de terrasse en bois IPE massif. Fixation invisible ou traditionnelle. Finition lisse ou striée antidérapante. Le bois IPE offre une teinte brun-rouge chaude et une résistance exceptionnelle aux insectes, à l'humidité et aux UV.",
     points: ["Classe de durabilité 1 (>50 ans)", "Densité exceptionnelle : 1 050 kg/m³", "Finition lisse ou striée antidérapante", "Fixation invisible disponible"],
   },
   {
-    id: "dalles",
-    title: "Dalles IPE",
+    id: "dalles", title: "Dalles IPE",
     desc: "Dalles modulaires IPE pour terrasses sur plots. Installation rapide et esthétique contemporaine. Format carré ou rectangulaire, ces dalles s'intègrent parfaitement aux aménagements modernes.",
     points: ["Installation rapide sur plots", "Format carré 50x50 ou 100x100", "Esthétique contemporaine", "Remplacement unitaire possible"],
   },
   {
-    id: "margelles",
-    title: "Margelles Piscine",
+    id: "margelles", title: "Margelles Piscine",
     desc: "Margelles de piscine en IPE massif. Finition antidérapante R11 pour une sécurité optimale aux abords du bassin. Le bois IPE ne chauffe pas excessivement au soleil et résiste au chlore.",
     points: ["Antidérapant classé R11", "Résistant au chlore", "Ne chauffe pas au soleil", "Esthétique premium naturelle"],
   },
   {
-    id: "bardage",
-    title: "Bardage IPE",
+    id: "bardage", title: "Bardage IPE",
     desc: "Bardage extérieur en lames IPE. Vieillissement noble vers un gris argenté naturel ou entretien huilé pour conserver la teinte d'origine. Le bardage IPE apporte caractère et modernité à toute façade.",
     points: ["Vieillissement noble gris argenté", "Entretien huilé optionnel", "Excellente stabilité dimensionnelle", "Résistant au feu (classe B)"],
   },
@@ -71,21 +67,20 @@ const TerrassesIpePage = () => (
                     </li>
                   ))}
                 </ul>
-                <Link to="/contact" className="btn-gold inline-block mt-6 text-sm">Demander un Devis</Link>
+                <Link to="/contact" className="btn-bordeaux inline-block mt-6 text-sm">Demander un Devis</Link>
               </div>
             </section>
           </ScrollReveal>
         ))}
       </div>
 
-      {/* Comparatif */}
       <ScrollReveal>
         <div className="mt-20">
           <h2 className="text-foreground text-center mb-8">Comparatif des Essences</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm font-body">
               <thead>
-                <tr className="bg-navy text-primary-foreground">
+                <tr className="bg-noir text-primary-foreground">
                   <th className="p-3 text-left rounded-tl-lg">Essence</th>
                   <th className="p-3 text-center">Durabilité</th>
                   <th className="p-3 text-center">Résistance</th>
@@ -96,7 +91,7 @@ const TerrassesIpePage = () => (
               </thead>
               <tbody>
                 {comparison.map((c, i) => (
-                  <tr key={c.essence} className={`${i === 0 ? "bg-gold/10 font-semibold" : "bg-card"} border-b border-border`}>
+                  <tr key={c.essence} className={`${i === 0 ? "bg-primary/10 font-semibold" : "bg-card"} border-b border-border`}>
                     <td className="p-3">{c.essence}</td>
                     <td className="p-3 text-center">{c.durabilite}</td>
                     <td className="p-3 text-center">{c.resistance}</td>

@@ -33,7 +33,7 @@ const BlogPage = () => (
                   <img src={a.img} alt={a.title} className="w-full h-44 object-cover" loading="lazy" width={400} height={250} />
                   <div className="p-5">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-xs font-subtitle font-semibold text-gold">{a.cat}</span>
+                      <span className="bg-primary text-primary-foreground text-xs font-subtitle font-semibold px-2 py-0.5 rounded">{a.cat}</span>
                       <span className="text-xs text-muted-foreground font-body">{a.date}</span>
                     </div>
                     <h3 className="text-base font-heading text-foreground leading-snug">{a.title}</h3>
@@ -45,13 +45,12 @@ const BlogPage = () => (
           </div>
         </div>
 
-        {/* Sidebar */}
         <aside className="space-y-8">
           <div className="card-equation p-6">
             <h3 className="text-lg font-heading text-foreground mb-4">Catégories</h3>
             <div className="space-y-2">
               {["Conseils", "Guide Technique", "Écologie", "Réglementation", "Économie d'énergie", "Aménagement", "Matériaux", "Diagnostic"].map((c) => (
-                <div key={c} className="text-sm font-body text-muted-foreground hover:text-gold cursor-pointer transition-colors">{c}</div>
+                <div key={c} className="text-sm font-body text-muted-foreground hover:text-primary cursor-pointer transition-colors">{c}</div>
               ))}
             </div>
           </div>
@@ -59,16 +58,16 @@ const BlogPage = () => (
             <h3 className="text-lg font-heading text-foreground mb-4">Articles Populaires</h3>
             <div className="space-y-3">
               {articles.slice(0, 3).map((a) => (
-                <Link key={a.slug} to={`/blog/${a.slug}`} className="block text-sm font-body text-muted-foreground hover:text-gold transition-colors">
+                <Link key={a.slug} to={`/blog/${a.slug}`} className="block text-sm font-body text-muted-foreground hover:text-primary transition-colors">
                   {a.title}
                 </Link>
               ))}
             </div>
           </div>
-          <div className="bg-gold rounded-xl p-6 text-center">
-            <h3 className="text-lg font-heading text-secondary-foreground mb-2">Besoin d'un devis ?</h3>
-            <p className="text-secondary-foreground/80 text-sm font-body mb-4">Réponse sous 48h</p>
-            <Link to="/contact" className="btn-navy text-sm">Contactez-nous</Link>
+          <div className="bg-primary rounded-xl p-6 text-center">
+            <h3 className="text-lg font-heading text-primary-foreground mb-2">Besoin d'un devis ?</h3>
+            <p className="text-primary-foreground/80 text-sm font-body mb-4">Réponse sous 48h</p>
+            <Link to="/contact" className="btn-noir text-sm">Contactez-nous</Link>
           </div>
         </aside>
       </div>

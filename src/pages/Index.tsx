@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { Flame, Droplets, Gem, Search, Grid3X3, Leaf, Award, Shield, PenTool, Clock, Building2, Landmark, Users, Briefcase, Home, User, CheckCircle, Phone, ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
-import heroImg from "@/assets/hero-home.jpg";
+import bannerImg from "@/assets/banner-equation-01.png";
 import teamImg from "@/assets/team-construction.jpg";
 import greenRoofImg from "@/assets/green-roof.jpg";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 import ipeImg from "@/assets/ipe-terrace.jpg";
+import signatureImg from "@/assets/signature-efficacite.png";
+import certificationsImg from "@/assets/certifications.png";
 import { useEffect, useRef, useState } from "react";
 
 const Counter = ({ target, suffix = "", label }: { target: number; suffix?: string; label: string }) => {
@@ -40,7 +42,7 @@ const Counter = ({ target, suffix = "", label }: { target: number; suffix?: stri
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-4xl md:text-5xl font-heading font-bold text-gold">
+      <div className="text-4xl md:text-5xl font-heading font-bold text-primary">
         {count.toLocaleString()}{suffix}
       </div>
       <p className="text-primary-foreground/70 mt-2 font-body text-sm">{label}</p>
@@ -86,13 +88,13 @@ const HomePage = () => {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center">
         <div className="absolute inset-0">
-          <img src={heroImg} alt="Étanchéité toiture terrasse Clermont-Ferrand" className="w-full h-full object-cover" width={1920} height={1080} />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-transparent" />
+          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand" className="w-full h-full object-cover" width={1920} height={1080} />
+          <div className="absolute inset-0 bg-gradient-to-r from-noir/90 via-noir/70 to-transparent" />
         </div>
         <div className="relative container-main pt-32 pb-20">
           <ScrollReveal>
             <h1 className="text-primary-foreground max-w-3xl">
-              L'Excellence en Étanchéité depuis 2001
+              [ L'Excellence en Étanchéité depuis 2001 ]
             </h1>
           </ScrollReveal>
           <ScrollReveal delay={150}>
@@ -102,21 +104,20 @@ const HomePage = () => {
           </ScrollReveal>
           <ScrollReveal delay={300}>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link to="/expertises" className="btn-gold">Découvrir nos Expertises</Link>
+              <Link to="/expertises" className="btn-bordeaux">Découvrir nos Expertises</Link>
               <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
                 Nos Réalisations
               </Link>
             </div>
           </ScrollReveal>
-          <div className="absolute bottom-8 right-8 bg-popover rounded-lg px-4 py-3 shadow-lg hidden md:flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-success" />
-            <span className="text-sm font-subtitle font-semibold text-foreground">Certifié Qualibat RGE</span>
+          <div className="absolute bottom-8 right-8 hidden md:block">
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-20 w-auto opacity-60" />
           </div>
         </div>
       </section>
 
       {/* Chiffres clés */}
-      <section className="bg-navy-dark section-padding">
+      <section className="bg-noir section-padding">
         <div className="container-main grid grid-cols-2 md:grid-cols-4 gap-8">
           <Counter target={25} suffix="+" label="Années d'expérience" />
           <Counter target={2000} suffix="+" label="Chantiers réalisés" />
@@ -130,7 +131,7 @@ const HomePage = () => {
         <div className="container-main">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-foreground">Une Expertise Complète en Étanchéité</h2>
+              <h2 className="text-foreground">[ Une Expertise Complète en Étanchéité ]</h2>
               <p className="text-muted-foreground mt-4 font-body">
                 Des solutions techniques adaptées à chaque type de toiture et de support
               </p>
@@ -140,7 +141,7 @@ const HomePage = () => {
             {expertises.map((e, i) => (
               <ScrollReveal key={e.title} delay={i * 100}>
                 <Link to={`/expertises${e.hash}`} className="card-equation block p-8 h-full">
-                  <e.icon className="w-10 h-10 text-gold mb-4" />
+                  <e.icon className="w-10 h-10 text-primary mb-4" />
                   <h3 className="text-lg font-heading text-foreground">{e.title}</h3>
                   <p className="text-muted-foreground mt-2 text-sm font-body">{e.desc}</p>
                 </Link>
@@ -154,7 +155,7 @@ const HomePage = () => {
       <section className="section-padding">
         <div className="container-main">
           <ScrollReveal>
-            <h2 className="text-foreground text-center mb-12">Nos Dernières Réalisations</h2>
+            <h2 className="text-foreground text-center mb-12">[ Nos Dernières Réalisations ]</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((p, i) => (
@@ -170,7 +171,7 @@ const HomePage = () => {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link to="/realisations" className="inline-flex items-center gap-2 text-gold font-subtitle font-semibold hover:gap-3 transition-all">
+            <Link to="/realisations" className="inline-flex items-center gap-2 text-primary font-subtitle font-semibold hover:gap-3 transition-all">
               Voir toutes nos réalisations <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -178,10 +179,10 @@ const HomePage = () => {
       </section>
 
       {/* Pourquoi EQUATION */}
-      <section className="bg-navy-dark section-padding">
+      <section className="bg-noir section-padding">
         <div className="container-main">
           <ScrollReveal>
-            <h2 className="text-primary-foreground text-center mb-12">Pourquoi Nous Faire Confiance ?</h2>
+            <h2 className="text-primary-foreground text-center mb-12">[ Pourquoi Nous Faire Confiance ? ]</h2>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>
@@ -191,7 +192,7 @@ const HomePage = () => {
               {reasons.map((r, i) => (
                 <ScrollReveal key={r.title} delay={i * 100}>
                   <div className="flex gap-4">
-                    <r.icon className="w-8 h-8 text-gold shrink-0 mt-1" />
+                    <r.icon className="w-8 h-8 text-primary shrink-0 mt-1" />
                     <div>
                       <h3 className="text-lg font-heading text-primary-foreground">{r.title}</h3>
                       <p className="text-primary-foreground/70 text-sm font-body mt-1">{r.desc}</p>
@@ -214,7 +215,7 @@ const HomePage = () => {
             {clients.map((c, i) => (
               <ScrollReveal key={c.label} delay={i * 80}>
                 <div className="flex items-center gap-2 bg-card px-5 py-3 rounded-full shadow-sm font-subtitle text-sm font-medium text-foreground">
-                  <c.icon className="w-4 h-4 text-gold" />
+                  <c.icon className="w-4 h-4 text-primary" />
                   {c.label}
                 </div>
               </ScrollReveal>
@@ -224,28 +225,28 @@ const HomePage = () => {
       </section>
 
       {/* Certifications */}
-      <section className="section-padding">
+      <section className="section-padding bg-background">
         <div className="container-main text-center">
-          <div className="flex flex-wrap justify-center gap-8 items-center opacity-60">
-            {["Qualibat RGE", "FFB", "Garantie Décennale", "NF DTU 43.1"].map((c) => (
-              <div key={c} className="font-subtitle font-bold text-lg text-foreground">{c}</div>
-            ))}
-          </div>
-          <p className="text-muted-foreground text-sm mt-4 font-body">Membre actif de la FFB Puy-de-Dôme depuis 8 ans</p>
+          <ScrollReveal>
+            <h2 className="text-foreground mb-6">Certifications et Labels</h2>
+            <p className="text-muted-foreground text-sm font-body mb-8">Gages de compétence et de fiabilité</p>
+            <img src={certificationsImg} alt="Certifications CSFE, Qualibat, Reconnu Grenelle Environnement" className="mx-auto max-w-lg w-full h-auto" loading="lazy" />
+            <p className="text-muted-foreground text-sm mt-6 font-body">Membre actif de la FFB Puy-de-Dôme depuis 8 ans</p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-gold section-padding">
+      <section className="bg-primary section-padding">
         <div className="container-main text-center">
           <ScrollReveal>
-            <h2 className="text-secondary-foreground">Un Projet d'Étanchéité ? Parlons-en.</h2>
-            <p className="text-secondary-foreground/80 mt-4 font-body text-lg">
+            <h2 className="text-primary-foreground">Un Projet d'Étanchéité ? Parlons-en.</h2>
+            <p className="text-primary-foreground/80 mt-4 font-body text-lg">
               Devis gratuit sous 48h — Intervention dans tout le Puy-de-Dôme et départements limitrophes
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <Link to="/contact" className="btn-navy">Contactez-nous</Link>
-              <a href="tel:0473875350" className="flex items-center gap-2 text-secondary-foreground font-subtitle font-semibold text-lg">
+              <Link to="/contact" className="btn-noir">Contactez-nous</Link>
+              <a href="tel:0473875350" className="flex items-center gap-2 text-primary-foreground font-subtitle font-semibold text-lg">
                 <Phone className="w-5 h-5" /> 04 73 87 53 50
               </a>
             </div>

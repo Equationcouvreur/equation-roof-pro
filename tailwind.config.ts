@@ -14,9 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Playfair Display", "serif"],
+        heading: ["Montserrat", "sans-serif"],
         subtitle: ["Montserrat", "sans-serif"],
         body: ["Inter", "sans-serif"],
+        signature: ["Caveat", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -52,15 +53,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        navy: {
-          DEFAULT: "hsl(var(--navy))",
-          dark: "hsl(var(--navy-dark))",
+        bordeaux: {
+          DEFAULT: "hsl(var(--bordeaux))",
+          dark: "hsl(var(--bordeaux-dark))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          hover: "hsl(var(--gold-hover))",
-        },
-        "green-deep": "hsl(var(--green-deep))",
+        noir: "hsl(var(--noir))",
+        "grey-anthracite": "hsl(var(--grey-anthracite))",
+        "green-whatsapp": "hsl(var(--green-whatsapp))",
         "green-success": "hsl(var(--green-success))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

@@ -31,7 +31,6 @@ const ContactPage = () => {
 
       <section className="container-main section-padding">
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Formulaire */}
           <div className="lg:col-span-3">
             <ScrollReveal>
               <h2 className="text-foreground mb-6">Demandez Votre Devis Gratuit</h2>
@@ -39,70 +38,69 @@ const ContactPage = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Nom *</label>
-                    <input type="text" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.nom} onChange={(e) => setFormData({ ...formData, nom: e.target.value })} />
+                    <input type="text" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.nom} onChange={(e) => setFormData({ ...formData, nom: e.target.value })} />
                   </div>
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Prénom *</label>
-                    <input type="text" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.prenom} onChange={(e) => setFormData({ ...formData, prenom: e.target.value })} />
+                    <input type="text" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.prenom} onChange={(e) => setFormData({ ...formData, prenom: e.target.value })} />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Email *</label>
-                    <input type="email" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                    <input type="email" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                   </div>
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Téléphone *</label>
-                    <input type="tel" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.telephone} onChange={(e) => setFormData({ ...formData, telephone: e.target.value })} />
+                    <input type="tel" required className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.telephone} onChange={(e) => setFormData({ ...formData, telephone: e.target.value })} />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Type de projet</label>
-                    <select className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value })}>
+                    <select className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value })}>
                       <option value="">Sélectionnez...</option>
                       {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Surface approximative (m²)</label>
-                    <input type="text" className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all" value={formData.surface} onChange={(e) => setFormData({ ...formData, surface: e.target.value })} />
+                    <input type="text" className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" value={formData.surface} onChange={(e) => setFormData({ ...formData, surface: e.target.value })} />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Message / Description du projet</label>
-                  <textarea rows={5} className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all resize-none" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
+                  <textarea rows={5} className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-card text-foreground focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                 </div>
                 <label className="flex items-start gap-2 cursor-pointer">
-                  <input type="checkbox" required checked={formData.consent} onChange={(e) => setFormData({ ...formData, consent: e.target.checked })} className="mt-1 accent-gold" />
+                  <input type="checkbox" required checked={formData.consent} onChange={(e) => setFormData({ ...formData, consent: e.target.checked })} className="mt-1 accent-[hsl(350,72%,34%)]" />
                   <span className="text-sm text-muted-foreground font-body">J'accepte que mes données soient utilisées pour traiter ma demande</span>
                 </label>
-                <button type="submit" className="btn-gold w-full text-lg py-4">
+                <button type="submit" className="btn-bordeaux w-full text-lg py-4">
                   Envoyer ma Demande
                 </button>
               </form>
             </ScrollReveal>
           </div>
 
-          {/* Coordonnées */}
           <div className="lg:col-span-2 space-y-8">
             <ScrollReveal delay={150}>
               <div className="card-equation p-6 space-y-5">
                 <h3 className="font-heading text-foreground">Nos Coordonnées</h3>
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                   <div className="font-body text-sm text-muted-foreground">
                     74 avenue du Midi<br />63800 Cournon-d'Auvergne
                   </div>
                 </div>
-                <a href="tel:0473875350" className="flex items-center gap-3 font-body text-sm text-foreground hover:text-gold transition-colors">
-                  <Phone className="w-5 h-5 text-gold shrink-0" /> 04 73 87 53 50
+                <a href="tel:0473875350" className="flex items-center gap-3 font-body text-sm text-foreground hover:text-primary transition-colors">
+                  <Phone className="w-5 h-5 text-primary shrink-0" /> 04 73 87 53 50
                 </a>
-                <a href="mailto:info@etanche.com" className="flex items-center gap-3 font-body text-sm text-foreground hover:text-gold transition-colors">
-                  <Mail className="w-5 h-5 text-gold shrink-0" /> info@etanche.com
+                <a href="mailto:info@etanche.com" className="flex items-center gap-3 font-body text-sm text-foreground hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5 text-primary shrink-0" /> info@etanche.com
                 </a>
                 <div className="flex items-center gap-3 font-body text-sm text-muted-foreground">
-                  <Clock className="w-5 h-5 text-gold shrink-0" /> Lun-Ven 7h30–17h30
+                  <Clock className="w-5 h-5 text-primary shrink-0" /> Lun-Ven 7h30–17h30
                 </div>
               </div>
             </ScrollReveal>

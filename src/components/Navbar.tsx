@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import logoMain from "@/assets/logo-equation-main.png";
 
 const expertises = [
   { label: "Étanchéité Bitumineuse", href: "/expertises#bitumineuse" },
@@ -46,16 +47,18 @@ const Navbar = () => {
   }, [location]);
 
   const isHome = location.pathname === "/";
-  const navBg = scrolled || !isHome
-    ? "bg-popover/95 backdrop-blur-md shadow-md"
-    : "bg-transparent";
+  const navBg = scrolled
+    ? "bg-noir/95 backdrop-blur-md shadow-md"
+    : isHome
+    ? "bg-transparent"
+    : "bg-popover/95 backdrop-blur-md shadow-md";
 
-  const textColor = scrolled || !isHome ? "text-foreground" : "text-primary-foreground";
+  const textColor = scrolled || isHome ? "text-primary-foreground" : "text-foreground";
 
   return (
     <>
       {/* Urgency bar */}
-      <div className="bg-gold text-secondary-foreground text-sm py-1.5 text-center font-subtitle font-medium fixed top-0 left-0 right-0 z-50">
+      <div className="bg-primary text-primary-foreground text-sm py-1.5 text-center font-subtitle font-medium fixed top-0 left-0 right-0 z-50">
         <span className="hidden sm:inline">⚡ Urgence infiltration ? Appelez le </span>
         <a href="tel:0473875350" className="underline font-bold">04 73 87 53 50</a>
         <span className="hidden sm:inline"> — Intervention rapide en Auvergne</span>
@@ -64,15 +67,8 @@ const Navbar = () => {
       <nav className={`fixed top-8 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>
         <div className="container-main flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-1">
-            <span className={`font-heading text-2xl md:text-3xl font-bold ${textColor}`}>
-              EQUA
-              <span className="text-gold">T</span>
-              ION
-            </span>
-            <span className={`hidden md:block text-xs ${textColor} opacity-70 ml-2 font-body`}>
-              Étanchéité depuis 2001
-            </span>
+          <Link to="/" className="flex items-center">
+            <img src={logoMain} alt="EQUATION Étanchéité Toitures Terrasses" className="h-10 md:h-12 w-auto" />
           </Link>
 
           {/* Desktop nav */}
@@ -86,8 +82,8 @@ const Navbar = () => {
               >
                 <Link
                   to={link.href}
-                  className={`flex items-center gap-1 text-sm font-subtitle font-medium transition-colors hover:text-gold ${
-                    location.pathname === link.href ? "text-gold" : textColor
+                  className={`flex items-center gap-1 text-sm font-subtitle font-medium transition-colors hover:text-primary ${
+                    location.pathname === link.href ? "text-primary" : textColor
                   }`}
                 >
                   {link.label}
@@ -100,7 +96,7 @@ const Navbar = () => {
                       <Link
                         key={sub.label}
                         to={sub.href}
-                        className="block px-4 py-2 text-sm font-body text-foreground hover:bg-muted hover:text-gold transition-colors"
+                        className="block px-4 py-2 text-sm font-body text-foreground hover:bg-muted hover:text-primary transition-colors"
                       >
                         {sub.label}
                       </Link>
@@ -110,7 +106,7 @@ const Navbar = () => {
               </div>
             ))}
 
-            <Link to="/contact" className="btn-gold text-sm py-2 px-5 rounded-lg">
+            <Link to="/contact" className="btn-bordeaux text-sm py-2 px-5 rounded-lg">
               Demander un Devis
             </Link>
           </div>
@@ -128,7 +124,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-navy-dark flex flex-col pt-20 px-6 lg:hidden">
+        <div className="fixed inset-0 z-50 bg-noir flex flex-col pt-20 px-6 lg:hidden">
           <button
             className="absolute top-12 right-6 text-primary-foreground"
             onClick={() => setMobileOpen(false)}
@@ -141,7 +137,7 @@ const Navbar = () => {
               <div key={link.label}>
                 <Link
                   to={link.href}
-                  className="text-primary-foreground text-xl font-heading font-semibold hover:text-gold transition-colors"
+                  className="text-primary-foreground text-xl font-heading font-semibold hover:text-primary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -151,7 +147,7 @@ const Navbar = () => {
                       <Link
                         key={sub.label}
                         to={sub.href}
-                        className="text-primary-foreground/70 text-base font-body hover:text-gold transition-colors"
+                        className="text-primary-foreground/70 text-base font-body hover:text-primary transition-colors"
                       >
                         {sub.label}
                       </Link>
@@ -162,7 +158,7 @@ const Navbar = () => {
             ))}
           </div>
           <div className="mt-8 flex flex-col gap-4">
-            <Link to="/contact" className="btn-gold text-center text-lg">
+            <Link to="/contact" className="btn-bordeaux text-center text-lg">
               Demander un Devis
             </Link>
             <a href="tel:0473875350" className="flex items-center gap-2 text-primary-foreground font-subtitle text-lg">
