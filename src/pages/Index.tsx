@@ -6,7 +6,7 @@ import teamImg from "@/assets/team-construction.jpg";
 import greenRoofImg from "@/assets/green-roof.jpg";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 import ipeImg from "@/assets/ipe-terrace.jpg";
-import signatureImg from "@/assets/signature-efficacite.png";
+
 import certificationsImg from "@/assets/certifications.png";
 import { useEffect, useRef, useState } from "react";
 
