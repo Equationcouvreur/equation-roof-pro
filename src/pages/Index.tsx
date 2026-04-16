@@ -6,7 +6,7 @@ import teamImg from "@/assets/team-construction.jpg";
 import greenRoofImg from "@/assets/green-roof.jpg";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 import ipeImg from "@/assets/ipe-terrace.jpg";
-import signatureImg from "@/assets/signature-efficacite.png";
+
 import certificationsImg from "@/assets/certifications.png";
 import { useEffect, useRef, useState } from "react";
 
@@ -86,33 +86,31 @@ const HomePage = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0">
-          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand" className="w-full h-full object-cover" width={1920} height={1080} />
-          <div className="absolute inset-0 bg-gradient-to-r from-noir/90 via-noir/70 to-transparent" />
-        </div>
-        <div className="relative container-main pt-32 pb-20">
-          <ScrollReveal>
-            <h1 className="text-primary-foreground max-w-3xl">
-              [ L'Excellence en Étanchéité depuis 2001 ]
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={150}>
-            <p className="text-primary-foreground/80 text-lg md:text-xl mt-6 max-w-2xl font-body">
-              Expert Qualibat RGE en toitures terrasses — Clermont-Ferrand et Auvergne
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={300}>
-            <div className="flex flex-wrap gap-4 mt-8">
-              <Link to="/expertises" className="btn-bordeaux">Découvrir nos Expertises</Link>
-              <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
-                Nos Réalisations
-              </Link>
-            </div>
-          </ScrollReveal>
-          <div className="absolute bottom-8 right-8 hidden md:block">
-            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-20 w-auto opacity-60" />
+      <section className="relative bg-noir flex flex-col">
+        <div className="flex-1 flex items-center pt-32 pb-10 md:pb-16">
+          <div className="container-main">
+            <ScrollReveal>
+              <h1 className="text-primary-foreground max-w-3xl">
+                [ L'Excellence en Étanchéité depuis 2001 ]
+              </h1>
+            </ScrollReveal>
+            <ScrollReveal delay={150}>
+              <p className="text-primary-foreground/80 text-lg md:text-xl mt-6 max-w-2xl font-body">
+                Expert Qualibat RGE en toitures terrasses — Clermont-Ferrand et Auvergne
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={300}>
+              <div className="flex flex-wrap gap-4 mt-8">
+                <Link to="/expertises" className="btn-bordeaux">Découvrir nos Expertises</Link>
+                <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
+                  Nos Réalisations
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
+        </div>
+        <div className="w-full">
+          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="w-full h-auto" />
         </div>
       </section>
 

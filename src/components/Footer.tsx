@@ -2,9 +2,15 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoMain from "@/assets/logo-equation-main.png";
 import signatureImg from "@/assets/signature-efficacite.png";
+import bannerImg from "@/assets/banner-equation-02.png";
 
 const Footer = () => (
   <footer className="bg-noir text-primary-foreground border-t-[3px] border-primary">
+    {/* Banner */}
+    <div className="w-full">
+      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="w-full h-auto" />
+    </div>
+
     <div className="container-main section-padding">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Col 1 */}
