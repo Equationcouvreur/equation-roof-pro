@@ -47,7 +47,7 @@ const EntreprisePage = () => (
         </ScrollReveal>
         <ScrollReveal delay={150}>
           <div>
-            <h2 className="text-foreground mb-4">[ EQUATION en bref ]</h2>
+            <h2 className="text-foreground mb-4">EQUATION en bref</h2>
             <p className="text-muted-foreground font-body leading-relaxed">
               <strong className="text-foreground">EQUATION</strong> est une entreprise fondée en 2001 par <strong className="text-foreground">Thierry Meylan</strong>, basée à Cournon-d'Auvergne (63), près de Clermont-Ferrand. SARL au capital de 50 000 €, nous sommes spécialisés dans l'étanchéité des toitures terrasses, l'isolation thermique et les revêtements spécifiques.
             </p>
@@ -67,7 +67,7 @@ const EntreprisePage = () => (
     <section className="bg-warm section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <h2 className="text-foreground text-center mb-12">[ Pourquoi Nous Choisir ]</h2>
+          <h2 className="text-foreground text-center mb-12">Pourquoi Nous Choisir</h2>
         </ScrollReveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {reasons.map((r, i) => (
@@ -92,7 +92,7 @@ const EntreprisePage = () => (
     {/* Timeline */}
     <section className="container-main section-padding">
       <ScrollReveal>
-        <h2 className="text-foreground text-center mb-12">[ Notre Histoire ]</h2>
+        <h2 className="text-foreground text-center mb-12">Notre Histoire</h2>
       </ScrollReveal>
       <div className="max-w-2xl mx-auto relative">
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-0.5" />
@@ -114,7 +114,7 @@ const EntreprisePage = () => (
     <section className="bg-noir section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <h2 className="text-primary-foreground text-center mb-12">[ Nos Clients ]</h2>
+          <h2 className="text-primary-foreground text-center mb-12">Nos Clients</h2>
         </ScrollReveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {clients.map((c, i) => (

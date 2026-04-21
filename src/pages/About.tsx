@@ -32,7 +32,7 @@ const AboutPage = () => (
     {/* Timeline */}
     <section className="container-main section-padding">
       <ScrollReveal>
-        <h2 className="text-foreground text-center mb-12">[ Notre Histoire ]</h2>
+        <h2 className="text-foreground text-center mb-12">Notre Histoire</h2>
       </ScrollReveal>
       <div className="max-w-2xl mx-auto relative">
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-0.5" />
@@ -54,7 +54,7 @@ const AboutPage = () => (
     <section className="bg-warm section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <h2 className="text-foreground text-center mb-12">[ Nos Valeurs ]</h2>
+          <h2 className="text-foreground text-center mb-12">Nos Valeurs</h2>
         </ScrollReveal>
         <div className="grid md:grid-cols-3 gap-8">
           {values.map((v, i) => (
@@ -95,7 +95,7 @@ const AboutPage = () => (
     <section className="bg-noir section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <h2 className="text-primary-foreground text-center mb-6">[ Nos Certifications ]</h2>
+          <h2 className="text-primary-foreground text-center mb-6">Nos Certifications</h2>
           <p className="text-primary-foreground/60 text-center text-sm font-body mb-10">Certifications et labels — gages de compétence et de fiabilité</p>
         </ScrollReveal>
         <ScrollReveal>
@@ -109,7 +109,7 @@ const AboutPage = () => (
             { title: "Qualibat", desc: "Votre label de fiabilité — qualification officielle des entreprises du bâtiment." },
             { title: "Reconnu Grenelle Environnement", desc: "Éligibilité aux aides à la rénovation énergétique (RGE)." },
             { title: "FFB", desc: "Fédération Française du Bâtiment — Thierry Meylan est administrateur FFB63." },
-          ].map((c, i) => (
+         .map((c, i) => (
             <ScrollReveal key={c.title} delay={i * 100}>
               <div className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-xl p-6">
                 <Shield className="w-8 h-8 text-primary mb-3" />
