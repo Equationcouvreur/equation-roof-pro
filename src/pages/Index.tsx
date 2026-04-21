@@ -51,12 +51,12 @@ const Counter = ({ target, suffix = "", label }: { target: number; suffix?: stri
 };
 
 const expertises = [
-  { icon: Flame, title: "Étanchéité Bitumineuse", desc: "Membranes bitumineuses soudées au chalumeau, système mono ou bicouche, conforme DTU 43.1", hash: "#bitumineuse" },
-  { icon: Droplets, title: "Étanchéité Résine", desc: "Résine polyuréthane sans joint ni soudure, pour toitures complexes et surfaces irrégulières", hash: "#resine" },
-  { icon: Gem, title: "Revêtement Quartz", desc: "Finition esthétique et résistante pour terrasses accessibles et balcons", hash: "#quartz" },
-  { icon: Search, title: "Recherche de Fuite", desc: "Détection non destructive des infiltrations par technologies avancées", hash: "#fuite" },
-  { icon: Grid3X3, title: "Dalles sur Plots", desc: "Aménagement de terrasses accessibles avec dalles sur plots réglables", hash: "#dalles" },
-  { icon: Leaf, title: "Toiture Végétalisée", desc: "Végétalisation extensive et semi-intensive, biodiversité urbaine", hash: "#vegetalisee" },
+  { icon: Flame, title: "Étanchéité Bitumineuse", desc: "Membranes bitumineuses soudées au chalumeau, système mono ou bicouche, conforme DTU 43.1", hash: "/coeur-de-metier#bitumineuse" },
+  { icon: Droplets, title: "Étanchéité Résine", desc: "Résine polyuréthane sans joint ni soudure, pour toitures complexes et surfaces irrégulières", hash: "/coeur-de-metier#resine" },
+  { icon: Gem, title: "Revêtement Quartz", desc: "Finition esthétique et résistante pour terrasses accessibles et balcons", hash: "/solutions-innovantes#quartz" },
+  { icon: Search, title: "Recherche de Fuite", desc: "Détection non destructive des infiltrations par technologies avancées", hash: "/coeur-de-metier#fuite" },
+  { icon: Grid3X3, title: "Dalles sur Plots", desc: "Aménagement de terrasses accessibles avec dalles sur plots réglables", hash: "/coeur-de-metier#dalles" },
+  { icon: Leaf, title: "Toiture Végétalisée", desc: "Végétalisation extensive et semi-intensive, biodiversité urbaine", hash: "/coeur-de-metier#vegetalisee" },
 ];
 
 const projects = [
@@ -101,7 +101,7 @@ const HomePage = () => {
             </ScrollReveal>
             <ScrollReveal delay={300}>
               <div className="flex flex-wrap gap-4 mt-8">
-                <Link to="/expertises" className="btn-bordeaux">Découvrir nos Expertises</Link>
+                <Link to="/coeur-de-metier" className="btn-bordeaux">Découvrir nos Expertises</Link>
                 <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
                   Nos Réalisations
                 </Link>
@@ -138,7 +138,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {expertises.map((e, i) => (
               <ScrollReveal key={e.title} delay={i * 100}>
-                <Link to={`/expertises${e.hash}`} className="card-equation block p-8 h-full">
+                <Link to={e.hash} className="card-equation block p-8 h-full">
                   <e.icon className="w-10 h-10 text-primary mb-4" />
                   <h3 className="text-lg font-heading text-foreground">{e.title}</h3>
                   <p className="text-muted-foreground mt-2 text-sm font-body">{e.desc}</p>

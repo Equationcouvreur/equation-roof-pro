@@ -34,10 +34,17 @@ const Footer = () => (
 
         {/* Col 2 */}
         <div>
-          <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">Nos Expertises</h4>
+          <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">Cœur de Métier</h4>
           <div className="flex flex-col gap-2 text-sm font-body">
-            {["Étanchéité Bitumineuse", "Étanchéité Résine", "Revêtement Quartz", "Recherche de Fuite", "Dalles sur Plots", "Toiture Végétalisée"].map((e) => (
-              <Link key={e} to="/expertises" className="text-primary-foreground/70 hover:text-primary transition-colors">{e}</Link>
+            {[
+              { l: "Isolation Thermique", h: "/coeur-de-metier#isolation" },
+              { l: "Étanchéité Bitumineuse", h: "/coeur-de-metier#bitumineuse" },
+              { l: "Étanchéité Résine", h: "/coeur-de-metier#resine" },
+              { l: "Dalles sur Plots", h: "/coeur-de-metier#dalles" },
+              { l: "Toitures Végétalisées", h: "/coeur-de-metier#vegetalisee" },
+              { l: "Recherche de Fuite", h: "/coeur-de-metier#fuite" },
+            ].map((e) => (
+              <Link key={e.l} to={e.h} className="text-primary-foreground/70 hover:text-primary transition-colors">{e.l}</Link>
             ))}
           </div>
         </div>
@@ -46,10 +53,11 @@ const Footer = () => (
         <div>
           <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">L'Entreprise</h4>
           <div className="flex flex-col gap-2 text-sm font-body">
-            <Link to="/a-propos" className="text-primary-foreground/70 hover:text-primary transition-colors">À Propos</Link>
+            <Link to="/entreprise" className="text-primary-foreground/70 hover:text-primary transition-colors">L'Entreprise</Link>
+            <Link to="/solutions-innovantes" className="text-primary-foreground/70 hover:text-primary transition-colors">Solutions Innovantes</Link>
             <Link to="/realisations" className="text-primary-foreground/70 hover:text-primary transition-colors">Réalisations</Link>
             <Link to="/blog" className="text-primary-foreground/70 hover:text-primary transition-colors">Blog</Link>
-            <Link to="/terrasses-ipe" className="text-primary-foreground/70 hover:text-primary transition-colors">Terrasses IPE</Link>
+            <Link to="/avis-clients" className="text-primary-foreground/70 hover:text-primary transition-colors">Avis Clients</Link>
             <Link to="/contact" className="text-primary-foreground/70 hover:text-primary transition-colors">Contact</Link>
           </div>
         </div>

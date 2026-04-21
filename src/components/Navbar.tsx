@@ -3,28 +3,29 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import logoMain from "@/assets/logo-equation-main.png";
 
-const expertises = [
-  { label: "Étanchéité Bitumineuse", href: "/expertises#bitumineuse" },
-  { label: "Étanchéité Résine", href: "/expertises#resine" },
-  { label: "Revêtement Quartz", href: "/expertises#quartz" },
-  { label: "Recherche de Fuite", href: "/expertises#fuite" },
-  { label: "Dalles sur Plots", href: "/expertises#dalles" },
-  { label: "Toiture Végétalisée", href: "/expertises#vegetalisee" },
+const coeurMetier = [
+  { label: "Isolation Thermique", href: "/coeur-de-metier#isolation" },
+  { label: "Étanchéité Bitumineuse", href: "/coeur-de-metier#bitumineuse" },
+  { label: "Étanchéité Résine", href: "/coeur-de-metier#resine" },
+  { label: "Terrasses Dalles sur Plots", href: "/coeur-de-metier#dalles" },
+  { label: "Toitures Végétalisées", href: "/coeur-de-metier#vegetalisee" },
+  { label: "Recherche de Fuite", href: "/coeur-de-metier#fuite" },
 ];
 
-const ipeItems = [
-  { label: "Lames IPE", href: "/terrasses-ipe#lames" },
-  { label: "Dalles IPE", href: "/terrasses-ipe#dalles" },
-  { label: "Margelles Piscine", href: "/terrasses-ipe#margelles" },
-  { label: "Bardage IPE", href: "/terrasses-ipe#bardage" },
+const solutionsInnovantes = [
+  { label: "Isolation FOAMGLAS — 30 Ans", href: "/solutions-innovantes#foamglas" },
+  { label: "Toitures Froides / Cool Roof", href: "/solutions-innovantes#cool-roof" },
+  { label: "Panneaux Photovoltaïques", href: "/solutions-innovantes#photovoltaique" },
+  { label: "Revêtement Quartz", href: "/solutions-innovantes#quartz" },
 ];
 
 const navLinks = [
-  { label: "Accueil", href: "/" },
-  { label: "Nos Expertises", href: "/expertises", submenu: expertises },
+  { label: "L'Entreprise", href: "/entreprise" },
+  { label: "Notre Cœur de Métier", href: "/coeur-de-metier", submenu: coeurMetier },
+  { label: "Solutions Innovantes", href: "/solutions-innovantes", submenu: solutionsInnovantes },
   { label: "Réalisations", href: "/realisations" },
-  { label: "Terrasses IPE", href: "/terrasses-ipe", submenu: ipeItems },
   { label: "Blog", href: "/blog" },
+  { label: "Avis Clients", href: "/avis-clients" },
   { label: "À Propos", href: "/a-propos" },
   { label: "Contact", href: "/contact" },
 ];
@@ -66,13 +67,11 @@ const Navbar = () => {
 
       <nav className={`fixed top-8 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>
         <div className="container-main flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
           <Link to="/" className="flex items-center">
             <img src={logoMain} alt="EQUATION Étanchéité Toitures Terrasses" className="h-10 md:h-12 w-auto" />
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-5">
             {navLinks.map((link) => (
               <div
                 key={link.label}
@@ -91,7 +90,7 @@ const Navbar = () => {
                 </Link>
 
                 {link.submenu && openDropdown === link.label && (
-                  <div className="absolute top-full left-0 mt-1 bg-popover rounded-lg shadow-lg border border-border py-2 min-w-[220px] z-50">
+                  <div className="absolute top-full left-0 mt-1 bg-popover rounded-lg shadow-lg border border-border py-2 min-w-[260px] z-50">
                     {link.submenu.map((sub) => (
                       <Link
                         key={sub.label}
@@ -111,9 +110,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile toggle */}
           <button
-            className={`lg:hidden ${textColor}`}
+            className={`xl:hidden ${textColor}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
@@ -122,9 +120,8 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-noir flex flex-col pt-20 px-6 lg:hidden">
+        <div className="fixed inset-0 z-50 bg-noir flex flex-col pt-20 px-6 xl:hidden overflow-y-auto">
           <button
             className="absolute top-12 right-6 text-primary-foreground"
             onClick={() => setMobileOpen(false)}
@@ -132,12 +129,12 @@ const Navbar = () => {
           >
             <X className="w-8 h-8" />
           </button>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 pb-10">
             {navLinks.map((link) => (
               <div key={link.label}>
                 <Link
                   to={link.href}
-                  className="text-primary-foreground text-xl font-heading font-semibold hover:text-primary transition-colors"
+                  className="text-primary-foreground text-lg font-heading font-semibold hover:text-primary transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -147,7 +144,7 @@ const Navbar = () => {
                       <Link
                         key={sub.label}
                         to={sub.href}
-                        className="text-primary-foreground/70 text-base font-body hover:text-primary transition-colors"
+                        className="text-primary-foreground/70 text-sm font-body hover:text-primary transition-colors"
                       >
                         {sub.label}
                       </Link>
@@ -156,9 +153,7 @@ const Navbar = () => {
                 )}
               </div>
             ))}
-          </div>
-          <div className="mt-8 flex flex-col gap-4">
-            <Link to="/contact" className="btn-bordeaux text-center text-lg">
+            <Link to="/contact" className="btn-bordeaux text-center text-lg mt-4">
               Demander un Devis
             </Link>
             <a href="tel:0473875350" className="flex items-center gap-2 text-primary-foreground font-subtitle text-lg">

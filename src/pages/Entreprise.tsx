@@ -1,0 +1,135 @@
+import { Award, Shield, PenTool, Clock, Building2, Landmark, Users, Briefcase, User } from "lucide-react";
+import PageHero from "@/components/PageHero";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ScrollReveal from "@/components/ScrollReveal";
+import certificationsImg from "@/assets/certifications.png";
+import signatureImg from "@/assets/signature-efficacite.png";
+import teamImg from "@/assets/team-construction.jpg";
+
+const timeline = [
+  { year: "2001", text: "Création d'EQUATION par Thierry Meylan à Cournon-d'Auvergne" },
+  { year: "2005", text: "Obtention de la certification Qualibat" },
+  { year: "2008", text: "Développement de l'activité terrasses bois IPE" },
+  { year: "2012", text: "Premiers chantiers de toitures végétalisées en Auvergne" },
+  { year: "2015", text: "Franchissement du cap des 2 millions d'€ de CA" },
+  { year: "2018", text: "Engagement FFB Puy-de-Dôme, Thierry Meylan administrateur" },
+  { year: "2020", text: "Développement du bureau d'études intégré (DAO 3D)" },
+  { year: "2024", text: "Renouvellement certification Qualibat RGE" },
+  { year: "2026", text: "25 ans d'excellence et plus de 2 000 chantiers réalisés" },
+];
+
+const reasons = [
+  { icon: Clock, title: "25 Ans d'Expérience", desc: "Depuis 2001, plus de 2 000 chantiers réalisés sur tous types de bâtiments en Auvergne." },
+  { icon: Award, title: "Certifications Reconnues", desc: "Qualibat RGE, CSFE, Reconnu Grenelle Environnement, membre actif FFB 63." },
+  { icon: Shield, title: "Garantie Décennale", desc: "Tous nos ouvrages couverts. Travail dans le respect strict des DTU 43.1, 43.3, 43.4 et 43.5." },
+  { icon: PenTool, title: "Bureau d'Études Intégré", desc: "Études techniques et croquis DAO 3D en interne pour des solutions sur mesure." },
+];
+
+const clients = [
+  { icon: Building2, label: "Bailleurs sociaux", desc: "Auvergne Habitat, Niévre Habitat" },
+  { icon: Landmark, label: "Collectivités publiques", desc: "Établissements et services publics" },
+  { icon: Users, label: "Copropriétés et syndics", desc: "Gestion immobilière collective" },
+  { icon: PenTool, label: "Architectes et BET", desc: "Bureaux d'études techniques" },
+  { icon: Briefcase, label: "Entreprises et commerces", desc: "Bâtiments tertiaires" },
+  { icon: User, label: "Particuliers", desc: "Maisons individuelles, copropriétaires" },
+];
+
+const EntreprisePage = () => (
+  <>
+    <PageHero title="Qui Sommes-Nous et Pourquoi Nous Choisir" subtitle="EQUATION — 25 ans d'expertise en étanchéité et isolation en Auvergne" />
+    <Breadcrumbs items={[{ label: "L'Entreprise" }]} />
+
+    {/* Présentation */}
+    <section className="container-main section-padding">
+      <div className="grid md:grid-cols-2 gap-12 items-center">
+        <ScrollReveal>
+          <img src={teamImg} alt="Équipe EQUATION étanchéité Cournon-d'Auvergne" className="rounded-xl w-full h-96 object-cover" loading="lazy" />
+        </ScrollReveal>
+        <ScrollReveal delay={150}>
+          <div>
+            <h2 className="text-foreground mb-4">[ EQUATION en bref ]</h2>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              <strong className="text-foreground">EQUATION</strong> est une entreprise fondée en 2001 par <strong className="text-foreground">Thierry Meylan</strong>, basée à Cournon-d'Auvergne (63), près de Clermont-Ferrand. SARL au capital de 50 000 €, nous sommes spécialisés dans l'étanchéité des toitures terrasses, l'isolation thermique et les revêtements spécifiques.
+            </p>
+            <p className="text-muted-foreground font-body leading-relaxed mt-4">
+              Nous intervenons dans le Puy-de-Dôme (63), l'Allier (03), la Haute-Loire (43), le Cantal (15), la Nièvre (58) et au-delà sur demande pour les chantiers d'envergure.
+            </p>
+            <p className="text-muted-foreground font-body leading-relaxed mt-4">
+              Thierry Meylan est administrateur de la <strong className="text-foreground">FFB Puy-de-Dôme</strong> depuis 8 ans, et intervient à l'Université Clermont Auvergne sur le social selling et l'image de marque.
+            </p>
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-14 w-auto mt-6 opacity-80" />
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+
+    {/* Pourquoi nous choisir */}
+    <section className="bg-warm section-padding">
+      <div className="container-main">
+        <ScrollReveal>
+          <h2 className="text-foreground text-center mb-12">[ Pourquoi Nous Choisir ]</h2>
+        </ScrollReveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {reasons.map((r, i) => (
+            <ScrollReveal key={r.title} delay={i * 100}>
+              <div className="card-equation p-6 h-full">
+                <r.icon className="w-10 h-10 text-primary mb-4" />
+                <h3 className="text-lg font-heading text-foreground">{r.title}</h3>
+                <p className="text-muted-foreground font-body text-sm mt-2">{r.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+        <ScrollReveal>
+          <div className="mt-12 flex flex-col items-center">
+            <p className="text-muted-foreground font-body text-sm mb-6">Nos certifications et labels — gages de fiabilité</p>
+            <img src={certificationsImg} alt="Certifications CSFE, Qualibat RGE, FFB" className="max-w-lg w-full h-auto" loading="lazy" />
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+
+    {/* Timeline */}
+    <section className="container-main section-padding">
+      <ScrollReveal>
+        <h2 className="text-foreground text-center mb-12">[ Notre Histoire ]</h2>
+      </ScrollReveal>
+      <div className="max-w-2xl mx-auto relative">
+        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-0.5" />
+        {timeline.map((t, i) => (
+          <ScrollReveal key={t.year} delay={i * 80}>
+            <div className={`relative pl-12 md:pl-0 mb-8 md:flex ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
+              <div className="absolute left-2 md:left-1/2 w-5 h-5 rounded-full bg-primary border-4 border-background md:-translate-x-2.5 mt-1" />
+              <div className={`md:w-1/2 ${i % 2 === 0 ? "md:pr-10 md:text-right" : "md:pl-10"}`}>
+                <span className="text-primary font-heading font-bold text-lg">{t.year}</span>
+                <p className="text-muted-foreground font-body text-sm mt-1">{t.text}</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+
+    {/* Clients */}
+    <section className="bg-noir section-padding">
+      <div className="container-main">
+        <ScrollReveal>
+          <h2 className="text-primary-foreground text-center mb-12">[ Nos Clients ]</h2>
+        </ScrollReveal>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {clients.map((c, i) => (
+            <ScrollReveal key={c.label} delay={i * 80}>
+              <div className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-xl p-6">
+                <c.icon className="w-8 h-8 text-primary mb-3" />
+                <h3 className="text-primary-foreground font-heading text-lg">{c.label}</h3>
+                <p className="text-primary-foreground/60 font-body text-sm mt-1">{c.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+);
+
+export default EntreprisePage;
