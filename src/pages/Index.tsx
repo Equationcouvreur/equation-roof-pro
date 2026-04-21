@@ -91,7 +91,7 @@ const HomePage = () => {
           <div className="container-main">
             <ScrollReveal>
               <h1 className="text-primary-foreground max-w-3xl">
-                [ L'Excellence en Étanchéité depuis 2001 ]
+                L'Excellence en Étanchéité depuis 2001
               </h1>
             </ScrollReveal>
             <ScrollReveal delay={150}>
@@ -129,7 +129,7 @@ const HomePage = () => {
         <div className="container-main">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-foreground">[ Une Expertise Complète en Étanchéité ]</h2>
+              <h2 className="text-foreground">Une Expertise Complète en Étanchéité</h2>
               <p className="text-muted-foreground mt-4 font-body">
                 Des solutions techniques adaptées à chaque type de toiture et de support
               </p>
@@ -153,7 +153,7 @@ const HomePage = () => {
       <section className="section-padding">
         <div className="container-main">
           <ScrollReveal>
-            <h2 className="text-foreground text-center mb-12">[ Nos Dernières Réalisations ]</h2>
+            <h2 className="text-foreground text-center mb-12">Nos Dernières Réalisations</h2>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((p, i) => (
@@ -180,7 +180,7 @@ const HomePage = () => {
       <section className="bg-noir section-padding">
         <div className="container-main">
           <ScrollReveal>
-            <h2 className="text-primary-foreground text-center mb-12">[ Pourquoi Nous Faire Confiance ? ]</h2>
+            <h2 className="text-primary-foreground text-center mb-12">Pourquoi Nous Faire Confiance ?</h2>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>

@@ -60,7 +60,7 @@ const AvisClientsPage = () => (
     <section className="bg-warm section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <h2 className="text-foreground text-center mb-12">[ Témoignages ]</h2>
+          <h2 className="text-foreground text-center mb-12">Témoignages</h2>
         </ScrollReveal>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
