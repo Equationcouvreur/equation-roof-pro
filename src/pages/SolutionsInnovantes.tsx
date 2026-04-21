@@ -32,7 +32,7 @@ const solutions = [
       "Application sur étanchéité existante (pas de dépose)",
       "Prolonge la durée de vie de la membrane d'étanchéité",
       "Contribue à la lutte contre les îlots de chaleur urbains",
-   ,
+    ],
   },
   {
     id: "photovoltaique", icon: Zap,
@@ -44,7 +44,7 @@ const solutions = [
       "Reprise étanchéité autour des pénétrations garantie",
       "Coordination avec les installateurs photovoltaïques",
       "Éligible aux aides à la rénovation énergétique",
-   ,
+    ],
   },
   {
     id: "quartz", icon: Gem,
@@ -55,7 +55,7 @@ const solutions = [
       "Surface antidérapante classée",
       "Résistant au trafic piétonnier",
       "Entretien minimal",
-   ,
+    ],
   },
 ];
 
