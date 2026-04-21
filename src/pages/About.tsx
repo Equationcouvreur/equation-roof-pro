@@ -109,7 +109,7 @@ const AboutPage = () => (
             { title: "Qualibat", desc: "Votre label de fiabilité — qualification officielle des entreprises du bâtiment." },
             { title: "Reconnu Grenelle Environnement", desc: "Éligibilité aux aides à la rénovation énergétique (RGE)." },
             { title: "FFB", desc: "Fédération Française du Bâtiment — Thierry Meylan est administrateur FFB63." },
-         .map((c, i) => (
+          ].map((c, i) => (
             <ScrollReveal key={c.title} delay={i * 100}>
               <div className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-xl p-6">
                 <Shield className="w-8 h-8 text-primary mb-3" />

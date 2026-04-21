@@ -19,7 +19,7 @@ const solutions = [
       "Incompressible — supporte les charges lourdes sans tassement",
       "Incombustible classement A1 — sécurité incendie maximale",
       "Insensible aux rongeurs, insectes et moisissures",
-   ,
+    ],
     ref: "Référence chantier : Groupe La Glacière pour Auvergne Habitat — 1 200 m² de toitures terrasses avec verre cellulaire collé au bitume à chaud.",
   },
   {
