@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -11,13 +12,21 @@ const projectTypes = [
   "Terrasse IPE",
   "Toiture végétalisée",
   "Dalles sur plots",
+  "Étanchéité Bitumineuse",
+  "Résine",
   "Autre",
 ];
 
 const ContactPage = () => {
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     nom: "", prenom: "", email: "", telephone: "", type: "", surface: "", message: "", consent: false,
   });
+
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type) setFormData((prev) => ({ ...prev, type }));
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
