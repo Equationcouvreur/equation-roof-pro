@@ -5,11 +5,49 @@ import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import PhotoGallery, { GalleryImage } from "@/components/PhotoGallery";
-import bitumenImg from "@/assets/bitumen-work.jpg";
-import greenRoofImg from "@/assets/green-roof.jpg";
-import teamImg from "@/assets/team-construction.jpg";
-import ipeImg from "@/assets/ipe-terrace.jpg";
-import heroImg from "@/assets/hero-home.jpg";
+
+// Photos générées par IA spécifiquement pour chaque réalisation EQUATION
+import cpam1 from "@/assets/realisations/cpam-1.jpg";
+import cpam2 from "@/assets/realisations/cpam-2.jpg";
+import cpam3 from "@/assets/realisations/cpam-3.jpg";
+import cpam4 from "@/assets/realisations/cpam-4.jpg";
+import cpam5 from "@/assets/realisations/cpam-5.jpg";
+import nievre1 from "@/assets/realisations/nievre-1.jpg";
+import nievre2 from "@/assets/realisations/nievre-2.jpg";
+import nievre3 from "@/assets/realisations/nievre-3.jpg";
+import nievre4 from "@/assets/realisations/nievre-4.jpg";
+import glaciere1 from "@/assets/realisations/glaciere-1.jpg";
+import glaciere2 from "@/assets/realisations/glaciere-2.jpg";
+import glaciere3 from "@/assets/realisations/glaciere-3.jpg";
+import glaciere4 from "@/assets/realisations/glaciere-4.jpg";
+import assemblia1 from "@/assets/realisations/assemblia-1.jpg";
+import assemblia2 from "@/assets/realisations/assemblia-2.jpg";
+import assemblia3 from "@/assets/realisations/assemblia-3.jpg";
+import universite1 from "@/assets/realisations/universite-1.jpg";
+import universite2 from "@/assets/realisations/universite-2.jpg";
+import universite3 from "@/assets/realisations/universite-3.jpg";
+import arverne1 from "@/assets/realisations/arverne-1.jpg";
+import arverne2 from "@/assets/realisations/arverne-2.jpg";
+import arverne3 from "@/assets/realisations/arverne-3.jpg";
+import ipe1 from "@/assets/realisations/ipe-1.jpg";
+import ipe2 from "@/assets/realisations/ipe-2.jpg";
+import ipe3 from "@/assets/realisations/ipe-3.jpg";
+import murol1 from "@/assets/realisations/murol-1.jpg";
+import murol2 from "@/assets/realisations/murol-2.jpg";
+import murol3 from "@/assets/realisations/murol-3.jpg";
+import jeanAlix1 from "@/assets/realisations/jean-alix-1.jpg";
+import jeanAlix2 from "@/assets/realisations/jean-alix-2.jpg";
+import jeanAlix3 from "@/assets/realisations/jean-alix-3.jpg";
+import jeanAlix4 from "@/assets/realisations/jean-alix-4.jpg";
+import romagnat1 from "@/assets/realisations/romagnat-1.jpg";
+import romagnat2 from "@/assets/realisations/romagnat-2.jpg";
+import romagnat3 from "@/assets/realisations/romagnat-3.jpg";
+import vic1 from "@/assets/realisations/vic-1.jpg";
+import vic2 from "@/assets/realisations/vic-2.jpg";
+import vic3 from "@/assets/realisations/vic-3.jpg";
+import cendre1 from "@/assets/realisations/cendre-1.jpg";
+import cendre2 from "@/assets/realisations/cendre-2.jpg";
+import cendre3 from "@/assets/realisations/cendre-3.jpg";
 
 type Realisation = {
   id: string;
@@ -33,43 +71,6 @@ const categories = [
   "Recherche de Fuite",
 ];
 
-// Photos Unsplash thématiques (toitures, étanchéité, bâtiments, IPE, végétalisation)
-const U = (id: string, w = 1200) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
-
-const PHOTOS = {
-  // Bâtiments / immeubles modernes
-  building1: U("1486325212027-8081e485255e"),
-  building2: U("1448630360428-65456885c650"),
-  building3: U("1487958449943-2429e8be8625"),
-  building4: U("1473177104440-ffee2f376098"),
-  building5: U("1496564203457-11bb12075d90"),
-  // Toitures & étanchéité
-  roof1: U("1518780664697-55e3ad937233"),
-  roof2: U("1503387762-cf06e0e864cb"),
-  roof3: U("1605276374104-dee2a0ed3cd6"),
-  // Chantiers & ouvriers
-  worker1: U("1581094794329-c8112a89af12"),
-  worker2: U("1504307651254-35680f356dfd"),
-  worker3: U("1541888946425-d81bb19240f5"),
-  worker4: U("1521575107034-e0fa0b594529"),
-  // Toitures végétalisées
-  green1: U("1416879595882-3373a0480b5b"),
-  green2: U("1518531933037-91b2f5f229cc"),
-  green3: U("1572297982008-83beb1a23a89"),
-  // IPE / terrasses bois
-  ipe1: U("1600585154340-be6161a56a0c"),
-  ipe2: U("1600566753190-17f0baa2a6c8"),
-  ipe3: U("1600210492486-724fe5c67fb0"),
-  // Balcons / résine
-  balcony1: U("1545324418-cc1a3fa10c00"),
-  balcony2: U("1493809842364-78817add7ffb"),
-  // Écoles / institutions
-  school1: U("1580582932707-520aed937b7b"),
-  school2: U("1497486751825-1233686d5d80"),
-  // Photovoltaïque
-  solar1: U("1509391366360-2e959784a276"),
-};
-
 const projects: Realisation[] = [
   {
     id: "cpam-nevers",
@@ -81,11 +82,11 @@ const projects: Realisation[] = [
     year: "2022",
     location: "Nevers (58)",
     images: [
-      { src: PHOTOS.building1, alt: "CPAM Nevers - vue d'ensemble", caption: "Vue d'ensemble du bâtiment CPAM avant intervention — 6 toitures terrasses sur 2 500 m²" },
-      { src: PHOTOS.worker1, alt: "Pose isolation PU", caption: "Pose de l'isolant polyuréthane 100mm sur pare-vapeur — coefficient λ = 0,022 W/m.K" },
-      { src: PHOTOS.roof1, alt: "Étanchéité bicouche soudée", caption: "Soudure au chalumeau de la 1ère couche bitumineuse — élastomère SBS conforme DTU 43.1" },
-      { src: PHOTOS.worker2, alt: "Finition autoprotégée", caption: "Pose de la couche de finition autoprotégée par paillettes d'ardoise grise" },
-      { src: PHOTOS.roof2, alt: "Toiture terminée", caption: "Toiture livrée — garantie décennale + assurance dommages-ouvrage" },
+      { src: cpam1, alt: "CPAM Nevers - vue d'ensemble", caption: "Vue d'ensemble du bâtiment CPAM avant intervention — 6 toitures terrasses sur 2 500 m²" },
+      { src: cpam2, alt: "Pose isolation PU", caption: "Pose de l'isolant polyuréthane 100mm sur pare-vapeur — coefficient λ = 0,022 W/m.K" },
+      { src: cpam3, alt: "Soudure bitumineuse", caption: "Soudure au chalumeau de la 1ère couche bitumineuse — élastomère SBS conforme DTU 43.1" },
+      { src: cpam4, alt: "Finition autoprotégée", caption: "Pose de la couche de finition autoprotégée par paillettes d'ardoise grise" },
+      { src: cpam5, alt: "Toiture terminée", caption: "Toiture livrée — garantie décennale + assurance dommages-ouvrage" },
     ],
   },
   {
@@ -98,10 +99,10 @@ const projects: Realisation[] = [
     year: "2021",
     location: "Nevers (58)",
     images: [
-      { src: PHOTOS.building2, alt: "Immeubles Nièvre Habitat", caption: "3 immeubles de logements sociaux — 1 800 m² de toitures à rénover" },
-      { src: PHOTOS.worker3, alt: "Dépose ancienne étanchéité", caption: "Dépose et tri sélectif de l'ancienne étanchéité — recyclage filière agréée" },
-      { src: PHOTOS.worker4, alt: "Pose isolation thermique", caption: "Mise en œuvre isolation polyuréthane 100mm — résistance thermique R = 4,55 m².K/W" },
-      { src: PHOTOS.roof3, alt: "Garde-corps ODCO", caption: "Installation des garde-corps ODCO conformes EN 13374 — sécurité permanente" },
+      { src: nievre1, alt: "Immeubles Nièvre Habitat", caption: "3 immeubles de logements sociaux — 1 800 m² de toitures à rénover" },
+      { src: nievre2, alt: "Dépose ancienne étanchéité", caption: "Dépose et tri sélectif de l'ancienne étanchéité — recyclage filière agréée" },
+      { src: nievre3, alt: "Pose isolation thermique", caption: "Mise en œuvre isolation polyuréthane 100mm — résistance thermique R = 4,55 m².K/W" },
+      { src: nievre4, alt: "Garde-corps ODCO", caption: "Installation des garde-corps ODCO conformes EN 13374 — sécurité permanente" },
     ],
   },
   {
@@ -114,10 +115,10 @@ const projects: Realisation[] = [
     year: "2020",
     location: "Clermont-Ferrand (63)",
     images: [
-      { src: PHOTOS.building3, alt: "Groupe La Glacière", caption: "Bâtiment du Groupe La Glacière — 1 200 m² traités en verre cellulaire FOAMGLAS" },
-      { src: PHOTOS.worker1, alt: "Pose verre cellulaire", caption: "Pose des plaques de FOAMGLAS — étanche à l'eau ET à la vapeur (pas de pare-vapeur séparé)" },
-      { src: PHOTOS.roof1, alt: "Bitume chaud", caption: "Collage au bitume à chaud — adhérence parfaite et durabilité 30 ans garantie fabricant" },
-      { src: PHOTOS.roof2, alt: "Étanchéité finale", caption: "Étanchéité bicouche de finition sur FOAMGLAS — complexe incombustible classement A1" },
+      { src: glaciere1, alt: "Groupe La Glacière", caption: "Bâtiment du Groupe La Glacière — 1 200 m² traités en verre cellulaire FOAMGLAS" },
+      { src: glaciere2, alt: "Pose verre cellulaire", caption: "Pose des plaques de FOAMGLAS — étanche à l'eau ET à la vapeur (pas de pare-vapeur séparé)" },
+      { src: glaciere3, alt: "Bitume chaud", caption: "Collage au bitume à chaud — adhérence parfaite et durabilité 30 ans garantie fabricant" },
+      { src: glaciere4, alt: "Étanchéité finale", caption: "Étanchéité bicouche de finition sur FOAMGLAS — complexe incombustible classement A1" },
     ],
   },
   {
@@ -130,9 +131,9 @@ const projects: Realisation[] = [
     year: "2023",
     location: "Clermont-Ferrand (63)",
     images: [
-      { src: PHOTOS.green1, alt: "Toiture végétalisée Assemblia", caption: "Toiture végétalisée extensive Assemblia — 800 m² de sedum et graminées" },
-      { src: PHOTOS.green2, alt: "Complexe drainant", caption: "Mise en œuvre du complexe drainant sur membrane anti-racine certifiée FLL" },
-      { src: PHOTOS.green3, alt: "Plantation sedum", caption: "Plantation du sedum en plaques pré-cultivées — couverture végétale immédiate à 95%" },
+      { src: assemblia1, alt: "Toiture végétalisée Assemblia", caption: "Toiture végétalisée extensive Assemblia — 800 m² de sedum et graminées" },
+      { src: assemblia2, alt: "Complexe drainant", caption: "Mise en œuvre du complexe drainant sur membrane anti-racine certifiée FLL" },
+      { src: assemblia3, alt: "Plantation sedum", caption: "Plantation du sedum en plaques pré-cultivées — couverture végétale immédiate à 95%" },
     ],
   },
   {
@@ -145,9 +146,9 @@ const projects: Realisation[] = [
     year: "2022",
     location: "Clermont-Ferrand (63)",
     images: [
-      { src: PHOTOS.school1, alt: "Bâtiment Paul Collomp", caption: "Bâtiment Paul Collomp — Université Clermont Auvergne, intervention en site occupé" },
-      { src: PHOTOS.worker2, alt: "Réfection étanchéité", caption: "Dépose des relevés bitumineux dégradés et préparation des supports béton" },
-      { src: PHOTOS.roof3, alt: "Étanchéité neuve", caption: "Nouvelle étanchéité bicouche soudée — finition autoprotégée minérale" },
+      { src: universite1, alt: "Bâtiment Paul Collomp", caption: "Bâtiment Paul Collomp — Université Clermont Auvergne, intervention en site occupé" },
+      { src: universite2, alt: "Réfection étanchéité", caption: "Dépose des relevés bitumineux dégradés et préparation des supports béton" },
+      { src: universite3, alt: "Étanchéité neuve", caption: "Nouvelle étanchéité bicouche soudée — finition autoprotégée minérale" },
     ],
   },
   {
@@ -160,9 +161,9 @@ const projects: Realisation[] = [
     year: "2021",
     location: "Clermont-Ferrand (63)",
     images: [
-      { src: PHOTOS.balcony1, alt: "Balcons Résidence Arverne", caption: "Résidence Arverne — 2 000 m² de balcons et coursives à étancher" },
-      { src: PHOTOS.balcony2, alt: "Application résine PMMA", caption: "Application de la résine PMMA à froid — sans flamme, sans odeur, séchage 30 min" },
-      { src: PHOTOS.worker3, alt: "Pose carrelage", caption: "Pose du carrelage collé sur résine armée — durabilité 25 ans+" },
+      { src: arverne1, alt: "Balcons Résidence Arverne", caption: "Résidence Arverne — 2 000 m² de balcons et coursives à étancher" },
+      { src: arverne2, alt: "Application résine PMMA", caption: "Application de la résine PMMA à froid — sans flamme, sans odeur, séchage 30 min" },
+      { src: arverne3, alt: "Pose carrelage", caption: "Pose du carrelage collé sur résine armée — durabilité 25 ans+" },
     ],
   },
   {
@@ -175,9 +176,9 @@ const projects: Realisation[] = [
     year: "2023",
     location: "Puy-de-Dôme (63)",
     images: [
-      { src: PHOTOS.ipe1, alt: "Terrasse IPE finie", caption: "Terrasse IPE 120 m² — lames 21mm × 145mm en bois exotique classe 4" },
-      { src: PHOTOS.ipe2, alt: "Plots réglables", caption: "Plots PVC réglables 40-100mm — drainage naturel et protection de l'étanchéité" },
-      { src: PHOTOS.ipe3, alt: "Détail finition IPE", caption: "Finition par clips invisibles inox A4 — aucune vis apparente, esthétique haut de gamme" },
+      { src: ipe1, alt: "Terrasse IPE finie", caption: "Terrasse IPE 120 m² — lames 21mm × 145mm en bois exotique classe 4" },
+      { src: ipe2, alt: "Plots réglables", caption: "Plots PVC réglables 40-100mm — drainage naturel et protection de l'étanchéité" },
+      { src: ipe3, alt: "Détail finition IPE", caption: "Finition par clips invisibles inox A4 — aucune vis apparente, esthétique haut de gamme" },
     ],
   },
   {
@@ -190,9 +191,9 @@ const projects: Realisation[] = [
     year: "2022",
     location: "Murol (63)",
     images: [
-      { src: PHOTOS.green2, alt: "Toiture sedum Murol", caption: "Toiture végétalisée Murol — 400 m² adaptés à l'altitude (850m)" },
-      { src: PHOTOS.green3, alt: "Sedum en fleurs", caption: "Sedum en fleurs été — 8 variétés sélectionnées pour résistance gel/sécheresse" },
-      { src: PHOTOS.green1, alt: "Vue d'ensemble", caption: "Rétention d'eau pluviale > 50% — gestion EP intégrée et biodiversité urbaine" },
+      { src: murol1, alt: "Toiture sedum Murol", caption: "Toiture végétalisée Murol — 400 m² adaptés à l'altitude (850m)" },
+      { src: murol2, alt: "Sedum en fleurs", caption: "Sedum en fleurs été — 8 variétés sélectionnées pour résistance gel/sécheresse" },
+      { src: murol3, alt: "Vue d'ensemble", caption: "Rétention d'eau pluviale > 50% — gestion EP intégrée et biodiversité urbaine" },
     ],
   },
   {
@@ -205,10 +206,10 @@ const projects: Realisation[] = [
     year: "2021",
     location: "Puy-de-Dôme (63)",
     images: [
-      { src: PHOTOS.school2, alt: "École Jean Alix extension", caption: "Extension du groupe scolaire Jean Alix — 600 m² de toiture neuve RE 2020" },
-      { src: PHOTOS.worker4, alt: "Pose isolation laine de roche", caption: "Isolation laine de roche 140mm — performance acoustique + thermique pour ERP" },
-      { src: PHOTOS.roof1, alt: "Étanchéité bicouche", caption: "Étanchéité bicouche soudée sur isolation — protection autoprotégée" },
-      { src: PHOTOS.worker2, alt: "Zinguerie cuivre", caption: "Façonnage et pose des rives et chéneaux en cuivre 0,6mm — durabilité 80 ans+" },
+      { src: jeanAlix1, alt: "École Jean Alix extension", caption: "Extension du groupe scolaire Jean Alix — 600 m² de toiture neuve RE 2020" },
+      { src: jeanAlix2, alt: "Pose isolation laine de roche", caption: "Isolation laine de roche 140mm — performance acoustique + thermique pour ERP" },
+      { src: jeanAlix3, alt: "Étanchéité bicouche", caption: "Étanchéité bicouche soudée sur isolation — protection autoprotégée" },
+      { src: jeanAlix4, alt: "Zinguerie cuivre", caption: "Façonnage et pose des rives et chéneaux en cuivre 0,6mm — durabilité 80 ans+" },
     ],
   },
   {
@@ -221,9 +222,9 @@ const projects: Realisation[] = [
     year: "2020",
     location: "Romagnat (63)",
     images: [
-      { src: PHOTOS.building4, alt: "Immeuble Romagnat", caption: "Résidence Romagnat — réhabilitation 18 logements collectifs (1 500 m²)" },
-      { src: PHOTOS.worker1, alt: "Sur-isolation", caption: "Sur-isolation polyuréthane 80mm sur isolant existant conservé — économie circulaire" },
-      { src: PHOTOS.roof2, alt: "Étanchéité finale", caption: "Étanchéité bicouche + relevés conformes DTU 43.1 — éligible MaPrimeRénov Copro" },
+      { src: romagnat1, alt: "Immeuble Romagnat", caption: "Résidence Romagnat — réhabilitation 18 logements collectifs (1 500 m²)" },
+      { src: romagnat2, alt: "Sur-isolation", caption: "Sur-isolation polyuréthane 80mm sur isolant existant conservé — économie circulaire" },
+      { src: romagnat3, alt: "Étanchéité finale", caption: "Étanchéité bicouche + relevés conformes DTU 43.1 — éligible MaPrimeRénov Copro" },
     ],
   },
   {
@@ -236,9 +237,9 @@ const projects: Realisation[] = [
     year: "2022",
     location: "Vic-le-Comte (63)",
     images: [
-      { src: PHOTOS.building5, alt: "Centre multi-accueil", caption: "Centre Multi-Accueil Vic-le-Comte — 350 m² pour bâtiment petite enfance" },
-      { src: PHOTOS.worker3, alt: "Isolation A1", caption: "Isolation laine de roche classement A1 — sécurité incendie maximale ERP" },
-      { src: PHOTOS.roof3, alt: "Finition", caption: "Finition autoprotégée — matériaux faibles émissions COV (label A+)" },
+      { src: vic1, alt: "Centre multi-accueil", caption: "Centre Multi-Accueil Vic-le-Comte — 350 m² pour bâtiment petite enfance" },
+      { src: vic2, alt: "Isolation A1", caption: "Isolation laine de roche classement A1 — sécurité incendie maximale ERP" },
+      { src: vic3, alt: "Finition", caption: "Finition autoprotégée — matériaux faibles émissions COV (label A+)" },
     ],
   },
   {
@@ -251,9 +252,9 @@ const projects: Realisation[] = [
     year: "2021",
     location: "Le Cendre (63)",
     images: [
-      { src: PHOTOS.building1, alt: "16 logements Le Cendre", caption: "Programme 16 logements Le Cendre — accession sociale à la propriété" },
-      { src: PHOTOS.worker2, alt: "Isolation PU 120mm", caption: "Isolation polyuréthane 120mm — conformité RE 2020 (Up = 0,18 W/m².K)" },
-      { src: PHOTOS.roof1, alt: "Étanchéité bicouche", caption: "Étanchéité bicouche soudée — garantie décennale + DO" },
+      { src: cendre1, alt: "16 logements Le Cendre", caption: "Programme 16 logements Le Cendre — accession sociale à la propriété" },
+      { src: cendre2, alt: "Isolation PU 120mm", caption: "Isolation polyuréthane 120mm — conformité RE 2020 (Up = 0,18 W/m².K)" },
+      { src: cendre3, alt: "Étanchéité bicouche", caption: "Étanchéité bicouche soudée — garantie décennale + DO" },
     ],
   },
 ];
