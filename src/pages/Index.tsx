@@ -218,13 +218,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((p, i) => (
               <ScrollReveal key={p.title} delay={i * 100}>
-                <div className="card-equation overflow-hidden">
-                  <img src={p.img} alt={`${p.title} étanchéité Auvergne`} className="w-full h-56 object-cover" loading="lazy" width={600} height={400} />
-                  <div className="p-6">
-                    <h3 className="text-lg font-heading text-foreground">{p.title}</h3>
-                    <p className="text-muted-foreground mt-2 text-sm font-body">{p.desc}</p>
-                  </div>
-                </div>
+                <ProjectCard images={p.images} title={p.title} desc={p.desc} />
               </ScrollReveal>
             ))}
           </div>
@@ -244,7 +238,7 @@ const HomePage = () => {
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>
-              <img src={teamImg} alt="Équipe EQUATION étanchéité professionnelle" className="rounded-xl w-full h-80 object-cover" loading="lazy" width={600} height={400} />
+              <img src={cpam1} alt="Équipe EQUATION étanchéité professionnelle" className="rounded-xl w-full h-80 object-cover" loading="lazy" width={600} height={400} />
             </ScrollReveal>
             <div className="space-y-6">
               {reasons.map((r, i) => (
