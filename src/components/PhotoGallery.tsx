@@ -161,6 +161,12 @@ const PhotoGallery = ({
         )}
       </div>
 
+      {images[activeIdx].caption && (
+        <p className="mt-3 text-sm font-body text-muted-foreground italic border-l-2 border-primary pl-3">
+          {images[activeIdx].caption}
+        </p>
+      )}
+
       {hasMultiple && (
         <div
           className="mt-3 flex gap-2 overflow-x-auto pb-2"
