@@ -263,7 +263,47 @@ const projects: Realisation[] = [
 const RealisationsPage = () => {
   const [filter, setFilter] = useState("Tous");
   const [selected, setSelected] = useState<Realisation | null>(null);
-  const filtered = filter === "Tous" ? projects : projects.filter((p) => p.category === filter);
+  const [allProjects, setAllProjects] = useState<Realisation[]>(projects);
+
+  useEffect(() => {
+    (async () => {
+      const { data: reals } = await supabase
+        .from("realisations")
+        .select("id,title,category,description,surface,technique,year,location,display_order")
+        .eq("status", "published")
+        .order("display_order", { ascending: true })
+        .order("created_at", { ascending: false });
+      if (!reals || reals.length === 0) return;
+
+      const ids = reals.map((r) => r.id);
+      const { data: photos } = await supabase
+        .from("realisation_photos")
+        .select("realisation_id,url,alt_text,caption,display_order,is_favorite")
+        .in("realisation_id", ids)
+        .order("is_favorite", { ascending: false })
+        .order("display_order", { ascending: true });
+
+      const dbProjects: Realisation[] = reals.map((r) => {
+        const imgs = (photos || [])
+          .filter((p) => p.realisation_id === r.id)
+          .map<GalleryImage>((p) => ({ src: p.url, alt: p.alt_text || r.title, caption: p.caption || undefined }));
+        return {
+          id: r.id,
+          title: r.title,
+          category: r.category,
+          description: r.description || "",
+          surface: r.surface || undefined,
+          technique: r.technique || undefined,
+          year: r.year || undefined,
+          location: r.location || undefined,
+          images: imgs.length ? imgs : [{ src: "/placeholder.svg", alt: r.title }],
+        };
+      });
+      setAllProjects([...dbProjects, ...projects]);
+    })();
+  }, []);
+
+  const filtered = filter === "Tous" ? allProjects : allProjects.filter((p) => p.category === filter);
 
   return (
     <>
