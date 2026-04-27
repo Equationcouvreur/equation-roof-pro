@@ -104,6 +104,42 @@ const expertises: Expertise[] = [
   },
 ];
 
+import { useSiteSection } from "@/hooks/useSiteSection";
+
+const ExpertiseBlock = ({ e, i }: { e: Expertise; i: number }) => {
+  const content = useSiteSection(e.id, {
+    title: e.title,
+    text: e.text,
+    points: e.points,
+    images: e.images,
+  });
+  return (
+    <ScrollReveal>
+      <section id={e.id} className="grid md:grid-cols-2 gap-12 items-center scroll-mt-32">
+        <div className={i % 2 === 1 ? "md:order-2" : ""}>
+          <PhotoGallery images={content.images} />
+        </div>
+        <div className={i % 2 === 1 ? "md:order-1" : ""}>
+          <e.icon className="w-10 h-10 text-primary mb-4" />
+          <h2 className="text-2xl md:text-3xl text-foreground">{content.title}</h2>
+          <p className="text-muted-foreground mt-4 font-body leading-relaxed whitespace-pre-line">{content.intro}</p>
+          <ul className="mt-6 space-y-2">
+            {content.points.map((p) => (
+              <li key={p} className="flex items-center gap-2 font-body text-sm text-foreground">
+                <CheckCircle className="w-4 h-4 text-green-success shrink-0" />
+                {p}
+              </li>
+            ))}
+          </ul>
+          <Link to="/contact" className="btn-bordeaux inline-block mt-6 text-sm">
+            Demander un Devis pour ce Service
+          </Link>
+        </div>
+      </section>
+    </ScrollReveal>
+  );
+};
+
 const CoeurMetierPage = () => (
   <>
     <PageHero title="Notre Cœur de Métier" subtitle="6 expertises techniques au service de vos toitures terrasses" />
@@ -128,29 +164,7 @@ const CoeurMetierPage = () => (
 
     <div className="container-main section-padding space-y-20">
       {expertises.map((e, i) => (
-        <ScrollReveal key={e.id}>
-          <section id={e.id} className="grid md:grid-cols-2 gap-12 items-center scroll-mt-32">
-            <div className={i % 2 === 1 ? "md:order-2" : ""}>
-              <PhotoGallery images={e.images} />
-            </div>
-            <div className={i % 2 === 1 ? "md:order-1" : ""}>
-              <e.icon className="w-10 h-10 text-primary mb-4" />
-              <h2 className="text-2xl md:text-3xl text-foreground">{e.title}</h2>
-              <p className="text-muted-foreground mt-4 font-body leading-relaxed">{e.text}</p>
-              <ul className="mt-6 space-y-2">
-                {e.points.map((p) => (
-                  <li key={p} className="flex items-center gap-2 font-body text-sm text-foreground">
-                    <CheckCircle className="w-4 h-4 text-green-success shrink-0" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/contact" className="btn-bordeaux inline-block mt-6 text-sm">
-                Demander un Devis pour ce Service
-              </Link>
-            </div>
-          </section>
-        </ScrollReveal>
+        <ExpertiseBlock key={e.id} e={e} i={i} />
       ))}
     </div>
   </>

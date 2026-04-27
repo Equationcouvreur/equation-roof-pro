@@ -1,11 +1,12 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, FileText, Hammer, Users, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, FileText, Hammer, Users, LogOut, ExternalLink, LayoutTemplate } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
   { to: "/admin", icon: LayoutDashboard, label: "Tableau de bord", end: true },
+  { to: "/admin/sections", icon: LayoutTemplate, label: "Sections du site" },
   { to: "/admin/articles", icon: FileText, label: "Articles" },
   { to: "/admin/realisations", icon: Hammer, label: "Réalisations" },
 ];

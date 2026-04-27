@@ -175,6 +175,86 @@ export type Database = {
         }
         Relationships: []
       }
+      section_photos: {
+        Row: {
+          alt_text: string | null
+          caption: string | null
+          created_at: string
+          display_order: number
+          id: string
+          is_favorite: boolean
+          section_id: string
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_favorite?: boolean
+          section_id: string
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_favorite?: boolean
+          section_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "section_photos_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "site_sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_sections: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          intro: string | null
+          page: string
+          points: string[] | null
+          reference_text: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          intro?: string | null
+          page: string
+          points?: string[] | null
+          reference_text?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          intro?: string | null
+          page?: string
+          points?: string[] | null
+          reference_text?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

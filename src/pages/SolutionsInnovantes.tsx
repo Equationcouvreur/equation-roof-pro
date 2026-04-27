@@ -104,6 +104,55 @@ const solutions: Solution[] = [
   },
 ];
 
+import { useSiteSection } from "@/hooks/useSiteSection";
+
+const SolutionBlock = ({ s, i }: { s: Solution; i: number }) => {
+  const content = useSiteSection(s.id, {
+    title: s.title,
+    text: s.text,
+    points: s.points,
+    ref: s.ref,
+    images: s.images,
+  });
+  return (
+    <section
+      id={s.id}
+      className={`section-padding scroll-mt-32 ${i % 2 === 0 ? "bg-background" : "bg-warm"}`}
+    >
+      <div className="container-main">
+        <ScrollReveal>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className={i % 2 === 1 ? "md:order-2" : ""}>
+              <PhotoGallery images={content.images} />
+            </div>
+            <div className={i % 2 === 1 ? "md:order-1" : ""}>
+              <s.icon className="w-10 h-10 text-primary mb-4" />
+              <h2 className="text-2xl md:text-3xl text-foreground">{content.title}</h2>
+              <p className="text-muted-foreground mt-4 font-body leading-relaxed whitespace-pre-line">{content.intro}</p>
+              <ul className="mt-6 space-y-2">
+                {content.points.map((p) => (
+                  <li key={p} className="flex items-start gap-2 font-body text-sm text-foreground">
+                    <CheckCircle className="w-4 h-4 text-green-success shrink-0 mt-0.5" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+              {content.reference && (
+                <p className="mt-4 text-xs font-body italic text-muted-foreground border-l-2 border-primary pl-3">
+                  {content.reference}
+                </p>
+              )}
+              <Link to="/contact" className="btn-bordeaux inline-block mt-6 text-sm">
+                Demander un Devis pour cette Solution
+              </Link>
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+};
+
 const SolutionsInnovantesPage = () => (
   <>
     <PageHero title="Nos Solutions Innovantes" subtitle="EQUATION investit dans les technologies d'avenir pour des bâtiments plus performants et plus durables" />
@@ -111,42 +160,7 @@ const SolutionsInnovantesPage = () => (
 
     <div className="space-y-0">
       {solutions.map((s, i) => (
-        <section
-          key={s.id}
-          id={s.id}
-          className={`section-padding scroll-mt-32 ${i % 2 === 0 ? "bg-background" : "bg-warm"}`}
-        >
-          <div className="container-main">
-            <ScrollReveal>
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className={i % 2 === 1 ? "md:order-2" : ""}>
-                  <PhotoGallery images={s.images} />
-                </div>
-                <div className={i % 2 === 1 ? "md:order-1" : ""}>
-                  <s.icon className="w-10 h-10 text-primary mb-4" />
-                  <h2 className="text-2xl md:text-3xl text-foreground">{s.title}</h2>
-                  <p className="text-muted-foreground mt-4 font-body leading-relaxed">{s.text}</p>
-                  <ul className="mt-6 space-y-2">
-                    {s.points.map((p) => (
-                      <li key={p} className="flex items-start gap-2 font-body text-sm text-foreground">
-                        <CheckCircle className="w-4 h-4 text-green-success shrink-0 mt-0.5" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                  {s.ref && (
-                    <p className="mt-4 text-xs font-body italic text-muted-foreground border-l-2 border-primary pl-3">
-                      {s.ref}
-                    </p>
-                  )}
-                  <Link to="/contact" className="btn-bordeaux inline-block mt-6 text-sm">
-                    Demander un Devis pour cette Solution
-                  </Link>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
+        <SolutionBlock key={s.id} s={s} i={i} />
       ))}
     </div>
   </>

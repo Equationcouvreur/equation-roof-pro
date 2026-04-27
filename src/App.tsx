@@ -27,6 +27,8 @@ import ArticlesList from "./pages/admin/ArticlesList";
 import ArticleEditor from "./pages/admin/ArticleEditor";
 import RealisationsList from "./pages/admin/RealisationsList";
 import RealisationEditor from "./pages/admin/RealisationEditor";
+import SectionsList from "./pages/admin/SectionsList";
+import SectionEditor from "./pages/admin/SectionEditor";
 import Users from "./pages/admin/Users";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import { useEffect } from "react";
@@ -79,6 +81,8 @@ const App = () => (
               }
             >
               <Route index element={<Dashboard />} />
+              <Route path="sections" element={<SectionsList />} />
+              <Route path="sections/:id" element={<SectionEditor />} />
               <Route path="articles" element={<ArticlesList />} />
               <Route path="articles/:id" element={<ArticleEditor />} />
               <Route path="realisations" element={<RealisationsList />} />
