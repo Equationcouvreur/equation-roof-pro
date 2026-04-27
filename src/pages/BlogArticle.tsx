@@ -1,10 +1,14 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Phone } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-const articleContent: Record<string, { title: string; cat: string; date: string; content: string[] }> = {
+type StaticArticle = { title: string; cat: string; date: string; content: string[] };
+
+const articleContent: Record<string, StaticArticle> = {
   "signes-renovation-etancheite": {
     title: "Les 5 Signes qu'il Est Temps de Rénover l'Étanchéité de Votre Toiture Terrasse",
     cat: "Conseils", date: "12 mars 2026",
@@ -31,15 +35,77 @@ const articleContent: Record<string, { title: string; cat: string; date: string;
   },
 };
 
-const defaultContent = {
+const defaultContent: StaticArticle = {
   title: "Article", cat: "Blog", date: "2026",
   content: ["Contenu de l'article à venir. Contactez EQUATION pour plus d'informations sur nos services d'étanchéité."],
 };
 
+type DbArticle = { title: string; cat: string; date: string; html: string };
+
 const BlogArticlePage = () => {
   const { slug } = useParams();
-  const article = articleContent[slug || ""] || defaultContent;
+  const [dbArticle, setDbArticle] = useState<DbArticle | null>(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!slug) return;
+    (async () => {
+      const { data } = await supabase
+        .from("blog_articles")
+        .select("title,category,content,published_at")
+        .eq("slug", slug)
+        .eq("status", "published")
+        .maybeSingle();
+      if (data) {
+        setDbArticle({
+          title: data.title,
+          cat: data.category,
+          date: data.published_at ? new Date(data.published_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "",
+          html: data.content || "",
+        });
+      }
+      setLoading(false);
+    })();
+  }, [slug]);
+
+  if (loading && !articleContent[slug || ""]) {
+    return (
+      <section className="container-main section-padding">
+        <p className="text-muted-foreground">Chargement…</p>
+      </section>
+    );
+  }
+
+  if (dbArticle) {
+    return (
+      <>
+        <PageHero title={dbArticle.title} />
+        <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: dbArticle.title }]} />
+        <section className="container-main section-padding">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="bg-primary text-primary-foreground text-sm font-subtitle font-semibold px-2 py-0.5 rounded">{dbArticle.cat}</span>
+              <span className="text-sm text-muted-foreground font-body">{dbArticle.date}</span>
+            </div>
+            <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-p:font-body prose-a:text-primary prose-img:rounded-lg" dangerouslySetInnerHTML={{ __html: dbArticle.html }} />
+
+            <div className="mt-12 bg-primary rounded-xl p-8 text-center">
+              <h3 className="text-xl font-heading text-primary-foreground mb-2">Besoin d'un diagnostic ?</h3>
+              <p className="text-primary-foreground/80 font-body mb-4">Contactez EQUATION pour un devis gratuit</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/contact" className="btn-noir">Contactez-nous</Link>
+                <a href="tel:0473875350" className="flex items-center gap-2 text-primary-foreground font-subtitle font-semibold">
+                  <Phone className="w-4 h-4" /> 04 73 87 53 50
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  const article = articleContent[slug || ""] || defaultContent;
   return (
     <>
       <PageHero title={article.title} />

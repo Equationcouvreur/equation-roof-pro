@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
+import { supabase } from "@/integrations/supabase/client";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 import greenRoofImg from "@/assets/green-roof.jpg";
 import teamImg from "@/assets/team-construction.jpg";
 import ipeImg from "@/assets/ipe-terrace.jpg";
 
-const articles = [
+type Article = { slug: string; cat: string; date: string; img: string; title: string; excerpt: string };
+
+const staticArticles: Article[] = [
   { slug: "signes-renovation-etancheite", cat: "Conseils", date: "12 mars 2026", img: bitumenImg, title: "Les 5 Signes qu'il Est Temps de Rénover l'Étanchéité de Votre Toiture Terrasse", excerpt: "Flaques stagnantes, fissures dans les membranes, taches d'humidité au plafond... Découvrez les signaux d'alerte à ne pas ignorer." },
   { slug: "bitumineuse-vs-resine", cat: "Guide Technique", date: "5 mars 2026", img: teamImg, title: "Étanchéité Bitumineuse vs Résine : Quelle Solution Choisir ?", excerpt: "Comparatif détaillé des deux systèmes d'étanchéité les plus courants : avantages, inconvénients, coûts et cas d'usage." },
   { slug: "toiture-vegetalisee-2026", cat: "Écologie", date: "20 février 2026", img: greenRoofImg, title: "Toiture Végétalisée : Avantages, Coûts et Réglementation en 2026", excerpt: "Avantages thermiques, rétention des eaux pluviales, conformité PLU et coût au m² : tout savoir sur la végétalisation." },
@@ -18,7 +22,37 @@ const articles = [
   { slug: "recherche-fuite-toiture", cat: "Diagnostic", date: "2 janvier 2026", img: bitumenImg, title: "Recherche de Fuite en Toiture Terrasse : Technologies Modernes", excerpt: "Thermographie, tests fumigènes, détection électrique : quand et comment intervenir." },
 ];
 
-const BlogPage = () => (
+const formatDate = (iso: string | null) => {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+};
+
+const BlogPage = () => {
+  const [articles, setArticles] = useState<Article[]>(staticArticles);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("blog_articles")
+        .select("slug,title,category,excerpt,cover_image_url,published_at")
+        .eq("status", "published")
+        .order("published_at", { ascending: false });
+      if (data && data.length) {
+        const dbArticles: Article[] = data.map((a) => ({
+          slug: a.slug,
+          cat: a.category,
+          date: formatDate(a.published_at),
+          img: a.cover_image_url || bitumenImg,
+          title: a.title,
+          excerpt: a.excerpt || "",
+        }));
+        const dbSlugs = new Set(dbArticles.map((a) => a.slug));
+        setArticles([...dbArticles, ...staticArticles.filter((a) => !dbSlugs.has(a.slug))]);
+      }
+    })();
+  }, []);
+
+  return (
   <>
     <PageHero title="Notre Blog" subtitle="Conseils et expertise en étanchéité de toitures terrasses" />
     <Breadcrumbs items={[{ label: "Blog" }]} />
@@ -73,6 +107,7 @@ const BlogPage = () => (
       </div>
     </section>
   </>
-);
+  );
+};
 
 export default BlogPage;
