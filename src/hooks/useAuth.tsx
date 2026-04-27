@@ -25,29 +25,47 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchRoles = async (uid: string) => {
-    const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid);
+    const { data, error } = await supabase.from("user_roles").select("role").eq("user_id", uid);
+
+    if (error) {
+      console.error("Impossible de récupérer les rôles utilisateur", error);
+      setRoles([]);
+      return;
+    }
+
     setRoles((data?.map((r) => r.role) as Role[]) || []);
   };
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
+    let mounted = true;
+
+    const applySession = async (sess: Session | null) => {
+      if (!mounted) return;
+      setLoading(true);
       setSession(sess);
       setUser(sess?.user ?? null);
+
       if (sess?.user) {
-        setTimeout(() => fetchRoles(sess.user.id), 0);
+        await fetchRoles(sess.user.id);
       } else {
         setRoles([]);
       }
+
+      if (mounted) setLoading(false);
+    };
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
+      void applySession(sess);
     });
 
     supabase.auth.getSession().then(({ data: { session: sess } }) => {
-      setSession(sess);
-      setUser(sess?.user ?? null);
-      if (sess?.user) fetchRoles(sess.user.id);
-      setLoading(false);
+      void applySession(sess);
     });
 
-    return () => sub.subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
