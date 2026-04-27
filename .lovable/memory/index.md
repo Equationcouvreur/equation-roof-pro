@@ -1,10 +1,12 @@
 # Project Memory
 
 ## Core
-EQUATION - BTP roofing company site. Bordeaux #96162B, Grey #4A4A4A, Noir #0A0A0A.
-Montserrat headings, Inter body, Caveat signature. French language only.
-8 pages: Home, Expertises, Réalisations, Terrasses IPE, Blog, À Propos, Contact, Mentions Légales.
-Real logos in src/assets/: logo-equation-main.png, logo-e-rouge.png, certifications.png, signature-efficacite.png, banner-equation-01/02.png.
+EQUATION - BTP roofing company site. Navy #1B3A5C, Gold #E8A624, Green #2C8C6F.
+Playfair Display headings, Montserrat subtitles, Inter body. French language only.
+Lovable Cloud activated. Admin at /admin (login at /admin/login).
+First signup auto-promoted to admin. Roles: admin, editor, user.
+DB tables: blog_articles, realisations, realisation_photos, profiles, user_roles. Storage bucket: media.
 
 ## Memories
-- [Brand colors](mem://design/colors) — Bordeaux/grey/noir palette with all tokens
+- [Brand colors](mem://design/colors) — Full palette with navy, gold, green, warm bg tokens
+- [Admin CMS](mem://features/admin) — Auth, roles, blog & realisations CRUD with photo gallery
