@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -19,6 +20,15 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/admin/Login";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import ArticlesList from "./pages/admin/ArticlesList";
+import ArticleEditor from "./pages/admin/ArticleEditor";
+import RealisationsList from "./pages/admin/RealisationsList";
+import RealisationEditor from "./pages/admin/RealisationEditor";
+import Users from "./pages/admin/Users";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -39,36 +49,67 @@ const ScrollToTop = () => {
   return null;
 };
 
+const PublicLayout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <Navbar />
+    <main>{children}</main>
+    <Footer />
+    <WhatsAppButton />
+    <BackToTop />
+  </>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <Navbar />
-        <main>
+        <AuthProvider>
+          <ScrollToTop />
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/entreprise" element={<Entreprise />} />
-            <Route path="/coeur-de-metier" element={<CoeurMetier />} />
-            <Route path="/solutions-innovantes" element={<SolutionsInnovantes />} />
-            <Route path="/realisations" element={<Realisations />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogArticle />} />
-            <Route path="/avis-clients" element={<AvisClients />} />
-            <Route path="/a-propos" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/mentions-legales" element={<MentionsLegales />} />
-            {/* Legacy redirects */}
+            {/* Admin routes (no public navbar/footer) */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="articles" element={<ArticlesList />} />
+              <Route path="articles/:id" element={<ArticleEditor />} />
+              <Route path="realisations" element={<RealisationsList />} />
+              <Route path="realisations/:id" element={<RealisationEditor />} />
+              <Route
+                path="users"
+                element={
+                  <ProtectedRoute requireAdmin>
+                    <Users />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+
+            {/* Public routes */}
+            <Route path="/" element={<PublicLayout><Index /></PublicLayout>} />
+            <Route path="/entreprise" element={<PublicLayout><Entreprise /></PublicLayout>} />
+            <Route path="/coeur-de-metier" element={<PublicLayout><CoeurMetier /></PublicLayout>} />
+            <Route path="/solutions-innovantes" element={<PublicLayout><SolutionsInnovantes /></PublicLayout>} />
+            <Route path="/realisations" element={<PublicLayout><Realisations /></PublicLayout>} />
+            <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
+            <Route path="/blog/:slug" element={<PublicLayout><BlogArticle /></PublicLayout>} />
+            <Route path="/avis-clients" element={<PublicLayout><AvisClients /></PublicLayout>} />
+            <Route path="/a-propos" element={<PublicLayout><About /></PublicLayout>} />
+            <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+            <Route path="/mentions-legales" element={<PublicLayout><MentionsLegales /></PublicLayout>} />
             <Route path="/expertises" element={<Navigate to="/coeur-de-metier" replace />} />
             <Route path="/terrasses-ipe" element={<Navigate to="/coeur-de-metier#dalles" replace />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
           </Routes>
-        </main>
-        <Footer />
-        <WhatsAppButton />
-        <BackToTop />
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
