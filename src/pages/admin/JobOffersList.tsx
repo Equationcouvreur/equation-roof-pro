@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
+import { ArrowDown, ArrowUp, Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 type JobOffer = {
@@ -61,6 +61,28 @@ const JobOffersList = () => {
     load();
   };
 
+  const moveOffer = async (index: number, direction: -1 | 1) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= offers.length) return;
+    const previous = offers;
+    const reordered = [...offers];
+    const [moved] = reordered.splice(index, 1);
+    reordered.splice(targetIndex, 0, moved);
+    const normalized = reordered.map((offer, order) => ({ ...offer, display_order: order }));
+    setOffers(normalized);
+
+    const results = await Promise.all(
+      normalized.map((offer) => supabase.from("job_offers").update({ display_order: offer.display_order }).eq("id", offer.id)),
+    );
+    const error = results.find((result) => result.error)?.error;
+    if (error) {
+      setOffers(previous);
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Ordre mis à jour");
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -90,7 +112,7 @@ const JobOffersList = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {offers.map((o) => (
+              {offers.map((o, index) => (
                 <tr key={o.id} className="text-sm font-body">
                   <td className="px-4 py-3 font-medium text-foreground">{o.title}</td>
                   <td className="px-4 py-3 text-muted-foreground">{o.contract_type}</td>
@@ -106,6 +128,12 @@ const JobOffersList = () => {
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="inline-flex gap-2">
+                      <Button size="sm" variant="ghost" onClick={() => moveOffer(index, -1)} disabled={index === 0} title="Monter">
+                        <ArrowUp className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => moveOffer(index, 1)} disabled={index === offers.length - 1} title="Descendre">
+                        <ArrowDown className="w-4 h-4" />
+                      </Button>
                       <Link to={`/admin/recrutement/${o.id}`}>
                         <Button size="sm" variant="ghost"><Pencil className="w-4 h-4" /></Button>
                       </Link>
