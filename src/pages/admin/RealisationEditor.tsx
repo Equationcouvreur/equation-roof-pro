@@ -46,9 +46,18 @@ const SortablePhoto = ({ photo, onSetFavorite, onUpdateCaption, onDelete }: { ph
     <div ref={setNodeRef} style={style} className="bg-card border rounded-lg overflow-hidden group">
       <div className="relative h-40 bg-muted">
         <img src={photo.url} alt={photo.caption || ""} className="w-full h-full object-cover" />
-        <button {...attributes} {...listeners} className="absolute top-2 left-2 bg-background/90 rounded p-1 cursor-grab active:cursor-grabbing" title="Réordonner">
-          <GripVertical className="w-4 h-4" />
-        </button>
+        <div
+          {...attributes}
+          {...listeners}
+          role="button"
+          tabIndex={0}
+          aria-label="Réordonner"
+          title="Glisser pour réordonner"
+          style={{ touchAction: "none" }}
+          className="absolute top-2 left-2 bg-background/90 rounded p-1 cursor-grab active:cursor-grabbing select-none"
+        >
+          <GripVertical className="w-4 h-4 pointer-events-none" />
+        </div>
         <button
           onClick={() => onSetFavorite(photo.id)}
           className={`absolute top-2 right-2 rounded-full p-1.5 transition-all ${photo.is_favorite ? "bg-amber-500 text-white" : "bg-background/90 text-muted-foreground hover:text-amber-500"}`}
