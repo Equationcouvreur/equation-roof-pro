@@ -30,6 +30,8 @@ import RealisationsList from "./pages/admin/RealisationsList";
 import RealisationEditor from "./pages/admin/RealisationEditor";
 import SectionsList from "./pages/admin/SectionsList";
 import SectionEditor from "./pages/admin/SectionEditor";
+import JobOffersList from "./pages/admin/JobOffersList";
+import JobOfferEditor from "./pages/admin/JobOfferEditor";
 import Users from "./pages/admin/Users";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import { useEffect } from "react";
@@ -88,6 +90,8 @@ const App = () => (
               <Route path="articles/:id" element={<ArticleEditor />} />
               <Route path="realisations" element={<RealisationsList />} />
               <Route path="realisations/:id" element={<RealisationEditor />} />
+              <Route path="recrutement" element={<JobOffersList />} />
+              <Route path="recrutement/:id" element={<JobOfferEditor />} />
               <Route
                 path="users"
                 element={

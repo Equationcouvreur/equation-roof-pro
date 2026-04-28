@@ -65,6 +65,42 @@ export type Database = {
         }
         Relationships: []
       }
+      job_offers: {
+        Row: {
+          contract_type: string
+          created_at: string
+          description: string
+          display_order: number
+          id: string
+          is_published: boolean
+          location: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          contract_type?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          location?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          contract_type?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          location?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

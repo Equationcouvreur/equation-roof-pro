@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Briefcase, HeartHandshake, GraduationCap, Wrench, Mail, Phone, Send } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
+import { supabase } from "@/integrations/supabase/client";
 
-const postes = [
-  { titre: "Étancheur·se confirmé·e", type: "CDI", lieu: "Cournon-d'Auvergne (63)", desc: "Pose d'étanchéité bitumineuse, résine, isolation. Expérience 3+ ans." },
-  { titre: "Étancheur·se débutant·e / Apprenti·e", type: "CDI / Alternance", lieu: "Cournon-d'Auvergne (63)", desc: "Formation assurée en interne. Motivation et rigueur exigées." },
-  { titre: "Chef·fe d'équipe étanchéité", type: "CDI", lieu: "Puy-de-Dôme", desc: "Encadrement chantier, lecture de plans, autonomie complète." },
-  { titre: "Candidature spontanée", type: "Toutes fonctions", lieu: "Auvergne", desc: "Vous ne trouvez pas votre poste ? Envoyez-nous votre CV." },
-];
+type JobOffer = {
+  id: string;
+  title: string;
+  contract_type: string;
+  location: string;
+  description: string;
+};
 
 const avantages = [
   { icon: HeartHandshake, titre: "Une équipe humaine", desc: "Une PME familiale fondée en 2001, où chacun compte." },
@@ -20,6 +22,16 @@ const avantages = [
 
 const Recrutement = () => {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", poste: "", message: "" });
+  const [postes, setPostes] = useState<JobOffer[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("job_offers")
+      .select("id,title,contract_type,location,description")
+      .eq("is_published", true)
+      .order("display_order", { ascending: true })
+      .then(({ data }) => setPostes(data || []));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,16 +93,16 @@ const Recrutement = () => {
         </ScrollReveal>
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {postes.map((p, i) => (
-            <ScrollReveal key={p.titre} delay={i * 80}>
+            <ScrollReveal key={p.id} delay={i * 80}>
               <div className="bg-card border border-border rounded-xl p-6 hover:border-primary transition-colors">
                 <div className="flex items-start justify-between gap-4 mb-3">
-                  <h3 className="font-heading text-xl text-foreground">{p.titre}</h3>
+                  <h3 className="font-heading text-xl text-foreground">{p.title}</h3>
                   <span className="text-xs font-subtitle font-semibold uppercase bg-primary/10 text-primary px-3 py-1 rounded-full whitespace-nowrap">
-                    {p.type}
+                    {p.contract_type}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground font-body mb-2">📍 {p.lieu}</p>
-                <p className="text-sm font-body text-foreground/80">{p.desc}</p>
+                <p className="text-sm text-muted-foreground font-body mb-2">📍 {p.location}</p>
+                <p className="text-sm font-body text-foreground/80">{p.description}</p>
               </div>
             </ScrollReveal>
           ))}
@@ -130,7 +142,7 @@ const Recrutement = () => {
               <select value={form.poste} onChange={(e) => setForm({ ...form, poste: e.target.value })}
                 className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-background text-foreground focus:ring-2 focus:ring-primary outline-none">
                 <option value="">— Choisissez —</option>
-                {postes.map((p) => <option key={p.titre} value={p.titre}>{p.titre}</option>)}
+                {postes.map((p) => <option key={p.id} value={p.title}>{p.title}</option>)}
               </select>
             </div>
             <div>
