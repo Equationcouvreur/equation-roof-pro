@@ -229,11 +229,25 @@ const SectionEditor = () => {
     if (!over || active.id === over.id) return;
     const oldIdx = photos.findIndex((p) => p.id === active.id);
     const newIdx = photos.findIndex((p) => p.id === over.id);
+    if (oldIdx < 0 || newIdx < 0) return;
     const reordered = arrayMove(photos, oldIdx, newIdx);
     setPhotos(reordered);
     await Promise.all(
       reordered.map((p, i) => supabase.from("section_photos").update({ display_order: i }).eq("id", p.id)),
     );
+  };
+
+  const movePhoto = async (photoId: string, direction: -1 | 1) => {
+    const oldIdx = photos.findIndex((p) => p.id === photoId);
+    const newIdx = oldIdx + direction;
+    if (oldIdx < 0 || newIdx < 0 || newIdx >= photos.length) return;
+    const reordered = arrayMove(photos, oldIdx, newIdx);
+    setPhotos(reordered);
+    const results = await Promise.all(
+      reordered.map((p, i) => supabase.from("section_photos").update({ display_order: i }).eq("id", p.id)),
+    );
+    const error = results.find((result) => result.error)?.error;
+    if (error) toast.error(error.message);
   };
 
   const save = async () => {
@@ -379,14 +393,17 @@ const SectionEditor = () => {
               <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={photos.map((p) => p.id)} strategy={rectSortingStrategy}>
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    {photos.map((p) => (
+                    {photos.map((p, index) => (
                       <SortablePhoto
                         key={p.id}
                         photo={p}
+                        canMoveUp={index > 0}
+                        canMoveDown={index < photos.length - 1}
                         onSetFavorite={setFavorite}
                         onUpdateCaption={updateCaption}
                         onDelete={deletePhoto}
                         onBlurCaption={saveCaption}
+                        onMove={movePhoto}
                       />
                     ))}
                   </div>
