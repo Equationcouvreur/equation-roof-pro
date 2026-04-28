@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadImage } from "@/lib/uploadImage";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Send, Star, Trash2, Upload, GripVertical } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowUp, Save, Send, Star, Trash2, Upload, GripVertical } from "lucide-react";
 import { z } from "zod";
 import {
   DndContext,
@@ -38,14 +38,30 @@ interface Photo {
   display_order: number;
 }
 
-const SortablePhoto = ({ photo, onSetFavorite, onUpdateCaption, onDelete }: { photo: Photo; onSetFavorite: (id: string) => void; onUpdateCaption: (id: string, c: string) => void; onDelete: (id: string) => void; }) => {
+const SortablePhoto = ({
+  photo,
+  canMoveDown,
+  canMoveUp,
+  onSetFavorite,
+  onUpdateCaption,
+  onDelete,
+  onMove,
+}: {
+  photo: Photo;
+  canMoveDown: boolean;
+  canMoveUp: boolean;
+  onSetFavorite: (id: string) => void;
+  onUpdateCaption: (id: string, c: string) => void;
+  onDelete: (id: string) => void;
+  onMove: (id: string, direction: -1 | 1) => void;
+}) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: photo.id });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 };
 
   return (
     <div ref={setNodeRef} style={style} className="bg-card border rounded-lg overflow-hidden group">
       <div className="relative h-40 bg-muted">
-        <img src={photo.url} alt={photo.caption || ""} className="w-full h-full object-cover" />
+        <img src={photo.url} alt={photo.caption || ""} className="w-full h-full object-cover pointer-events-none" />
         <div
           {...attributes}
           {...listeners}
@@ -54,18 +70,31 @@ const SortablePhoto = ({ photo, onSetFavorite, onUpdateCaption, onDelete }: { ph
           aria-label="Réordonner"
           title="Glisser pour réordonner"
           style={{ touchAction: "none" }}
-          className="absolute top-2 left-2 bg-background/90 rounded p-1 cursor-grab active:cursor-grabbing select-none"
-        >
-          <GripVertical className="w-4 h-4 pointer-events-none" />
+          className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing select-none"
+        />
+        <div className="absolute top-2 left-2 z-10 flex items-center gap-1 pointer-events-none">
+          <span className="bg-background/90 rounded p-1 shadow-sm">
+            <GripVertical className="w-4 h-4" />
+          </span>
+        </div>
+        <div className="absolute bottom-2 left-2 z-10 flex gap-1">
+          <button type="button" disabled={!canMoveUp} onPointerDown={(e) => e.stopPropagation()} onClick={() => onMove(photo.id, -1)} className="bg-background/90 text-foreground rounded p-1.5 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed" title="Monter">
+            <ArrowUp className="w-4 h-4" />
+          </button>
+          <button type="button" disabled={!canMoveDown} onPointerDown={(e) => e.stopPropagation()} onClick={() => onMove(photo.id, 1)} className="bg-background/90 text-foreground rounded p-1.5 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed" title="Descendre">
+            <ArrowDown className="w-4 h-4" />
+          </button>
         </div>
         <button
+          type="button"
           onClick={() => onSetFavorite(photo.id)}
-          className={`absolute top-2 right-2 rounded-full p-1.5 transition-all ${photo.is_favorite ? "bg-amber-500 text-white" : "bg-background/90 text-muted-foreground hover:text-amber-500"}`}
+          onPointerDown={(e) => e.stopPropagation()}
+          className={`absolute top-2 right-2 z-10 rounded-full p-1.5 transition-all ${photo.is_favorite ? "bg-amber-500 text-white" : "bg-background/90 text-muted-foreground hover:text-amber-500"}`}
           title={photo.is_favorite ? "Photo favorite" : "Définir comme favorite"}
         >
           <Star className={`w-4 h-4 ${photo.is_favorite ? "fill-current" : ""}`} />
         </button>
-        <button onClick={() => onDelete(photo.id)} className="absolute bottom-2 right-2 bg-destructive text-destructive-foreground rounded p-1.5 opacity-0 group-hover:opacity-100 transition-opacity" title="Supprimer">
+        <button type="button" onClick={() => onDelete(photo.id)} onPointerDown={(e) => e.stopPropagation()} className="absolute bottom-2 right-2 z-10 bg-destructive text-destructive-foreground rounded p-1.5 opacity-0 group-hover:opacity-100 transition-opacity" title="Supprimer">
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
@@ -181,9 +210,21 @@ const RealisationEditor = () => {
     if (!over || active.id === over.id) return;
     const oldIdx = photos.findIndex((p) => p.id === active.id);
     const newIdx = photos.findIndex((p) => p.id === over.id);
+    if (oldIdx < 0 || newIdx < 0) return;
     const reordered = arrayMove(photos, oldIdx, newIdx);
     setPhotos(reordered);
     await Promise.all(reordered.map((p, i) => supabase.from("realisation_photos").update({ display_order: i }).eq("id", p.id)));
+  };
+
+  const movePhoto = async (photoId: string, direction: -1 | 1) => {
+    const oldIdx = photos.findIndex((p) => p.id === photoId);
+    const newIdx = oldIdx + direction;
+    if (oldIdx < 0 || newIdx < 0 || newIdx >= photos.length) return;
+    const reordered = arrayMove(photos, oldIdx, newIdx);
+    setPhotos(reordered);
+    const results = await Promise.all(reordered.map((p, i) => supabase.from("realisation_photos").update({ display_order: i }).eq("id", p.id)));
+    const error = results.find((result) => result.error)?.error;
+    if (error) toast.error(error.message);
   };
 
   const save = async (status: "draft" | "published") => {
@@ -269,9 +310,17 @@ const RealisationEditor = () => {
               <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                 <SortableContext items={photos.map((p) => p.id)} strategy={rectSortingStrategy}>
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    {photos.map((p) => (
+                    {photos.map((p, index) => (
                       <div key={p.id} onBlur={() => saveCaption(p.id, p.caption || "")}>
-                        <SortablePhoto photo={p} onSetFavorite={setFavorite} onUpdateCaption={updateCaption} onDelete={deletePhoto} />
+                        <SortablePhoto
+                          photo={p}
+                          canMoveUp={index > 0}
+                          canMoveDown={index < photos.length - 1}
+                          onSetFavorite={setFavorite}
+                          onUpdateCaption={updateCaption}
+                          onDelete={deletePhoto}
+                          onMove={movePhoto}
+                        />
                       </div>
                     ))}
                   </div>
