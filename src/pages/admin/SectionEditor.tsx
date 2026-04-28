@@ -92,13 +92,12 @@ const SortablePhoto = ({
           >
             <ArrowDown className="w-4 h-4" />
           </button>
-        >
         </div>
         <button
           type="button"
           onClick={() => onSetFavorite(photo.id)}
           onPointerDown={(e) => e.stopPropagation()}
-          className={`absolute top-2 right-2 rounded-full p-1.5 transition-all ${
+          className={`absolute top-2 right-2 z-10 rounded-full p-1.5 transition-all ${
             photo.is_favorite ? "bg-amber-500 text-white" : "bg-background/90 text-muted-foreground hover:text-amber-500"
           }`}
           title={photo.is_favorite ? "Photo favorite" : "Définir comme favorite"}
