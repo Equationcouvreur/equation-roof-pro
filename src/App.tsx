@@ -18,6 +18,7 @@ import BlogArticle from "./pages/BlogArticle";
 import AvisClients from "./pages/AvisClients";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Recrutement from "./pages/Recrutement";
 import MentionsLegales from "./pages/MentionsLegales";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/Login";
@@ -108,6 +109,7 @@ const App = () => (
             <Route path="/avis-clients" element={<PublicLayout><AvisClients /></PublicLayout>} />
             <Route path="/a-propos" element={<PublicLayout><About /></PublicLayout>} />
             <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+            <Route path="/recrutement" element={<PublicLayout><Recrutement /></PublicLayout>} />
             <Route path="/mentions-legales" element={<PublicLayout><MentionsLegales /></PublicLayout>} />
             <Route path="/expertises" element={<Navigate to="/coeur-de-metier" replace />} />
             <Route path="/terrasses-ipe" element={<Navigate to="/coeur-de-metier#dalles" replace />} />

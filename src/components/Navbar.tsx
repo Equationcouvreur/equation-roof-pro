@@ -27,6 +27,7 @@ const navLinks = [
   { label: "Blog", href: "/blog" },
   { label: "Avis Clients", href: "/avis-clients" },
   { label: "À Propos", href: "/a-propos" },
+  { label: "Recrutement", href: "/recrutement" },
   { label: "Contact", href: "/contact" },
 ];
 
