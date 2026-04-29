@@ -1,4 +1,4 @@
-import { Flame, Droplets, Thermometer, Search, Grid3X3, Leaf, CheckCircle } from "lucide-react";
+import { Flame, Droplets, Thermometer, Search, Grid3X3, Leaf, ShieldAlert, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -26,6 +26,9 @@ import vegC from "@/assets/realisations/murol-2.jpg";
 import fuiteA from "@/assets/realisations/universite-2.jpg";
 import fuiteB from "@/assets/realisations/glaciere-1.jpg";
 import fuiteC from "@/assets/realisations/cpam-4.jpg";
+import securite1 from "@/assets/expertises/securite-1.jpg";
+import securite2 from "@/assets/expertises/securite-2.jpg";
+import securite3 from "@/assets/expertises/securite-3.jpg";
 
 type Expertise = {
   id: string;
