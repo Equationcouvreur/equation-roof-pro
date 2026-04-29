@@ -331,6 +331,10 @@ const RealisationEditor = () => {
               </DndContext>
             )}
           </div>
+
+          <div className="bg-card border rounded-xl p-5">
+            <YouTubeUrlField value={videoUrl} onChange={setVideoUrl} />
+          </div>
         </div>
 
         <aside className="space-y-5">
