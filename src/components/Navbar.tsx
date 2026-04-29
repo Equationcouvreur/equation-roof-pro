@@ -9,6 +9,7 @@ const coeurMetier = [
   { label: "Étanchéité Résine", href: "/coeur-de-metier#resine" },
   { label: "Terrasses Dalles sur Plots", href: "/coeur-de-metier#dalles" },
   { label: "Toitures Végétalisées", href: "/coeur-de-metier#vegetalisee" },
+  { label: "Sécurité — Éclairage Zénithal — Désenfumage", href: "/coeur-de-metier#securite-desenfumage" },
   { label: "Recherche de Fuite", href: "/coeur-de-metier#fuite" },
 ];
 

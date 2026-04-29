@@ -42,6 +42,7 @@ const Footer = () => (
               { l: "Étanchéité Résine", h: "/coeur-de-metier#resine" },
               { l: "Dalles sur Plots", h: "/coeur-de-metier#dalles" },
               { l: "Toitures Végétalisées", h: "/coeur-de-metier#vegetalisee" },
+              { l: "Sécurité & Désenfumage", h: "/coeur-de-metier#securite-desenfumage" },
               { l: "Recherche de Fuite", h: "/coeur-de-metier#fuite" },
             ].map((e) => (
               <Link key={e.l} to={e.h} className="text-primary-foreground/70 hover:text-primary transition-colors">{e.l}</Link>

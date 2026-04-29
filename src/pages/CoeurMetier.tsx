@@ -1,4 +1,4 @@
-import { Flame, Droplets, Thermometer, Search, Grid3X3, Leaf, CheckCircle } from "lucide-react";
+import { Flame, Droplets, Thermometer, Search, Grid3X3, Leaf, ShieldAlert, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -26,6 +26,9 @@ import vegC from "@/assets/realisations/murol-2.jpg";
 import fuiteA from "@/assets/realisations/universite-2.jpg";
 import fuiteB from "@/assets/realisations/glaciere-1.jpg";
 import fuiteC from "@/assets/realisations/cpam-4.jpg";
+import securite1 from "@/assets/expertises/securite-1.jpg";
+import securite2 from "@/assets/expertises/securite-2.jpg";
+import securite3 from "@/assets/expertises/securite-3.jpg";
 
 type Expertise = {
   id: string;
@@ -91,6 +94,23 @@ const expertises: Expertise[] = [
     ],
     text: "La végétalisation des toitures terrasses est une solution écologique et performante qui combine isolation thermique et acoustique, gestion des eaux pluviales, amélioration de la biodiversité urbaine et valorisation esthétique du bâtiment. EQUATION réalise des toitures végétalisées extensives et semi-intensives avec complexe anti-racine certifié.",
     points: ["Complexe bicouche anti-racine certifié", "Végétalisation extensive (sedum, graminées)", "Rétention des eaux pluviales", "Amélioration du confort thermique été/hiver"],
+  },
+  {
+    id: "securite-desenfumage", icon: ShieldAlert,
+    title: "Sécurité — Éclairage Zénithal — Désenfumage",
+    images: [
+      { src: securite1, alt: "Lanterneaux d'éclairage zénithal", caption: "Lanterneaux et voûtes filantes — apport de lumière naturelle en toiture industrielle" },
+      { src: securite2, alt: "Garde-corps et ligne de vie", caption: "Garde-corps, lignes de vie et points d'ancrage conformes NF EN 795" },
+      { src: securite3, alt: "Exutoire de désenfumage DENFC", caption: "Exutoire de désenfumage DENFC — conforme NF EN 12101-2 (ERP & industriel)" },
+    ],
+    text: "La sécurité en toiture terrasse passe par des équipements conformes aux réglementations en vigueur. EQUATION assure la fourniture, la pose et la maintenance des dispositifs de sécurité, d'éclairage naturel et de désenfumage sur toitures terrasses et bâtiments industriels, commerciaux et tertiaires.\n\nNos interventions couvrent les exutoires de désenfumage (DENFC), les lanterneaux d'éclairage zénithal (polycarbonate, PMMA), ainsi que les équipements de sécurité (garde-corps, lignes de vie, points d'ancrage, crosses d'accès et échelles à crinoline) conformes aux normes NF EN 795 et NF E 85-015.",
+    points: [
+      "Exutoires de désenfumage conformes NF EN 12101-2",
+      "Lanterneaux d'éclairage zénithal (polycarbonate, PMMA)",
+      "Garde-corps, lignes de vie et points d'ancrage",
+      "Pose, raccordement et maintenance préventive",
+      "Conformité ERP et bâtiments industriels",
+    ],
   },
   {
     id: "fuite", icon: Search,
