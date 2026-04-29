@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import YouTubePlayer from "@/components/YouTubePlayer";
 
 type StaticArticle = { title: string; cat: string; date: string; content: string[] };
 
@@ -40,7 +41,7 @@ const defaultContent: StaticArticle = {
   content: ["Contenu de l'article à venir. Contactez EQUATION pour plus d'informations sur nos services d'étanchéité."],
 };
 
-type DbArticle = { title: string; cat: string; date: string; html: string };
+type DbArticle = { title: string; cat: string; date: string; html: string; videoUrl: string | null };
 
 const BlogArticlePage = () => {
   const { slug } = useParams();
@@ -52,7 +53,7 @@ const BlogArticlePage = () => {
     (async () => {
       const { data } = await supabase
         .from("blog_articles")
-        .select("title,category,content,published_at")
+        .select("title,category,content,published_at,video_url")
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
@@ -62,6 +63,7 @@ const BlogArticlePage = () => {
           cat: data.category,
           date: data.published_at ? new Date(data.published_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "",
           html: data.content || "",
+          videoUrl: (data as { video_url?: string | null }).video_url || null,
         });
       }
       setLoading(false);
@@ -87,7 +89,33 @@ const BlogArticlePage = () => {
               <span className="bg-primary text-primary-foreground text-sm font-subtitle font-semibold px-2 py-0.5 rounded">{dbArticle.cat}</span>
               <span className="text-sm text-muted-foreground font-body">{dbArticle.date}</span>
             </div>
-            <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-p:font-body prose-a:text-primary prose-img:rounded-lg" dangerouslySetInnerHTML={{ __html: dbArticle.html }} />
+            {(() => {
+              const html = dbArticle.html;
+              const idx = html.indexOf("</p>");
+              if (dbArticle.videoUrl && idx !== -1) {
+                const before = html.slice(0, idx + 4);
+                const after = html.slice(idx + 4);
+                return (
+                  <>
+                    <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-p:font-body prose-a:text-primary prose-img:rounded-lg" dangerouslySetInnerHTML={{ __html: before }} />
+                    <div className="my-8">
+                      <YouTubePlayer url={dbArticle.videoUrl} title={dbArticle.title} />
+                    </div>
+                    <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-p:font-body prose-a:text-primary prose-img:rounded-lg" dangerouslySetInnerHTML={{ __html: after }} />
+                  </>
+                );
+              }
+              return (
+                <>
+                  <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-p:font-body prose-a:text-primary prose-img:rounded-lg" dangerouslySetInnerHTML={{ __html: html }} />
+                  {dbArticle.videoUrl && (
+                    <div className="my-8">
+                      <YouTubePlayer url={dbArticle.videoUrl} title={dbArticle.title} />
+                    </div>
+                  )}
+                </>
+              );
+            })()}
 
             <div className="mt-12 bg-primary rounded-xl p-8 text-center">
               <h3 className="text-xl font-heading text-primary-foreground mb-2">Besoin d'un diagnostic ?</h3>

@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import PhotoGallery, { GalleryImage } from "@/components/PhotoGallery";
+import YouTubePlayer from "@/components/YouTubePlayer";
 import { supabase } from "@/integrations/supabase/client";
 
 // Photos générées par IA spécifiquement pour chaque réalisation EQUATION
@@ -60,6 +61,7 @@ type Realisation = {
   year?: string;
   location?: string;
   images: GalleryImage[];
+  videoUrl?: string | null;
 };
 
 const categories = [
@@ -269,7 +271,7 @@ const RealisationsPage = () => {
     (async () => {
       const { data: reals } = await supabase
         .from("realisations")
-        .select("id,title,category,description,surface,technique,year,location,display_order")
+        .select("id,title,category,description,surface,technique,year,location,display_order,video_url")
         .eq("status", "published")
         .order("display_order", { ascending: true })
         .order("created_at", { ascending: false });
@@ -296,6 +298,7 @@ const RealisationsPage = () => {
           technique: r.technique || undefined,
           year: r.year || undefined,
           location: r.location || undefined,
+          videoUrl: (r as { video_url?: string | null }).video_url || null,
           images: imgs.length ? imgs : [{ src: "/placeholder.svg", alt: r.title }],
         };
       });
@@ -397,6 +400,14 @@ const ProjectModal = ({ project, onClose }: { project: Realisation; onClose: () 
         </div>
 
         <div className="p-5">
+          {project.videoUrl && (
+            <div className="mb-6">
+              <p className="text-xs font-subtitle font-semibold uppercase tracking-wide mb-2 text-center" style={{ color: "#96162B" }}>
+                Vidéo du chantier
+              </p>
+              <YouTubePlayer url={project.videoUrl} title={project.title} />
+            </div>
+          )}
           <PhotoGallery images={project.images} mainHeightClass="h-64 md:h-[400px]" />
 
           <p className="text-foreground font-body mt-6 leading-relaxed">{project.description}</p>

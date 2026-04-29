@@ -30,6 +30,7 @@ export type Database = {
           status: string
           title: string
           updated_at: string
+          video_url: string | null
         }
         Insert: {
           author_id?: string | null
@@ -46,6 +47,7 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
+          video_url?: string | null
         }
         Update: {
           author_id?: string | null
@@ -62,6 +64,7 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -179,6 +182,7 @@ export type Database = {
           technique: string | null
           title: string
           updated_at: string
+          video_url: string | null
           year: string | null
         }
         Insert: {
@@ -193,6 +197,7 @@ export type Database = {
           technique?: string | null
           title: string
           updated_at?: string
+          video_url?: string | null
           year?: string | null
         }
         Update: {
@@ -207,6 +212,7 @@ export type Database = {
           technique?: string | null
           title?: string
           updated_at?: string
+          video_url?: string | null
           year?: string | null
         }
         Relationships: []
@@ -264,6 +270,7 @@ export type Database = {
           slug: string
           title: string
           updated_at: string
+          video_url: string | null
         }
         Insert: {
           created_at?: string
@@ -276,6 +283,7 @@ export type Database = {
           slug: string
           title: string
           updated_at?: string
+          video_url?: string | null
         }
         Update: {
           created_at?: string
@@ -288,6 +296,7 @@ export type Database = {
           slug?: string
           title?: string
           updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }

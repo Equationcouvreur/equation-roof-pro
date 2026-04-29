@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import RichEditor from "@/components/admin/RichEditor";
+import YouTubeUrlField from "@/components/admin/YouTubeUrlField";
 import { uploadImage, slugify } from "@/lib/uploadImage";
 import { toast } from "sonner";
 import { ArrowLeft, Save, Send, Image as ImageIcon, X } from "lucide-react";
@@ -34,6 +35,7 @@ const ArticleEditor = () => {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [loading, setLoading] = useState(!isNew);
@@ -55,6 +57,7 @@ const ArticleEditor = () => {
       setExcerpt(data.excerpt || "");
       setContent(data.content || "");
       setCoverUrl(data.cover_image_url || "");
+      setVideoUrl((data as { video_url?: string | null }).video_url || "");
       setMetaTitle(data.meta_title || "");
       setMetaDescription(data.meta_description || "");
       setSlugTouched(true);
@@ -92,6 +95,7 @@ const ArticleEditor = () => {
       excerpt: excerpt || null,
       content,
       cover_image_url: coverUrl || null,
+      video_url: videoUrl.trim() || null,
       meta_title: metaTitle || null,
       meta_description: metaDescription || null,
       status,
@@ -149,6 +153,8 @@ const ArticleEditor = () => {
               <RichEditor value={content} onChange={setContent} />
             </div>
           </div>
+
+          <YouTubeUrlField value={videoUrl} onChange={setVideoUrl} />
         </div>
 
         <aside className="space-y-5">
