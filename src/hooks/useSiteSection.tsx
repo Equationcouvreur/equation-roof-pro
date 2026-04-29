@@ -8,6 +8,7 @@ export interface SectionContent {
   points: string[];
   reference?: string;
   images: GalleryImage[];
+  videoUrl?: string | null;
 }
 
 export interface SectionDefaults {
@@ -19,7 +20,7 @@ export interface SectionDefaults {
 }
 
 /**
- * Loads a section's editable content (title/intro/points/reference + photos)
+ * Loads a section's editable content (title/intro/points/reference + photos + video)
  * from the database by slug. Falls back to provided static defaults so the
  * site keeps rendering even before any admin edit.
  */
@@ -30,6 +31,7 @@ export const useSiteSection = (slug: string, defaults: SectionDefaults): Section
     points: defaults.points,
     reference: defaults.ref,
     images: defaults.images,
+    videoUrl: null,
   });
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const useSiteSection = (slug: string, defaults: SectionDefaults): Section
     (async () => {
       const { data: section } = await supabase
         .from("site_sections")
-        .select("id, title, intro, points, reference_text")
+        .select("id, title, intro, points, reference_text, video_url")
         .eq("slug", slug)
         .maybeSingle();
       if (cancelled || !section) return;
@@ -63,6 +65,7 @@ export const useSiteSection = (slug: string, defaults: SectionDefaults): Section
         points: section.points && section.points.length > 0 ? section.points : defaults.points,
         reference: section.reference_text || defaults.ref,
         images: dbImages.length > 0 ? dbImages : defaults.images,
+        videoUrl: (section as { video_url?: string | null }).video_url || null,
       });
     })();
     return () => {
