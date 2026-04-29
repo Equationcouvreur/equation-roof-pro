@@ -16,7 +16,7 @@ const Footer = () => (
         {/* Col 1 */}
         <div>
           <Link to="/">
-            <img src={logoMain} alt="EQUATION Étanchéité" className="h-14 w-auto mb-4 brightness-0 invert" />
+            <img src={logoMain} alt="EQUATION Étanchéité" className="h-14 w-auto mb-4" />
           </Link>
           <div className="flex flex-col gap-3 text-sm font-body">
             <a href="https://maps.google.com/?q=74+avenue+du+Midi+63800+Cournon-d'Auvergne" target="_blank" rel="noopener" className="flex items-start gap-2 text-primary-foreground/80 hover:text-primary transition-colors">
