@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadImage } from "@/lib/uploadImage";
+import YouTubeUrlField from "@/components/admin/YouTubeUrlField";
 import { toast } from "sonner";
 import { ArrowDown, ArrowLeft, ArrowUp, Save, Star, Trash2, Upload, GripVertical, Plus, X } from "lucide-react";
 import {
@@ -139,6 +140,7 @@ const SectionEditor = () => {
   const [intro, setIntro] = useState("");
   const [points, setPoints] = useState<string[]>([]);
   const [referenceText, setReferenceText] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
 
   const sensors = useSensors(
@@ -162,6 +164,7 @@ const SectionEditor = () => {
       setIntro(s.intro || "");
       setPoints(s.points || []);
       setReferenceText(s.reference_text || "");
+      setVideoUrl((s as { video_url?: string | null }).video_url || "");
       const { data: ph } = await supabase
         .from("section_photos")
         .select("*")
@@ -265,6 +268,7 @@ const SectionEditor = () => {
         intro: intro || null,
         points: cleanPoints,
         reference_text: referenceText || null,
+        video_url: videoUrl.trim() || null,
       })
       .eq("id", id);
     setSaving(false);
@@ -300,6 +304,8 @@ const SectionEditor = () => {
               <Label>Texte de présentation</Label>
               <Textarea value={intro} onChange={(e) => setIntro(e.target.value)} rows={6} className="mt-1" />
             </div>
+
+            <YouTubeUrlField value={videoUrl} onChange={setVideoUrl} />
 
             <div>
               <div className="flex items-center justify-between mb-2">
