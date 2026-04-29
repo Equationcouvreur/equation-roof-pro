@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import PhotoGallery, { GalleryImage } from "@/components/PhotoGallery";
+import YouTubePlayer from "@/components/YouTubePlayer";
 
 // Photos IA chantier réutilisées par solution (les + pertinentes thématiquement)
 import foam1 from "@/assets/realisations/glaciere-2.jpg";
@@ -129,6 +130,11 @@ const SolutionBlock = ({ s, i }: { s: Solution; i: number }) => {
               <s.icon className="w-10 h-10 text-primary mb-4" />
               <h2 className="text-2xl md:text-3xl text-foreground">{content.title}</h2>
               <p className="text-muted-foreground mt-4 font-body leading-relaxed whitespace-pre-line">{content.intro}</p>
+              {content.videoUrl && (
+                <div className="mt-6">
+                  <YouTubePlayer url={content.videoUrl} title={content.title} />
+                </div>
+              )}
               <ul className="mt-6 space-y-2">
                 {content.points.map((p) => (
                   <li key={p} className="flex items-start gap-2 font-body text-sm text-foreground">
