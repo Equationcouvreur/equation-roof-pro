@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadImage } from "@/lib/uploadImage";
+import YouTubeUrlField from "@/components/admin/YouTubeUrlField";
 import { toast } from "sonner";
 import { ArrowDown, ArrowLeft, ArrowUp, Save, Send, Star, Trash2, Upload, GripVertical } from "lucide-react";
 import { z } from "zod";
@@ -120,6 +121,7 @@ const RealisationEditor = () => {
   const [technique, setTechnique] = useState("");
   const [year, setYear] = useState("");
   const [location, setLocation] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
@@ -138,6 +140,7 @@ const RealisationEditor = () => {
       if (!r) { navigate("/admin/realisations"); return; }
       setTitle(r.title); setCategory(r.category); setDescription(r.description || "");
       setSurface(r.surface || ""); setTechnique(r.technique || ""); setYear(r.year || ""); setLocation(r.location || "");
+      setVideoUrl((r as { video_url?: string | null }).video_url || "");
       const { data: ph } = await supabase.from("realisation_photos").select("*").eq("realisation_id", id).order("display_order");
       setPhotos(ph || []);
       setLoading(false);
@@ -231,7 +234,7 @@ const RealisationEditor = () => {
     const parsed = schema.safeParse({ title, category, description });
     if (!parsed.success) { toast.error(parsed.error.errors[0].message); return; }
     setSaving(true);
-    const payload = { title, category, description: description || null, surface: surface || null, technique: technique || null, year: year || null, location: location || null, status };
+    const payload = { title, category, description: description || null, surface: surface || null, technique: technique || null, year: year || null, location: location || null, video_url: videoUrl.trim() || null, status };
     const result = isNew
       ? await supabase.from("realisations").insert(payload).select("id").single()
       : await supabase.from("realisations").update(payload).eq("id", id!).select("id").single();
