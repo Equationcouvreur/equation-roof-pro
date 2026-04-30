@@ -68,6 +68,95 @@ export type Database = {
         }
         Relationships: []
       }
+      client_documents: {
+        Row: {
+          client_user_id: string
+          description: string | null
+          file_size_bytes: number | null
+          file_type: string
+          file_url: string
+          id: string
+          storage_path: string
+          title: string
+          uploaded_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          client_user_id: string
+          description?: string | null
+          file_size_bytes?: number | null
+          file_type: string
+          file_url: string
+          id?: string
+          storage_path: string
+          title: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          client_user_id?: string
+          description?: string | null
+          file_size_bytes?: number | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          storage_path?: string
+          title?: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_documents_client_user_id_fkey"
+            columns: ["client_user_id"]
+            isOneToOne: false
+            referencedRelation: "client_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_users: {
+        Row: {
+          auth_user_id: string | null
+          company: string | null
+          created_at: string
+          created_by: string | null
+          email: string
+          expires_at: string | null
+          full_name: string
+          id: string
+          is_active: boolean
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          auth_user_id?: string | null
+          company?: string | null
+          created_at?: string
+          created_by?: string | null
+          email: string
+          expires_at?: string | null
+          full_name: string
+          id?: string
+          is_active?: boolean
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          auth_user_id?: string | null
+          company?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string
+          expires_at?: string | null
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       job_offers: {
         Row: {
           contract_type: string
@@ -326,6 +415,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      current_client_user_id: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
