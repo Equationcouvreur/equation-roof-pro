@@ -25,8 +25,9 @@ Deno.serve(async (req) => {
     const ANON_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!;
 
     const authHeader = req.headers.get("Authorization") ?? "";
+    console.log("[admin-create-client] auth header present:", authHeader.startsWith("Bearer "));
     if (!authHeader.startsWith("Bearer ")) {
-      return new Response(JSON.stringify({ error: "Non authentifié" }), {
+      return new Response(JSON.stringify({ error: "Non authentifié - header manquant" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -37,8 +38,9 @@ Deno.serve(async (req) => {
       global: { headers: { Authorization: authHeader } },
     });
     const { data: userData, error: userErr } = await userClient.auth.getUser();
+    console.log("[admin-create-client] user check:", { userId: userData?.user?.id, err: userErr?.message });
     if (userErr || !userData.user) {
-      return new Response(JSON.stringify({ error: "Session invalide" }), {
+      return new Response(JSON.stringify({ error: `Session invalide: ${userErr?.message ?? "no user"}` }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -48,8 +50,9 @@ Deno.serve(async (req) => {
     const { data: isEditor, error: roleErr } = await admin.rpc("is_admin_or_editor", {
       _user_id: userData.user.id,
     });
+    console.log("[admin-create-client] role check:", { isEditor, err: roleErr?.message });
     if (roleErr || !isEditor) {
-      return new Response(JSON.stringify({ error: "Accès refusé" }), {
+      return new Response(JSON.stringify({ error: `Accès refusé: ${roleErr?.message ?? "pas admin/editor"}` }), {
         status: 403,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
