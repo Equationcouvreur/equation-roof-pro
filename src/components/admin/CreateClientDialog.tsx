@@ -70,7 +70,19 @@ const CreateClientDialog = ({ open, onOpenChange, onCreated }: Props) => {
       },
     });
     setSubmitting(false);
-    const errMsg = error?.message ?? (data as { error?: string })?.error;
+    let errMsg = (data as { error?: string } | null)?.error;
+    if (error) {
+      errMsg = error.message;
+      const context = (error as { context?: Response }).context;
+      if (context) {
+        try {
+          const body = (await context.clone().json()) as { error?: string };
+          errMsg = body.error ?? errMsg;
+        } catch {
+          // Keep the default error message if the response body is not JSON.
+        }
+      }
+    }
     if (errMsg) {
       toast.error(errMsg);
       return;
