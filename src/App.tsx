@@ -32,6 +32,9 @@ import SectionsList from "./pages/admin/SectionsList";
 import SectionEditor from "./pages/admin/SectionEditor";
 import JobOffersList from "./pages/admin/JobOffersList";
 import JobOfferEditor from "./pages/admin/JobOfferEditor";
+import ClientsList from "./pages/admin/ClientsList";
+import ClientDocuments from "./pages/admin/ClientDocuments";
+import EspaceClient from "./pages/EspaceClient";
 import Users from "./pages/admin/Users";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import { useEffect } from "react";
@@ -92,6 +95,8 @@ const App = () => (
               <Route path="realisations/:id" element={<RealisationEditor />} />
               <Route path="recrutement" element={<JobOffersList />} />
               <Route path="recrutement/:id" element={<JobOfferEditor />} />
+              <Route path="clients" element={<ClientsList />} />
+              <Route path="clients/:id" element={<ClientDocuments />} />
               <Route
                 path="users"
                 element={
@@ -115,6 +120,7 @@ const App = () => (
             <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
             <Route path="/recrutement" element={<PublicLayout><Recrutement /></PublicLayout>} />
             <Route path="/mentions-legales" element={<PublicLayout><MentionsLegales /></PublicLayout>} />
+            <Route path="/espace-client" element={<PublicLayout><EspaceClient /></PublicLayout>} />
             <Route path="/expertises" element={<Navigate to="/coeur-de-metier" replace />} />
             <Route path="/terrasses-ipe" element={<Navigate to="/coeur-de-metier#dalles" replace />} />
             <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />

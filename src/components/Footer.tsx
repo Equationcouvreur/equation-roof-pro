@@ -29,6 +29,9 @@ const Footer = () => (
             <a href="mailto:info@etanche.com" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary transition-colors">
               <Mail className="w-4 h-4 shrink-0" /> info@etanche.com
             </a>
+            <Link to="/espace-client" className="text-xs text-primary-foreground/60 hover:text-primary transition-colors mt-2">
+              Accès Espace Client →
+            </Link>
           </div>
         </div>
 
