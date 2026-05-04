@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { Camera, X } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import PhotoGallery, { GalleryImage } from "@/components/PhotoGallery";
 import YouTubePlayer from "@/components/YouTubePlayer";
-import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo-config";
+import { fetchPublishedRealisations, type RealisationCardData } from "@/lib/data-loaders";
 
 type Realisation = {
   id: string;
+  slug: string | null;
   title: string;
   category: string;
   description: string;
-  surface?: string;
-  technique?: string;
-  year?: string;
-  location?: string;
+  surface?: string | null;
+  technique?: string | null;
+  year?: string | null;
+  location?: string | null;
   images: GalleryImage[];
   videoUrl?: string | null;
 };
@@ -33,52 +34,27 @@ const categories = [
   "Recherche de Fuite",
 ];
 
+type LoaderData = { realisations?: RealisationCardData[] };
+
 const RealisationsPage = () => {
+  // Loader runs at SSG build-time AND on client navigation, so the initial
+  // HTML already contains the full list of cards (good for crawlers and AI bots).
+  const loaded = useLoaderData() as LoaderData | undefined;
+  const initial = loaded?.realisations ?? [];
+
   const [filter, setFilter] = useState("Tous");
   const [selected, setSelected] = useState<Realisation | null>(null);
-  const [allProjects, setAllProjects] = useState<Realisation[]>([]);
+  const [allProjects, setAllProjects] = useState<Realisation[]>(initial);
 
   useEffect(() => {
+    // Fallback: if the loader returned nothing (e.g. Supabase unreachable at
+    // build time), fetch on the client instead.
+    if (allProjects.length > 0) return;
     (async () => {
-      const { data: reals } = await supabase
-        .from("realisations")
-        .select("id,title,category,description,surface,technique,year,location,display_order,video_url")
-        .eq("status", "published")
-        .order("display_order", { ascending: true })
-        .order("created_at", { ascending: false });
-      if (!reals || reals.length === 0) {
-        setAllProjects([]);
-        return;
-      }
-
-      const ids = reals.map((r) => r.id);
-      const { data: photos } = await supabase
-        .from("realisation_photos")
-        .select("realisation_id,url,alt_text,caption,display_order,is_favorite")
-        .in("realisation_id", ids)
-        .order("is_favorite", { ascending: false })
-        .order("display_order", { ascending: true });
-
-      const dbProjects: Realisation[] = reals.map((r) => {
-        const imgs = (photos || [])
-          .filter((p) => p.realisation_id === r.id)
-          .map<GalleryImage>((p) => ({ src: p.url, alt: p.alt_text || r.title, caption: p.caption || undefined }));
-        return {
-          id: r.id,
-          title: r.title,
-          category: r.category,
-          description: r.description || "",
-          surface: r.surface || undefined,
-          technique: r.technique || undefined,
-          year: r.year || undefined,
-          location: r.location || undefined,
-          videoUrl: (r as { video_url?: string | null }).video_url || null,
-          images: imgs.length ? imgs : [{ src: "/placeholder.svg", alt: r.title }],
-        };
-      });
-      setAllProjects(dbProjects);
+      const data = await fetchPublishedRealisations();
+      setAllProjects(data);
     })();
-  }, []);
+  }, [allProjects.length]);
 
   const filtered = filter === "Tous" ? allProjects : allProjects.filter((p) => p.category === filter);
 

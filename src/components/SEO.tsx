@@ -70,13 +70,15 @@ const SEO = ({
       )}
       <link rel="canonical" href={url} />
 
+      <meta name="theme-color" content="#96162B" />
+
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content="fr_FR" />
-      <meta property="og:site_name" content="EQUATION" />
+      <meta property="og:site_name" content="EQUATION étanchéité Auvergne" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />

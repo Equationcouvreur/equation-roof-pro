@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
-import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo-config";
+import { fetchPublishedBlogArticles, type BlogArticleData } from "@/lib/data-loaders";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 import greenRoofImg from "@/assets/green-roof.jpg";
 import teamImg from "@/assets/team-construction.jpg";
@@ -29,30 +29,37 @@ const formatDate = (iso: string | null) => {
   return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 };
 
+function mergeArticles(db: BlogArticleData[]): Article[] {
+  const dbArticles: Article[] = db.map((a) => ({
+    slug: a.slug,
+    cat: a.category,
+    date: formatDate(a.publishedAt),
+    img: a.coverImageUrl || bitumenImg,
+    title: a.title,
+    excerpt: a.excerpt,
+  }));
+  const dbSlugs = new Set(dbArticles.map((a) => a.slug));
+  return [...dbArticles, ...staticArticles.filter((a) => !dbSlugs.has(a.slug))];
+}
+
+type LoaderData = { articles?: BlogArticleData[] };
+
 const BlogPage = () => {
-  const [articles, setArticles] = useState<Article[]>(staticArticles);
+  const loaded = useLoaderData() as LoaderData | undefined;
+  const initial = loaded?.articles?.length
+    ? mergeArticles(loaded.articles)
+    : staticArticles;
+
+  const [articles, setArticles] = useState<Article[]>(initial);
+  const hasDbArticles = (loaded?.articles?.length ?? 0) > 0;
 
   useEffect(() => {
+    if (hasDbArticles) return;
     (async () => {
-      const { data } = await supabase
-        .from("blog_articles")
-        .select("slug,title,category,excerpt,cover_image_url,published_at")
-        .eq("status", "published")
-        .order("published_at", { ascending: false });
-      if (data && data.length) {
-        const dbArticles: Article[] = data.map((a) => ({
-          slug: a.slug,
-          cat: a.category,
-          date: formatDate(a.published_at),
-          img: a.cover_image_url || bitumenImg,
-          title: a.title,
-          excerpt: a.excerpt || "",
-        }));
-        const dbSlugs = new Set(dbArticles.map((a) => a.slug));
-        setArticles([...dbArticles, ...staticArticles.filter((a) => !dbSlugs.has(a.slug))]);
-      }
+      const data = await fetchPublishedBlogArticles();
+      if (data.length) setArticles(mergeArticles(data));
     })();
-  }, []);
+  }, [hasDbArticles]);
 
   return (
   <>
@@ -72,7 +79,7 @@ const BlogPage = () => {
             {articles.map((a, i) => (
               <ScrollReveal key={a.slug} delay={i * 80}>
                 <Link to={`/blog/${a.slug}`} className="card-equation overflow-hidden block h-full">
-                  <img src={a.img} alt={a.title} className="w-full h-44 object-cover" loading="lazy" width={400} height={250} />
+                  <img src={a.img} alt={a.title} className="w-full h-44 object-cover" loading="lazy" decoding="async" width={400} height={250} />
                   <div className="p-5">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="bg-primary text-primary-foreground text-xs font-subtitle font-semibold px-2 py-0.5 rounded">{a.cat}</span>

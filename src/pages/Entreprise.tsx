@@ -51,7 +51,7 @@ const EntreprisePage = () => (
     <section className="container-main section-padding">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <ScrollReveal>
-          <img src={teamImg} alt="Équipe EQUATION étanchéité Cournon-d'Auvergne" className="rounded-xl w-full h-96 object-cover" loading="lazy" />
+          <img src={teamImg} alt="Équipe EQUATION étanchéité Cournon-d'Auvergne" className="rounded-xl w-full h-96 object-cover" loading="lazy" decoding="async" width={1408} height={768} />
         </ScrollReveal>
         <ScrollReveal delay={150}>
           <div>
@@ -65,7 +65,7 @@ const EntreprisePage = () => (
             <p className="text-muted-foreground font-body leading-relaxed mt-4">
               Thierry Meylan est administrateur de la <strong className="text-foreground">FFB Puy-de-Dôme</strong> depuis 8 ans, et intervient à l'Université Clermont Auvergne sur le social selling et l'image de marque.
             </p>
-            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-14 w-auto mt-6 opacity-80" />
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-14 w-auto mt-6 opacity-80" loading="lazy" decoding="async" width={312} height={159} />
           </div>
         </ScrollReveal>
       </div>
@@ -91,7 +91,7 @@ const EntreprisePage = () => (
         <ScrollReveal>
           <div className="mt-12 flex flex-col items-center">
             <p className="text-muted-foreground font-body text-sm mb-6">Nos certifications et labels — gages de fiabilité</p>
-            <img src={certificationsImg} alt="Certifications CSFE, Qualibat RGE, FFB" className="max-w-lg w-full h-auto" loading="lazy" />
+            <img src={certificationsImg} alt="Certifications CSFE, Qualibat RGE, FFB" className="max-w-lg w-full h-auto" loading="lazy" decoding="async" width={973} height={178} />
           </div>
         </ScrollReveal>
       </div>

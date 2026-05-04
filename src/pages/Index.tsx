@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { Flame, Droplets, Gem, Search, Grid3X3, Leaf, Award, Shield, PenTool, Clock, Building2, Landmark, Users, Briefcase, User, Phone, ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
-import { PAGE_SEO, LOCAL_BUSINESS_SCHEMA } from "@/lib/seo-config";
+import { PAGE_SEO } from "@/lib/seo-config";
+import { getOrganizationJsonLd } from "@/lib/jsonld";
 import { supabase } from "@/integrations/supabase/client";
 import bannerImg from "@/assets/banner-equation-01.png";
 
@@ -178,7 +179,7 @@ const HomePage = () => {
         description={PAGE_SEO.home.description}
         path="/"
         breadcrumbs={PAGE_SEO.home.breadcrumbs}
-        jsonLd={LOCAL_BUSINESS_SCHEMA}
+        jsonLd={getOrganizationJsonLd()}
       />
       {/* Hero */}
       <section className="relative bg-noir flex flex-col">
@@ -205,7 +206,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="w-full">
-          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="w-full h-auto" />
+          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="w-full h-auto" width={1920} height={181} loading="eager" {...({ fetchpriority: "high" } as Record<string, string>)} decoding="async" />
         </div>
       </section>
 
@@ -273,7 +274,7 @@ const HomePage = () => {
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>
-              <img src={teamImg} alt="Équipe EQUATION étanchéité professionnelle" className="rounded-xl w-full h-80 object-cover" loading="lazy" width={600} height={400} />
+              <img src={teamImg} alt="Équipe EQUATION étanchéité professionnelle" className="rounded-xl w-full h-80 object-cover" loading="lazy" decoding="async" width={1408} height={768} />
             </ScrollReveal>
             <div className="space-y-6">
               {reasons.map((r, i) => (
@@ -317,7 +318,7 @@ const HomePage = () => {
           <ScrollReveal>
             <h2 className="text-foreground mb-6">Certifications et Labels</h2>
             <p className="text-muted-foreground text-sm font-body mb-8">Gages de compétence et de fiabilité</p>
-            <img src={certificationsImg} alt="Certifications CSFE, Qualibat, Reconnu Grenelle Environnement" className="mx-auto max-w-lg w-full h-auto" loading="lazy" />
+            <img src={certificationsImg} alt="Certifications CSFE, Qualibat, Reconnu Grenelle Environnement" className="mx-auto max-w-lg w-full h-auto" loading="lazy" decoding="async" width={973} height={178} />
             <p className="text-muted-foreground text-sm mt-6 font-body">Membre actif de la FFB Puy-de-Dôme depuis 8 ans</p>
           </ScrollReveal>
         </div>

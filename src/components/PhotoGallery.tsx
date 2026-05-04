@@ -88,6 +88,9 @@ const PhotoGallery = ({
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
+                decoding="async"
+                width={1408}
+                height={768}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               {enableLightbox && (
@@ -116,6 +119,9 @@ const PhotoGallery = ({
           src={images[activeIdx].src}
           alt={images[activeIdx].alt}
           loading="lazy"
+          decoding="async"
+          width={1408}
+          height={768}
           className="w-full h-full object-cover animate-in fade-in duration-300"
         />
 
@@ -183,7 +189,7 @@ const PhotoGallery = ({
                 i === activeIdx ? "border-primary opacity-100" : "border-transparent opacity-60 hover:opacity-100",
               )}
             >
-              <img src={img.src} alt={img.alt} loading="lazy" className="w-full h-full object-cover" />
+              <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={80} height={80} className="w-full h-full object-cover" />
             </button>
           ))}
         </div>

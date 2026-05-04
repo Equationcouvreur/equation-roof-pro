@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /espace-client/
-
-Sitemap: https://www.etanche.com/sitemap.xml

@@ -70,7 +70,7 @@ const Navbar = () => {
       <nav className={`fixed top-8 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>
         <div className="container-main flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center">
-            <img src={logoMain} alt="EQUATION Étanchéité Toitures Terrasses" className="h-10 md:h-12 w-auto" />
+            <img src={logoMain} alt="EQUATION Étanchéité Toitures Terrasses" className="h-10 md:h-12 w-auto" width={1920} height={566} loading="eager" {...({ fetchpriority: "high" } as Record<string, string>)} decoding="async" />
           </Link>
 
           <div className="hidden xl:flex items-center gap-5">

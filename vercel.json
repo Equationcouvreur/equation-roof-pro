@@ -1,8 +1,13 @@
 {
-  "buildCommand": "echo 'Using pre-built dist'",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" },
+    { "source": "/espace-client", "destination": "/index.html" },
+    { "source": "/espace-client/:path*", "destination": "/index.html" },
+    { "source": "/realisations/:slug", "destination": "/index.html" },
+    { "source": "/blog/:slug", "destination": "/index.html" }
   ],
   "headers": [
     {

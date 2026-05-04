@@ -82,7 +82,7 @@ const AboutPage = () => (
     <section className="container-main section-padding">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <ScrollReveal>
-          <img src={teamImg} alt="Équipe EQUATION étanchéité" className="rounded-xl w-full h-80 object-cover" loading="lazy" width={600} height={400} />
+          <img src={teamImg} alt="Équipe EQUATION étanchéité" className="rounded-xl w-full h-80 object-cover" loading="lazy" decoding="async" width={1408} height={768} />
         </ScrollReveal>
         <ScrollReveal delay={150}>
           <div>
@@ -93,7 +93,7 @@ const AboutPage = () => (
             <p className="text-muted-foreground font-body leading-relaxed mt-4">
               Nos équipes d'étancheurs qualifiés interviennent avec professionnalisme sur tous types de chantiers, du logement social aux bâtiments institutionnels, en passant par les résidences privées.
             </p>
-            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto mt-6 opacity-80" />
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto mt-6 opacity-80" loading="lazy" decoding="async" width={312} height={159} />
           </div>
         </ScrollReveal>
       </div>
@@ -108,7 +108,7 @@ const AboutPage = () => (
         </ScrollReveal>
         <ScrollReveal>
           <div className="flex justify-center mb-10">
-            <img src={certificationsImg} alt="Certifications CSFE, Qualibat, Reconnu Grenelle Environnement" className="max-w-lg w-full h-auto" loading="lazy" />
+            <img src={certificationsImg} alt="Certifications CSFE, Qualibat, Reconnu Grenelle Environnement" className="max-w-lg w-full h-auto" loading="lazy" decoding="async" width={973} height={178} />
           </div>
         </ScrollReveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
