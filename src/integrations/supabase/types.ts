@@ -266,6 +266,7 @@ export type Database = {
           display_order: number
           id: string
           location: string | null
+          slug: string
           status: string
           surface: string | null
           technique: string | null
@@ -281,6 +282,7 @@ export type Database = {
           display_order?: number
           id?: string
           location?: string | null
+          slug: string
           status?: string
           surface?: string | null
           technique?: string | null
@@ -296,6 +298,7 @@ export type Database = {
           display_order?: number
           id?: string
           location?: string | null
+          slug?: string
           status?: string
           surface?: string | null
           technique?: string | null
