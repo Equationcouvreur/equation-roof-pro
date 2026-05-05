@@ -21,7 +21,7 @@ const solutionsInnovantes = [
 ];
 
 const navLinks = [
-  { label: "L'Entreprise", href: "/entreprise" },
+  { label: "Qui sommes-nous", href: "/entreprise" },
   { label: "Notre Cœur de Métier", href: "/coeur-de-metier", submenu: coeurMetier },
   { label: "Solutions Innovantes", href: "/solutions-innovantes", submenu: solutionsInnovantes },
   { label: "Réalisations", href: "/realisations" },
@@ -61,10 +61,20 @@ const Navbar = () => {
   return (
     <>
       {/* Urgency bar */}
-      <div className="bg-primary text-primary-foreground text-sm py-1.5 text-center font-subtitle font-medium fixed top-0 left-0 right-0 z-50">
-        <span className="hidden sm:inline">⚡ Urgence infiltration ? Appelez le </span>
-        <a href="tel:0473875350" className="underline font-bold">04 73 87 53 50</a>
-        <span className="hidden sm:inline"> — Intervention rapide en Auvergne</span>
+      <div className="bg-primary text-primary-foreground text-sm py-1.5 fixed top-0 left-0 right-0 z-50 font-subtitle font-medium">
+        <div className="container-main flex items-center justify-center gap-3 flex-wrap">
+          <div className="text-center">
+            <span className="hidden sm:inline">⚡ Urgence infiltration ? Appelez le </span>
+            <a href="tel:0473875350" className="underline font-bold">04 73 87 53 50</a>
+            <span className="hidden sm:inline"> — Intervention rapide en Auvergne</span>
+          </div>
+          <Link
+            to="/contact"
+            className="bg-primary-foreground text-primary text-xs font-bold px-3 py-1 rounded hover:bg-primary-foreground/90 transition-colors"
+          >
+            Je prends rendez-vous
+          </Link>
+        </div>
       </div>
 
       <nav className={`fixed top-8 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>

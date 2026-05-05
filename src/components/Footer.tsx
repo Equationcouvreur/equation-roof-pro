@@ -57,7 +57,7 @@ const Footer = () => (
         <div>
           <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">L'Entreprise</h4>
           <div className="flex flex-col gap-2 text-sm font-body">
-            <Link to="/entreprise" className="text-primary-foreground/70 hover:text-primary transition-colors">L'Entreprise</Link>
+            <Link to="/entreprise" className="text-primary-foreground/70 hover:text-primary transition-colors">Qui sommes-nous</Link>
             <Link to="/solutions-innovantes" className="text-primary-foreground/70 hover:text-primary transition-colors">Solutions Innovantes</Link>
             <Link to="/realisations" className="text-primary-foreground/70 hover:text-primary transition-colors">Réalisations</Link>
             <Link to="/blog" className="text-primary-foreground/70 hover:text-primary transition-colors">Blog</Link>
