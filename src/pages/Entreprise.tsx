@@ -1,4 +1,4 @@
-import { Award, Shield, PenTool, Clock, Building2, Landmark, Users, Briefcase, User } from "lucide-react";
+import { Award, Shield, PenTool, Clock, Building2, Landmark, Users, Briefcase, User, Leaf } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
