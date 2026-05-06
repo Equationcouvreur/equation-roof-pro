@@ -107,6 +107,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loading,
         isAdmin: roles.includes("admin"),
         isEditor: roles.includes("admin") || roles.includes("editor"),
+        can: (section) => {
+          if (roles.includes("admin") || roles.includes("editor")) return true;
+          switch (section) {
+            case "blog": return roles.includes("blog_editor");
+            case "realisations": return roles.includes("realisations_editor");
+            case "sections": return roles.includes("sections_editor");
+            case "recrutement": return roles.includes("recrutement_editor");
+            case "clients": return roles.includes("commercial");
+            default: return false;
+          }
+        },
         signIn,
         signUp,
         signOut,
