@@ -4,19 +4,22 @@ import { LayoutDashboard, FileText, Hammer, Users, LogOut, ExternalLink, LayoutT
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const links = [
+type Section = "blog" | "realisations" | "sections" | "recrutement" | "clients";
+
+const links: Array<{ to: string; icon: typeof LayoutDashboard; label: string; end?: boolean; section?: Section }> = [
   { to: "/admin", icon: LayoutDashboard, label: "Tableau de bord", end: true },
-  { to: "/admin/sections", icon: LayoutTemplate, label: "Sections du site" },
-  { to: "/admin/articles", icon: FileText, label: "Articles" },
-  { to: "/admin/realisations", icon: Hammer, label: "Réalisations" },
-  { to: "/admin/recrutement", icon: Briefcase, label: "Recrutement" },
-  { to: "/admin/clients", icon: FolderLock, label: "Espace Clients" },
+  { to: "/admin/sections", icon: LayoutTemplate, label: "Sections du site", section: "sections" },
+  { to: "/admin/articles", icon: FileText, label: "Articles", section: "blog" },
+  { to: "/admin/realisations", icon: Hammer, label: "Réalisations", section: "realisations" },
+  { to: "/admin/recrutement", icon: Briefcase, label: "Recrutement", section: "recrutement" },
+  { to: "/admin/clients", icon: FolderLock, label: "Espace Clients", section: "clients" },
   { to: "/admin/securite", icon: ShieldCheck, label: "Sécurité" },
 ];
 
 const AdminLayout = () => {
-  const { signOut, user, isAdmin } = useAuth();
+  const { signOut, user, isAdmin, can } = useAuth();
   const navigate = useNavigate();
+  const visibleLinks = links.filter((l) => !l.section || can(l.section));
 
   const handleSignOut = async () => {
     await signOut();
@@ -33,7 +36,7 @@ const AdminLayout = () => {
         </div>
 
         <nav className="flex-1 p-3 space-y-1">
-          {links.map((l) => (
+          {visibleLinks.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}

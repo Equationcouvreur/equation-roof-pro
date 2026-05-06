@@ -2,7 +2,15 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-type Role = "admin" | "editor" | "user";
+type Role =
+  | "admin"
+  | "editor"
+  | "blog_editor"
+  | "realisations_editor"
+  | "sections_editor"
+  | "recrutement_editor"
+  | "commercial"
+  | "user";
 
 interface AuthContextValue {
   user: User | null;
@@ -11,6 +19,7 @@ interface AuthContextValue {
   loading: boolean;
   isAdmin: boolean;
   isEditor: boolean;
+  can: (section: "blog" | "realisations" | "sections" | "recrutement" | "clients") => boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
@@ -98,6 +107,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loading,
         isAdmin: roles.includes("admin"),
         isEditor: roles.includes("admin") || roles.includes("editor"),
+        can: (section) => {
+          if (roles.includes("admin") || roles.includes("editor")) return true;
+          switch (section) {
+            case "blog": return roles.includes("blog_editor");
+            case "realisations": return roles.includes("realisations_editor");
+            case "sections": return roles.includes("sections_editor");
+            case "recrutement": return roles.includes("recrutement_editor");
+            case "clients": return roles.includes("commercial");
+            default: return false;
+          }
+        },
         signIn,
         signUp,
         signOut,
