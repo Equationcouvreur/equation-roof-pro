@@ -81,6 +81,14 @@ export const routes: RouteRecord[] = [
             path: "espace-client",
             lazy: lazyDefault(() => import("./pages/EspaceClient")),
           },
+          {
+            path: "espace-client/reset-password",
+            lazy: lazyDefault(() => import("./pages/EspaceClientReset")),
+          },
+          {
+            path: "espace-client/update-password",
+            lazy: lazyDefault(() => import("./pages/EspaceClientUpdatePassword")),
+          },
           { path: "expertises", element: <Navigate to="/coeur-de-metier" replace /> },
           { path: "terrasses-ipe", element: <Navigate to="/coeur-de-metier#dalles" replace /> },
           {

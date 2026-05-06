@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -172,6 +172,11 @@ const EspaceClient = () => {
               {submitting ? "..." : "Se connecter"}
             </Button>
           </form>
+          <div className="text-center mt-4">
+            <Link to="/espace-client/reset-password" className="text-sm text-primary hover:underline">
+              Mot de passe oublié ?
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground text-center mt-6">
             Besoin d'un accès ? Contactez EQUATION au 04 73 87 53 50
           </p>
