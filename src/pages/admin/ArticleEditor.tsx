@@ -86,6 +86,17 @@ const ArticleEditor = () => {
       toast.error(parsed.error.errors[0].message);
       return;
     }
+    if (status === "published") {
+      const plain = content.replace(/<[^>]*>/g, "").trim();
+      if (plain.length < 50) {
+        toast.error("Le contenu est obligatoire pour publier (50 caractères minimum)");
+        return;
+      }
+      if (!coverUrl) {
+        toast.error("Une image de couverture est obligatoire pour publier");
+        return;
+      }
+    }
     setSaving(true);
 
     const payload = {
