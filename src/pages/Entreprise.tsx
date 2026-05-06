@@ -118,6 +118,30 @@ const EntreprisePage = () => (
       </div>
     </section>
 
+    {/* Nos Valeurs */}
+    <section className="bg-warm section-padding">
+      <div className="container-main">
+        <ScrollReveal>
+          <h2 className="text-foreground text-center mb-12">Nos Valeurs</h2>
+        </ScrollReveal>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { icon: Award, title: "Excellence Technique", desc: "Chaque chantier est une signature. Nous appliquons les règles de l'art avec rigueur et exigence." },
+            { icon: Leaf, title: "Engagement Environnemental", desc: "Toitures végétalisées, isolation performante, matériaux durables : nous construisons pour demain." },
+            { icon: User, title: "Proximité Client", desc: "Du diagnostic au suivi post-travaux, un interlocuteur unique vous accompagne à chaque étape." },
+          ].map((v, i) => (
+            <ScrollReveal key={v.title} delay={i * 100}>
+              <div className="text-center">
+                <v.icon className="w-12 h-12 text-primary mx-auto mb-4" />
+                <h3 className="text-foreground font-heading">{v.title}</h3>
+                <p className="text-muted-foreground font-body text-sm mt-3">{v.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+
     {/* Clients */}
     <section className="bg-noir section-padding">
       <div className="container-main">
