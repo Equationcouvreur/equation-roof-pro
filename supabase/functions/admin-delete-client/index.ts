@@ -47,14 +47,29 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Get client row to find auth_user_id and storage folder
+    // Get client row to find auth_user_id
     const { data: client } = await admin
       .from("client_users")
       .select("auth_user_id")
       .eq("id", client_user_id)
       .maybeSingle();
 
-    // Delete storage folder
+    // Step 1: try to purge auth.users FIRST (so email can be reused)
+    if (client?.auth_user_id) {
+      const { error: authErr } = await admin.auth.admin.deleteUser(client.auth_user_id);
+      // Ignore "user not found" — already gone is fine
+      if (authErr && !/not.?found|does not exist/i.test(authErr.message)) {
+        return new Response(
+          JSON.stringify({ error: `Suppression auth échouée : ${authErr.message}` }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+      // Cleanup user_roles + profiles (no FK cascade on auth.users in this project)
+      await admin.from("user_roles").delete().eq("user_id", client.auth_user_id);
+      await admin.from("profiles").delete().eq("id", client.auth_user_id);
+    }
+
+    // Step 2: storage cleanup (best-effort) — folder named after client_user_id
     const { data: files } = await admin.storage.from("client-documents").list(client_user_id);
     if (files && files.length > 0) {
       await admin.storage
@@ -62,12 +77,13 @@ Deno.serve(async (req) => {
         .remove(files.map((f) => `${client_user_id}/${f.name}`));
     }
 
-    // Delete client_users row (cascades documents)
-    await admin.from("client_users").delete().eq("id", client_user_id);
-
-    // Delete auth user
-    if (client?.auth_user_id) {
-      await admin.auth.admin.deleteUser(client.auth_user_id);
+    // Step 3: delete client_users row (cascades documents)
+    const { error: delErr } = await admin.from("client_users").delete().eq("id", client_user_id);
+    if (delErr) {
+      return new Response(JSON.stringify({ error: delErr.message }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     return new Response(JSON.stringify({ ok: true }), {
