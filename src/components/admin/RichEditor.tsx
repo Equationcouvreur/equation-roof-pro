@@ -2,9 +2,10 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
-import { Bold, Italic, List, ListOrdered, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Quote, Undo, Redo } from "lucide-react";
+import { Bold, Italic, List, ListOrdered, Heading2, Heading3, Link as LinkIcon, Image as ImageIcon, Quote, Undo, Redo, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from "react";
 import { uploadImage } from "@/lib/uploadImage";
 import { toast } from "sonner";
 
