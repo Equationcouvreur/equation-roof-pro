@@ -113,8 +113,37 @@ const RichEditor = ({ value, onChange }: Props) => {
         <Btn onClick={() => editor.chain().focus().redo().run()} title="Rétablir">
           <Redo className="w-4 h-4" />
         </Btn>
+        <div className="flex-1" />
+        <Btn
+          onClick={() => {
+            if (!htmlMode) {
+              setRawHtml(editor.getHTML());
+              setHtmlMode(true);
+            } else {
+              editor.commands.setContent(rawHtml);
+              onChange(rawHtml);
+              setHtmlMode(false);
+            }
+          }}
+          active={htmlMode}
+          title="Mode HTML brut"
+        >
+          <Code className="w-4 h-4" />
+        </Btn>
       </div>
-      <EditorContent editor={editor} />
+      {htmlMode ? (
+        <Textarea
+          value={rawHtml}
+          onChange={(e) => {
+            setRawHtml(e.target.value);
+            onChange(e.target.value);
+          }}
+          className="w-full min-h-[600px] p-4 font-mono text-xs border-0 rounded-none focus-visible:ring-0"
+          placeholder="<p>Collez votre HTML ici...</p>"
+        />
+      ) : (
+        <EditorContent editor={editor} />
+      )}
     </div>
   );
 };
