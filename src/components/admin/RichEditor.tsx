@@ -15,6 +15,9 @@ interface Props {
 }
 
 const RichEditor = ({ value, onChange }: Props) => {
+  const [htmlMode, setHtmlMode] = useState(false);
+  const [rawHtml, setRawHtml] = useState(value);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -25,7 +28,7 @@ const RichEditor = ({ value, onChange }: Props) => {
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
-        class: "prose prose-sm md:prose-base max-w-none focus:outline-none min-h-[300px] px-4 py-3",
+        class: "prose prose-base max-w-none focus:outline-none min-h-[300px] px-4 py-3 prose-h2:mt-8 prose-h2:mb-4 prose-h3:mt-6 prose-h3:mb-3 prose-p:my-4",
       },
     },
   });
