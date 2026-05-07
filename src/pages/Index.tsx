@@ -10,6 +10,7 @@ import bannerImg from "@/assets/banner-equation-01.png";
 const teamImg = "/realisations/cpam-1.jpg";
 
 import certificationsImg from "@/assets/certifications.png";
+import HomeCarousel from "@/components/HomeCarousel";
 import { useEffect, useRef, useState } from "react";
 
 // Counter: initialise à la valeur finale pour que le SSR rende la vraie
@@ -216,6 +217,8 @@ const HomePage = () => {
           <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="w-full h-auto" width={1920} height={181} loading="eager" {...({ fetchpriority: "high" } as Record<string, string>)} decoding="async" />
         </div>
       </section>
+
+      <HomeCarousel />
 
       {/* Bandeau note Google */}
       <section className="bg-warm border-b border-border">
