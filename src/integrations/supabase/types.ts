@@ -413,6 +413,27 @@ export type Database = {
         }
         Relationships: []
       }
+      vercel_deploy_log: {
+        Row: {
+          id: string
+          source_action: string
+          source_table: string
+          triggered_at: string
+        }
+        Insert: {
+          id?: string
+          source_action: string
+          source_table: string
+          triggered_at?: string
+        }
+        Update: {
+          id?: string
+          source_action?: string
+          source_table?: string
+          triggered_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -434,6 +455,10 @@ export type Database = {
       is_role_or_admin: {
         Args: { _role: string; _user_id: string }
         Returns: boolean
+      }
+      trigger_vercel_rebuild: {
+        Args: { source_action: string; source_table: string }
+        Returns: undefined
       }
     }
     Enums: {
