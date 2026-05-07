@@ -12,30 +12,34 @@ const teamImg = "/realisations/cpam-1.jpg";
 import certificationsImg from "@/assets/certifications.png";
 import { useEffect, useRef, useState } from "react";
 
+// Counter: initialise à la valeur finale pour que le SSR rende la vraie
+// valeur dans le HTML (SEO + no-JS). useEffect ne s'exécute pas en SSR,
+// donc côté client on remet à 0 puis on anime jusqu'à la cible.
 const Counter = ({ target, suffix = "", label }: { target: number; suffix?: string; label: string }) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(target);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    setCount(0);
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !started.current) {
         started.current = true;
-        const duration = 1500;
-        const steps = 40;
-        const increment = target / steps;
-        let current = 0;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            setCount(target);
-            clearInterval(timer);
+        const duration = 2000;
+        const startTime = performance.now();
+        const animate = (now: number) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 2);
+          setCount(Math.floor(target * eased));
+          if (progress < 1) {
+            requestAnimationFrame(animate);
           } else {
-            setCount(Math.floor(current));
+            setCount(target);
           }
-        }, duration / steps);
+        };
+        requestAnimationFrame(animate);
       }
     }, { threshold: 0.3 });
     observer.observe(el);
@@ -45,7 +49,7 @@ const Counter = ({ target, suffix = "", label }: { target: number; suffix?: stri
   return (
     <div ref={ref} className="text-center">
       <div className="text-4xl md:text-5xl font-heading font-bold text-primary">
-        {count.toLocaleString()}{suffix}
+        {count.toLocaleString("fr-FR")}{suffix}
       </div>
       <p className="text-primary-foreground/70 mt-2 font-body text-sm">{label}</p>
     </div>
@@ -238,8 +242,8 @@ const HomePage = () => {
       <section className="bg-noir section-padding">
         <div className="container-main grid grid-cols-2 md:grid-cols-4 gap-8">
           <Counter target={25} suffix="+" label="Années d'expérience" />
-          <Counter target={2000} suffix="+" label="Chantiers réalisés" />
-          <Counter target={50000} suffix="+" label="m² traités par an" />
+          <Counter target={3000} suffix="+" label="Chantiers réalisés" />
+          <Counter target={20000} suffix="+" label="m² traités par an" />
           <Counter target={100} suffix="%" label="Garantie décennale" />
         </div>
       </section>
