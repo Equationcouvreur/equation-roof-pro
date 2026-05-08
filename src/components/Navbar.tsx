@@ -61,18 +61,19 @@ const Navbar = () => {
   return (
     <>
       {/* Urgency bar */}
-      <div className="bg-primary text-primary-foreground text-sm py-1.5 fixed top-0 left-0 right-0 z-50 font-subtitle font-medium">
-        <div className="container-main flex items-center justify-center gap-3 flex-wrap">
+      <div className="bg-primary text-primary-foreground text-xs sm:text-sm py-1.5 fixed top-0 left-0 right-0 z-50 font-subtitle font-medium overflow-hidden max-w-[100vw]">
+        <div className="container-main px-3 sm:px-6 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
           <div className="text-center">
             <span className="hidden sm:inline">⚡ Urgence infiltration ? Appelez le </span>
-            <a href="tel:0473875350" className="underline font-bold">04 73 87 53 50</a>
-            <span className="hidden sm:inline"> — Intervention rapide en Auvergne</span>
+            <a href="tel:0473875350" className="underline font-bold whitespace-nowrap">04 73 87 53 50</a>
+            <span className="hidden md:inline"> — Intervention rapide en Auvergne</span>
           </div>
           <Link
             to="/contact"
-            className="bg-primary-foreground text-primary text-xs font-bold px-3 py-1 rounded hover:bg-primary-foreground/90 transition-colors"
+            className="bg-primary-foreground text-primary text-[11px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded hover:bg-primary-foreground/90 transition-colors whitespace-nowrap"
           >
-            Je prends rendez-vous
+            <span className="sm:hidden">Prendre RDV</span>
+            <span className="hidden sm:inline">Je prends rendez-vous</span>
           </Link>
         </div>
       </div>

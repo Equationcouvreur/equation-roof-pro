@@ -7,8 +7,8 @@ import bannerImg from "@/assets/banner-equation-02.png";
 const Footer = () => (
   <footer className="bg-noir text-primary-foreground border-t-[3px] border-primary">
     {/* Banner */}
-    <div className="w-full">
-      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="w-full h-auto" loading="lazy" decoding="async" width={1920} height={181} />
+    <div className="w-full overflow-hidden max-w-[100vw]">
+      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="w-full object-cover object-center" style={{ height: "clamp(80px, 12vw, 140px)" }} loading="lazy" decoding="async" width={1920} height={181} />
     </div>
 
     <div className="container-main section-padding">
@@ -74,8 +74,8 @@ const Footer = () => (
             <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Mentions légales</Link>
             <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Politique de confidentialité</Link>
           </div>
-          <div className="mt-6">
-            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto opacity-70" loading="lazy" decoding="async" width={312} height={159} />
+          <div className="mt-6 flex justify-center md:justify-start">
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto max-w-[300px] md:max-w-[280px] object-contain opacity-70" loading="lazy" decoding="async" width={312} height={159} />
           </div>
         </div>
       </div>
