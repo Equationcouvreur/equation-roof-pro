@@ -7,8 +7,8 @@ import bannerImg from "@/assets/banner-equation-02.png";
 const Footer = () => (
   <footer className="bg-noir text-primary-foreground border-t-[3px] border-primary">
     {/* Banner */}
-    <div className="w-full">
-      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="w-full h-auto" loading="lazy" decoding="async" width={1920} height={181} />
+    <div className="w-full overflow-hidden max-w-[100vw]">
+      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="w-full object-cover object-center" style={{ height: "clamp(80px, 12vw, 140px)" }} loading="lazy" decoding="async" width={1920} height={181} />
     </div>
 
     <div className="container-main section-padding">
