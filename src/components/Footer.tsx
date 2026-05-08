@@ -8,7 +8,7 @@ const Footer = () => (
   <footer className="bg-noir text-primary-foreground border-t-[3px] border-primary">
     {/* Banner */}
     <div className="w-full max-w-[100vw] mx-auto overflow-hidden">
-      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="block w-full max-w-none object-cover object-center" style={{ height: "clamp(80px, 12vw, 140px)" }} loading="lazy" decoding="async" width={1920} height={181} />
+      <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses — réalisations chantiers" className="block w-full h-auto" loading="lazy" decoding="async" width={1920} height={181} />
     </div>
 
     <div className="container-main section-padding">

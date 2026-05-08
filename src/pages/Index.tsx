@@ -214,7 +214,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="w-full max-w-[100vw] mx-auto overflow-hidden">
-          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="block w-full max-w-none object-cover object-center" style={{ height: "clamp(80px, 12vw, 140px)" }} width={1920} height={181} loading="eager" {...({ fetchpriority: "high" } as Record<string, string>)} decoding="async" />
+          <img src={bannerImg} alt="EQUATION Étanchéité toitures terrasses Clermont-Ferrand — soudure bitume, toiture végétalisée, dalles IPE" className="block w-full h-auto" width={1920} height={181} loading="eager" {...({ fetchpriority: "high" } as Record<string, string>)} decoding="async" />
         </div>
       </section>
 
