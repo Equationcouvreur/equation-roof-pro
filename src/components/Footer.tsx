@@ -74,8 +74,8 @@ const Footer = () => (
             <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Mentions légales</Link>
             <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Politique de confidentialité</Link>
           </div>
-          <div className="mt-6">
-            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto opacity-70" loading="lazy" decoding="async" width={312} height={159} />
+          <div className="mt-6 flex justify-center md:justify-start">
+            <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto max-w-[300px] md:max-w-[280px] object-contain opacity-70" loading="lazy" decoding="async" width={312} height={159} />
           </div>
         </div>
       </div>
