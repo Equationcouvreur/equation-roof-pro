@@ -11,7 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Copy, Check, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 
@@ -123,5 +123,4 @@ const TempPasswordDialog = ({ target, onClose }: Props) => {
   );
 };
 
-import { DialogFooter } from "@/components/ui/dialog";
 export default TempPasswordDialog;
