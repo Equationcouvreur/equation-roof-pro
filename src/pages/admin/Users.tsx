@@ -33,9 +33,11 @@ interface UserRow {
 }
 
 const Users = () => {
+  const { isAdmin } = useAuth();
   const [users, setUsers] = useState<UserRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [tempPwTarget, setTempPwTarget] = useState<{ name: string; user_id: string } | null>(null);
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
