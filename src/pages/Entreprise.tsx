@@ -17,7 +17,7 @@ import rgeLogo from "@/assets/logos/rge-logo.png";
 // TODO: Remplacer par les vrais logos officiels fournis par Thibaut/Thierry
 const partners = [
   { src: ffbLogo, name: "Fédération Française du Bâtiment", short: "FFB", url: "https://www.ffbatiment.fr", alt: "Logo Fédération Française du Bâtiment - EQUATION membre depuis plus de 20 ans" },
-  { src: csfeLogo, name: "Chambre Syndicale Française de l'Étanchéité", short: "CSFE", url: "https://www.etancheite.com", alt: "Logo Chambre Syndicale Française de l'Étanchéité - EQUATION membre actif" },
+  { src: csfeLogo, name: "Chambre Syndicale Française de l'Étanchéité", short: "CSFE", url: "https://www.ffbatiment.fr/organisation-ffb/unions-syndicats-metier/csfe", alt: "Logo Chambre Syndicale Française de l'Étanchéité - EQUATION membre actif" },
   { src: nrcaLogo, name: "National Roofing Contractors Association", short: "NRCA", url: "https://www.nrca.net", alt: "Logo National Roofing Contractors Association - EQUATION membre international" },
   { src: qualibatLogo, name: "Qualibat - Certification Qualité Bâtiment", short: "Qualibat", url: "https://www.qualibat.com", alt: "Logo Qualibat - EQUATION certifié qualité bâtiment" },
   { src: rgeLogo, name: "Reconnu Garant de l'Environnement", short: "RGE", url: "https://www.faire.gouv.fr", alt: "Logo RGE Reconnu Garant de l'Environnement - EQUATION certifié rénovation énergétique" },
