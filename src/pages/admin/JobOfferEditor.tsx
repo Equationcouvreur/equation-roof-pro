@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Save } from "lucide-react";
 import { toast } from "sonner";
+import RichEditor from "@/components/admin/RichEditor";
 
 type JobOffer = {
   id: string;
@@ -80,7 +81,7 @@ const JobOfferEditor = () => {
 
         <div>
           <label className={label}>Description</label>
-          <textarea rows={5} className={field} value={offer.description} onChange={(e) => setOffer({ ...offer, description: e.target.value })} />
+          <RichEditor value={offer.description || ""} onChange={(html) => setOffer({ ...offer, description: html })} />
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">

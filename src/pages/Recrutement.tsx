@@ -110,7 +110,7 @@ const Recrutement = () => {
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground font-body mb-2">📍 {p.location}</p>
-                <p className="text-sm font-body text-foreground/80">{p.description}</p>
+                <div className="prose prose-sm max-w-none text-sm font-body text-foreground/80" dangerouslySetInnerHTML={{ __html: p.description || "" }} />
               </div>
             </ScrollReveal>
           ))}
