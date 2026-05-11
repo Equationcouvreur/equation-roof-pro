@@ -111,18 +111,20 @@ ${attachments.length ? `<p style="margin-top:24px;font-size:13px;color:#971C30;"
     // Accusé de réception au candidat (best-effort, n'échoue pas si erreur)
     try {
       const firstName = (app.full_name || "").trim().split(/\s+/)[0] || "";
-      const confirmHtml = `<!DOCTYPE html><html lang="fr"><body style="margin:0;padding:0;background:#f5f3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#1B3A5C;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3ee;padding:32px 16px;"><tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:600px;">
-<tr><td style="background:#1B3A5C;padding:24px;text-align:center;">
-<h1 style="margin:0;color:#E8A624;font-size:22px;">EQUATION</h1>
-<p style="margin:6px 0 0;color:#fff;font-size:13px;opacity:0.9;">Candidature bien reçue</p></td></tr>
-<tr><td style="padding:32px 28px;font-size:15px;line-height:1.6;">
-<p style="margin:0 0 16px;">Bonjour ${escapeHtml(firstName)},</p>
-<p style="margin:0 0 16px;">Nous avons bien reçu votre candidature${app.position ? ` pour le poste de <strong>${escapeHtml(app.position)}</strong>` : ""} et vous remercions de l'intérêt que vous portez à EQUATION.</p>
-<p style="margin:0 0 16px;">Notre équipe va l'étudier avec attention et reviendra vers vous sous <strong>48h ouvrées</strong>.</p>
-<p style="margin:24px 0 0;">À très bientôt,<br/>L'équipe EQUATION</p>
-<p style="margin:32px 0 0;font-size:13px;color:#999;border-top:1px solid #eee;padding-top:16px;">EQUATION — Étanchéité & Couverture<br/>04 73 87 53 50 — info@etanche.com</p>
+      const confirmHtml = `<!DOCTYPE html><html lang="fr"><body style="margin:0;padding:0;background:#f7f4f0;font-family:'Helvetica Neue',Arial,sans-serif;color:#1a1a1a;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f4f0;padding:32px 16px;"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+<tr><td style="background:#971C30;padding:28px;text-align:center;">
+<h1 style="margin:0;color:#ffffff;font-size:24px;font-family:'Georgia',serif;letter-spacing:1px;">EQUATION</h1>
+<p style="margin:8px 0 0;color:#ffffff;font-size:13px;opacity:0.9;text-transform:uppercase;letter-spacing:1.5px;">Candidature bien reçue</p></td></tr>
+<tr><td style="padding:36px 32px;font-size:15px;line-height:1.7;">
+<p style="margin:0 0 18px;">Bonjour ${escapeHtml(firstName)},</p>
+<p style="margin:0 0 18px;">Nous avons bien reçu votre candidature${app.position ? ` pour le poste de <strong style="color:#971C30;">${escapeHtml(app.position)}</strong>` : ""} et vous remercions de l'intérêt que vous portez à EQUATION.</p>
+<p style="margin:0 0 18px;">Notre équipe va l'étudier avec attention et reviendra vers vous sous <strong style="color:#971C30;">48h ouvrées</strong>.</p>
+<p style="margin:28px 0 0;">À très bientôt,<br/><strong>L'équipe EQUATION</strong></p>
+<div style="margin:32px 0 0;padding:18px 0 0;border-top:2px solid #971C30;font-size:13px;color:#6b6b6b;line-height:1.6;">
+<strong style="color:#971C30;">EQUATION</strong> — Étanchéité &amp; Couverture<br/>
+📞 04 73 87 53 50 &nbsp;·&nbsp; ✉ info@etanche.com</div>
 </td></tr></table></td></tr></table></body></html>`;
 
       await fetch("https://api.resend.com/emails", {
