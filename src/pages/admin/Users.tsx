@@ -107,17 +107,6 @@ const Users = () => {
     load();
   };
 
-  const sendReset = async (userId: string) => {
-    const { data, error } = await supabase.functions.invoke("admin-reset-user-password", {
-      body: {
-        user_id: userId,
-        redirect_to: `${window.location.origin}/admin/update-password`,
-      },
-    });
-    const errMsg = error?.message || (data as { error?: string })?.error;
-    if (errMsg) toast.error(errMsg);
-    else toast.success(`Mail de reset envoyé à ${(data as { email?: string })?.email ?? "l'utilisateur"}`);
-  };
 
   return (
     <div>
