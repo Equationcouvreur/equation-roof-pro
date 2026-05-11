@@ -183,7 +183,7 @@ const ClientsList = () => {
                             size="sm"
                             variant="ghost"
                             onClick={() => setTempPwTarget({ name: c.full_name, client_user_id: c.id })}
-                            title="Générer un mot de passe temporaire (envoi mail désactivé)"
+                            title="Réinitialiser le mot de passe"
                           >
                             <KeyRound className="w-4 h-4" />
                           </Button>

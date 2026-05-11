@@ -220,7 +220,7 @@ const Users = () => {
                               size="sm"
                               variant="ghost"
                               onClick={() => setTempPwTarget({ name: u.full_name || "cet utilisateur", user_id: u.id })}
-                              title="Générer un mot de passe temporaire"
+                              title="Réinitialiser le mot de passe"
                             >
                               <KeyRound className="w-4 h-4" />
                             </Button>

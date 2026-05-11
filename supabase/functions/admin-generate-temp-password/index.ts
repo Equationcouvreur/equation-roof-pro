@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
 
     await admin.from("audit_log").insert({
       admin_user_id: callerId,
-      action: "generate_temp_password",
+      action: "password_reset",
       target_user_id: targetAuthId,
       metadata: client_user_id ? { client_user_id } : null,
     });
