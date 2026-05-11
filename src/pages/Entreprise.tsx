@@ -54,7 +54,7 @@ const EntreprisePage = () => (
     <section className="container-main section-padding">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <ScrollReveal>
-          <img src={thierryImg} alt="Thierry Meylan, gérant fondateur d'EQUATION Étanchéité, expert toitures terrasses Auvergne" className="rounded-xl w-full h-96 object-cover" loading="lazy" decoding="async" />
+          <img src={thierryImg} alt="Thierry Meylan, gérant fondateur d'EQUATION Étanchéité, expert toitures terrasses Auvergne" className="rounded-xl w-full h-96 object-contain bg-warm" loading="lazy" decoding="async" />
           <ThierryCarousel />
         </ScrollReveal>
         <ScrollReveal delay={150}>
