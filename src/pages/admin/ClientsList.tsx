@@ -34,10 +34,12 @@ interface ClientUser {
 
 const ClientsList = () => {
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
   const [clients, setClients] = useState<ClientUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [createOpen, setCreateOpen] = useState(false);
   const [toDelete, setToDelete] = useState<ClientUser | null>(null);
+  const [tempPwTarget, setTempPwTarget] = useState<{ name: string; client_user_id: string } | null>(null);
 
   const load = async () => {
     setLoading(true);
