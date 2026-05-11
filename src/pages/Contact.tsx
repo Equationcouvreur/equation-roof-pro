@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo-config";
+import { supabase } from "@/integrations/supabase/client";
 
 const projectTypes = [
   "Étanchéité toiture terrasse",
@@ -24,15 +26,38 @@ const ContactPage = () => {
   const [formData, setFormData] = useState({
     nom: "", prenom: "", email: "", telephone: "", type: "", surface: "", message: "", consent: false,
   });
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const type = searchParams.get("type");
     if (type) setFormData((prev) => ({ ...prev, type }));
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Merci pour votre demande ! Nous vous recontacterons sous 48h.");
+    if (submitting) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast.error("Adresse email invalide");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("send-contact-request", {
+        body: {
+          nom: formData.nom, prenom: formData.prenom, email: formData.email,
+          telephone: formData.telephone, type: formData.type,
+          surface: formData.surface, message: formData.message,
+        },
+      });
+      if (error) throw error;
+      toast.success("Demande envoyée ! Nous vous recontacterons sous 48h.");
+      setFormData({ nom: "", prenom: "", email: "", telephone: "", type: "", surface: "", message: "", consent: false });
+    } catch (err) {
+      console.error(err);
+      toast.error("Erreur lors de l'envoi. Merci de réessayer ou nous contacter au 04 73 87 53 50.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -93,8 +118,8 @@ const ContactPage = () => {
                   <input type="checkbox" required checked={formData.consent} onChange={(e) => setFormData({ ...formData, consent: e.target.checked })} className="mt-1 accent-[hsl(350,72%,34%)]" />
                   <span className="text-sm text-muted-foreground font-body">J'accepte que mes données soient utilisées pour traiter ma demande</span>
                 </label>
-                <button type="submit" className="btn-bordeaux w-full text-lg py-4">
-                  Envoyer ma Demande
+                <button type="submit" disabled={submitting} className="btn-bordeaux w-full text-lg py-4 inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {submitting ? (<><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours…</>) : "Envoyer ma Demande"}
                 </button>
               </form>
             </ScrollReveal>
