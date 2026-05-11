@@ -184,6 +184,57 @@ export type Database = {
         }
         Relationships: []
       }
+      job_applications: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          cv_filename: string | null
+          cv_size_bytes: number | null
+          cv_url: string | null
+          email: string
+          full_name: string
+          id: string
+          message: string
+          phone: string
+          position: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          cv_filename?: string | null
+          cv_size_bytes?: number | null
+          cv_url?: string | null
+          email: string
+          full_name: string
+          id?: string
+          message: string
+          phone: string
+          position?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          cv_filename?: string | null
+          cv_size_bytes?: number | null
+          cv_url?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string
+          phone?: string
+          position?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       job_offers: {
         Row: {
           contract_type: string
