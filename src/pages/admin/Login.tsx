@@ -16,14 +16,26 @@ const authSchema = z.object({
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, signUp, user, loading } = useAuth();
+  const { signIn, signUp, signOut, user, loading, isAdmin, isEditor, roles } = useAuth();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  if (!loading && user) return <Navigate to="/admin" replace />;
+  // If user is logged in but has no admin/editor permissions, sign them out
+  // so they can log back in (avoids redirecting them to /admin which would
+  // show "Accès refusé"). Only redirect when they actually have access.
+  useEffect(() => {
+    if (!loading && user && !isAdmin && !isEditor && roles.length === 0) {
+      // roles still loading or genuinely empty — wait one tick then sign out
+      void signOut();
+    }
+  }, [loading, user, isAdmin, isEditor, roles, signOut]);
+
+  if (!loading && user && (isAdmin || isEditor)) {
+    return <Navigate to="/admin" replace />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
