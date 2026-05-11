@@ -206,8 +206,17 @@ const HomePage = () => {
                 <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
                   Nos Réalisations
                 </Link>
-                <Link to="/espace-client" className="inline-flex items-center gap-2 bg-primary-foreground/10 border-2 border-primary text-primary font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all shadow-lg">
-                  <User className="w-4 h-4" /> Espace client
+                <Link
+                  to="/espace-client"
+                  className="group relative inline-flex items-center gap-3 bg-primary-foreground/5 backdrop-blur-sm border-2 border-primary/60 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary hover:border-primary hover:shadow-[0_0_30px_-5px_hsl(var(--primary))] transition-all duration-300"
+                >
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 group-hover:bg-primary-foreground/20 transition-colors">
+                    <User className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </span>
+                  <span className="flex flex-col items-start leading-tight">
+                    <span className="text-[10px] uppercase tracking-widest text-primary group-hover:text-primary-foreground/80 transition-colors">Accès privé</span>
+                    <span>Espace client</span>
+                  </span>
                 </Link>
               </div>
             </ScrollReveal>
