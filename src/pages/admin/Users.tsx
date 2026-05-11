@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from "sonner";
 import { ShieldCheck, User as UserIcon, UserPlus, Trash2, KeyRound } from "lucide-react";
 import { z } from "zod";
+import TempPasswordDialog from "@/components/admin/TempPasswordDialog";
 
 const ROLE_OPTIONS = [
   { value: "admin", label: "Admin (accès total)" },
