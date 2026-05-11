@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { Briefcase, HeartHandshake, GraduationCap, Wrench, Mail, Phone, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Briefcase, HeartHandshake, GraduationCap, Wrench, Mail, Phone, Send, Paperclip, Copy, Check } from "lucide-react";
+import { toast } from "sonner";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ScrollReveal from "@/components/ScrollReveal";
 import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { PAGE_SEO } from "@/lib/seo-config";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 type JobOffer = {
   id: string;
@@ -22,9 +24,32 @@ const avantages = [
   { icon: Briefcase, titre: "Évolution interne", desc: "Possibilités de progression vers chef d'équipe, conducteur de travaux." },
 ];
 
+const buildBody = (form: { nom: string; email: string; telephone: string; poste: string; message: string }) => {
+  return `Bonjour,
+
+Je vous adresse ma candidature pour le poste : ${form.poste || "Candidature spontanée"}.
+
+Mes coordonnées :
+- Nom complet : ${form.nom}
+- Téléphone : ${form.telephone}
+- Email : ${form.email}
+
+Mon message :
+${form.message}
+
+⚠️ N'oubliez pas de joindre votre CV en pièce jointe à ce mail avant de l'envoyer.
+
+Cordialement,
+${form.nom}`;
+};
+
 const Recrutement = () => {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", poste: "", message: "" });
   const [postes, setPostes] = useState<JobOffer[]>([]);
+  const [fallbackOpen, setFallbackOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const fallbackBodyRef = useRef<string>("");
+  const fallbackSubjectRef = useRef<string>("");
 
   useEffect(() => {
     supabase
@@ -37,11 +62,41 @@ const Recrutement = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Candidature — ${form.poste || "Spontanée"} — ${form.nom}`);
-    const body = encodeURIComponent(
-      `Nom : ${form.nom}\nEmail : ${form.email}\nTéléphone : ${form.telephone}\nPoste : ${form.poste}\n\nMessage :\n${form.message}`,
-    );
-    window.location.href = `mailto:info@etanche.com?subject=${subject}&body=${body}`;
+
+    if (!form.nom || !form.telephone || !form.email || !form.message) {
+      toast.error("Veuillez remplir tous les champs requis");
+      return;
+    }
+
+    const subject = `Candidature - ${form.poste || "Spontanée"} - ${form.nom}`;
+    const body = buildBody(form);
+    fallbackSubjectRef.current = subject;
+    fallbackBodyRef.current = body;
+
+    const mailtoUrl = `mailto:info@etanche.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
+
+    toast.success("Votre client mail va s'ouvrir. Pensez à joindre votre CV avant d'envoyer.");
+
+    // Fallback : si la page a toujours le focus après 1.5s, c'est que rien ne s'est ouvert
+    window.setTimeout(() => {
+      if (document.hasFocus()) {
+        setFallbackOpen(true);
+      }
+    }, 1500);
+  };
+
+  const handleCopyRecap = async () => {
+    const text = `Sujet : ${fallbackSubjectRef.current}\n\n${fallbackBodyRef.current}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success("Récap copié dans le presse-papier");
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      toast.error("Impossible de copier — sélectionnez le texte manuellement");
+    }
   };
 
   return (
@@ -159,9 +214,23 @@ const Recrutement = () => {
                 placeholder="Parlez-nous de votre parcours, vos motivations, vos disponibilités…"
                 className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-background text-foreground focus:ring-2 focus:ring-primary outline-none" />
             </div>
-            <p className="text-xs text-muted-foreground font-body">
-              💡 Pensez à joindre votre CV en pièce jointe lors de l'envoi du mail qui s'ouvrira.
-            </p>
+
+            {/* Bloc important CV */}
+            <div className="flex gap-3 items-start rounded-xl border-2 border-primary/40 bg-primary/5 p-4">
+              <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center">
+                <Paperclip className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-sm font-body text-foreground/90">
+                <p className="font-subtitle font-semibold text-foreground mb-1">
+                  IMPORTANT — Joindre votre CV
+                </p>
+                <p>
+                  Au clic sur « Envoyer ma candidature », votre client mail va s'ouvrir avec un message pré-rempli.
+                  <strong> AVANT de l'envoyer, pensez à JOINDRE VOTRE CV</strong> (PDF de préférence) en pièce jointe.
+                </p>
+              </div>
+            </div>
+
             <button type="submit" className="btn-bordeaux w-full inline-flex items-center justify-center gap-2 py-3 rounded-lg">
               <Send className="w-4 h-4" /> Envoyer ma candidature
             </button>
@@ -180,6 +249,51 @@ const Recrutement = () => {
           </div>
         </div>
       </section>
+
+      {/* Fallback dialog */}
+      <Dialog open={fallbackOpen} onOpenChange={setFallbackOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Votre client mail ne semble pas s'être ouvert</DialogTitle>
+            <DialogDescription>
+              Pas de panique, vous pouvez transmettre votre candidature de deux autres façons :
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <ul className="text-sm font-body text-foreground/90 space-y-2 list-disc pl-5">
+              <li>
+                Copier le récap ci-dessous et l'envoyer à <strong>info@etanche.com</strong> depuis votre boîte mail web (Gmail, Outlook…), en joignant votre CV.
+              </li>
+              <li>
+                Appeler directement EQUATION au <a href="tel:0473875350" className="text-primary font-semibold underline">04 73 87 53 50</a>.
+              </li>
+            </ul>
+
+            <div>
+              <label className="block text-xs font-subtitle font-medium text-muted-foreground mb-1">Récap à envoyer</label>
+              <textarea
+                readOnly
+                rows={12}
+                className="w-full border border-border rounded-lg p-3 font-mono text-xs bg-background text-foreground"
+                value={`Sujet : ${fallbackSubjectRef.current}\n\n${fallbackBodyRef.current}`}
+                onFocus={(e) => e.currentTarget.select()}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <button
+              type="button"
+              onClick={handleCopyRecap}
+              className="btn-bordeaux inline-flex items-center justify-center gap-2 py-2 px-4 rounded-lg"
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? "Copié !" : "Copier le récap"}
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
