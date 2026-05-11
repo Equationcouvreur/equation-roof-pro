@@ -108,6 +108,38 @@ ${attachments.length ? `<p style="margin-top:24px;font-size:13px;color:#2C8C6F;"
       });
     }
 
+    // Accusé de réception au candidat (best-effort, n'échoue pas si erreur)
+    try {
+      const firstName = (app.full_name || "").trim().split(/\s+/)[0] || "";
+      const confirmHtml = `<!DOCTYPE html><html lang="fr"><body style="margin:0;padding:0;background:#f5f3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#1B3A5C;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3ee;padding:32px 16px;"><tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:600px;">
+<tr><td style="background:#1B3A5C;padding:24px;text-align:center;">
+<h1 style="margin:0;color:#E8A624;font-size:22px;">EQUATION</h1>
+<p style="margin:6px 0 0;color:#fff;font-size:13px;opacity:0.9;">Candidature bien reçue</p></td></tr>
+<tr><td style="padding:32px 28px;font-size:15px;line-height:1.6;">
+<p style="margin:0 0 16px;">Bonjour ${escapeHtml(firstName)},</p>
+<p style="margin:0 0 16px;">Nous avons bien reçu votre candidature${app.position ? ` pour le poste de <strong>${escapeHtml(app.position)}</strong>` : ""} et vous remercions de l'intérêt que vous portez à EQUATION.</p>
+<p style="margin:0 0 16px;">Notre équipe va l'étudier avec attention et reviendra vers vous sous <strong>48h ouvrées</strong>.</p>
+<p style="margin:24px 0 0;">À très bientôt,<br/>L'équipe EQUATION</p>
+<p style="margin:32px 0 0;font-size:13px;color:#999;border-top:1px solid #eee;padding-top:16px;">EQUATION — Étanchéité & Couverture<br/>04 73 87 53 50 — info@etanche.com</p>
+</td></tr></table></td></tr></table></body></html>`;
+
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: FROM,
+          to: [app.email],
+          reply_to: ADMIN_EMAIL,
+          subject: "Votre candidature a bien été reçue — EQUATION",
+          html: confirmHtml,
+        }),
+      });
+    } catch (e) {
+      console.warn("Confirmation candidat échouée:", e);
+    }
+
     return new Response(JSON.stringify({ ok: true, id: result.id }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
