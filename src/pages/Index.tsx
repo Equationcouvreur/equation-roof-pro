@@ -206,7 +206,7 @@ const HomePage = () => {
                 <Link to="/realisations" className="border-2 border-primary-foreground/50 text-primary-foreground font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary-foreground/10 transition-all">
                   Nos Réalisations
                 </Link>
-                <Link to="/espace-client" className="inline-flex items-center gap-2 text-primary-foreground/90 hover:text-primary font-subtitle font-semibold px-4 py-3 transition-colors">
+                <Link to="/espace-client" className="inline-flex items-center gap-2 bg-primary-foreground/10 border-2 border-primary text-primary font-subtitle font-semibold px-6 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all shadow-lg">
                   <User className="w-4 h-4" /> Espace client
                 </Link>
               </div>
