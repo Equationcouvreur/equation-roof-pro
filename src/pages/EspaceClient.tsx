@@ -151,7 +151,7 @@ const EspaceClient = () => {
           <div className="text-center mb-6">
             <img src={logoMain} alt="EQUATION" className="h-12 w-auto mx-auto mb-4" />
             <h1 className="text-2xl font-heading text-foreground">Espace Client</h1>
-            <p className="text-sm text-muted-foreground mt-1">Accédez à vos documents de projet</p>
+            <p className="text-sm text-muted-foreground mt-1">Accédez aux documents de votre projet</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
