@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,6 +18,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import CreateClientDialog from "@/components/admin/CreateClientDialog";
+import TempPasswordDialog from "@/components/admin/TempPasswordDialog";
 
 interface ClientUser {
   id: string;
@@ -32,10 +34,12 @@ interface ClientUser {
 
 const ClientsList = () => {
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
   const [clients, setClients] = useState<ClientUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [createOpen, setCreateOpen] = useState(false);
   const [toDelete, setToDelete] = useState<ClientUser | null>(null);
+  const [tempPwTarget, setTempPwTarget] = useState<{ name: string; client_user_id: string } | null>(null);
 
   const load = async () => {
     setLoading(true);
@@ -84,13 +88,6 @@ const ClientsList = () => {
     }
   };
 
-  const sendReset = async (c: ClientUser) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(c.email, {
-      redirectTo: `${window.location.origin}/espace-client/update-password`,
-    });
-    if (error) toast.error(error.message);
-    else toast.success(`Mail de reset envoyé à ${c.email}`);
-  };
 
   const deleteClient = async (c: ClientUser) => {
     const { data, error } = await supabase.functions.invoke("admin-delete-client", {
@@ -181,9 +178,16 @@ const ClientsList = () => {
                         <Button size="sm" variant="ghost" onClick={() => toggleActive(c)} title={c.is_active ? "Désactiver" : "Activer"}>
                           <Power className="w-4 h-4" />
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={() => sendReset(c)} title="Envoyer reset mdp">
-                          <KeyRound className="w-4 h-4" />
-                        </Button>
+                        {isAdmin && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setTempPwTarget({ name: c.full_name, client_user_id: c.id })}
+                            title="Générer un mot de passe temporaire (envoi mail désactivé)"
+                          >
+                            <KeyRound className="w-4 h-4" />
+                          </Button>
+                        )}
                         <Button size="sm" variant="ghost" onClick={() => setToDelete(c)} title="Supprimer">
                           <Trash2 className="w-4 h-4 text-destructive" />
                         </Button>
@@ -215,6 +219,8 @@ const ClientsList = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <TempPasswordDialog target={tempPwTarget} onClose={() => setTempPwTarget(null)} />
     </div>
   );
 };

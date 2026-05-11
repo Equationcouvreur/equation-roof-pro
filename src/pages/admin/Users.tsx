@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from "sonner";
 import { ShieldCheck, User as UserIcon, UserPlus, Trash2, KeyRound } from "lucide-react";
 import { z } from "zod";
+import TempPasswordDialog from "@/components/admin/TempPasswordDialog";
 
 const ROLE_OPTIONS = [
   { value: "admin", label: "Admin (accès total)" },
@@ -31,9 +33,11 @@ interface UserRow {
 }
 
 const Users = () => {
+  const { isAdmin: callerIsAdmin } = useAuth();
   const [users, setUsers] = useState<UserRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [tempPwTarget, setTempPwTarget] = useState<{ name: string; user_id: string } | null>(null);
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -103,17 +107,6 @@ const Users = () => {
     load();
   };
 
-  const sendReset = async (userId: string) => {
-    const { data, error } = await supabase.functions.invoke("admin-reset-user-password", {
-      body: {
-        user_id: userId,
-        redirect_to: `${window.location.origin}/admin/update-password`,
-      },
-    });
-    const errMsg = error?.message || (data as { error?: string })?.error;
-    if (errMsg) toast.error(errMsg);
-    else toast.success(`Mail de reset envoyé à ${(data as { email?: string })?.email ?? "l'utilisateur"}`);
-  };
 
   return (
     <div>
@@ -220,13 +213,27 @@ const Users = () => {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-right align-top">
-                      <div className="inline-flex gap-1 items-center">
-                        <Button size="sm" variant="ghost" onClick={() => sendReset(u.id)} title="Envoyer reset mdp">
-                          <KeyRound className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => revoke(u.id)} title="Révoquer tout">
-                          <Trash2 className="w-4 h-4 text-destructive" />
-                        </Button>
+                      <div className="inline-flex flex-col items-end gap-1">
+                        <div className="inline-flex gap-1 items-center">
+                          {callerIsAdmin && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => setTempPwTarget({ name: u.full_name || "cet utilisateur", user_id: u.id })}
+                              title="Générer un mot de passe temporaire"
+                            >
+                              <KeyRound className="w-4 h-4" />
+                            </Button>
+                          )}
+                          <Button size="sm" variant="ghost" onClick={() => revoke(u.id)} title="Révoquer tout">
+                            <Trash2 className="w-4 h-4 text-destructive" />
+                          </Button>
+                        </div>
+                        {callerIsAdmin && (
+                          <span className="text-[10px] text-muted-foreground italic">
+                            Envoi par mail désactivé (SMTP non configuré)
+                          </span>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -236,6 +243,8 @@ const Users = () => {
           </table>
         </div>
       )}
+
+      <TempPasswordDialog target={tempPwTarget} onClose={() => setTempPwTarget(null)} />
     </div>
   );
 };
