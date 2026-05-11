@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { LayoutDashboard, FileText, Hammer, Users, LogOut, ExternalLink, LayoutTemplate, Briefcase, FolderLock, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, FileText, Hammer, Users, LogOut, ExternalLink, LayoutTemplate, Briefcase, FolderLock, ShieldCheck, Inbox } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,8 @@ const links: Array<{ to: string; icon: typeof LayoutDashboard; label: string; en
   { to: "/admin/sections", icon: LayoutTemplate, label: "Sections du site", section: "sections" },
   { to: "/admin/articles", icon: FileText, label: "Articles", section: "blog" },
   { to: "/admin/realisations", icon: Hammer, label: "Réalisations", section: "realisations" },
-  { to: "/admin/recrutement", icon: Briefcase, label: "Recrutement", section: "recrutement" },
+  { to: "/admin/recrutement", icon: Briefcase, label: "Offres d'emploi", section: "recrutement" },
+  { to: "/admin/candidatures", icon: Inbox, label: "Candidatures", section: "recrutement" },
   { to: "/admin/clients", icon: FolderLock, label: "Espace Clients", section: "clients" },
   { to: "/admin/securite", icon: ShieldCheck, label: "Sécurité" },
 ];
