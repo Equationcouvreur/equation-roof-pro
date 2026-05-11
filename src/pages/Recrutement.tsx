@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Briefcase, HeartHandshake, GraduationCap, Wrench, Mail, Phone, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Briefcase, HeartHandshake, GraduationCap, Wrench, Mail, Phone, Send, Paperclip, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import PageHero from "@/components/PageHero";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -23,28 +24,27 @@ const avantages = [
   { icon: Briefcase, titre: "Évolution interne", desc: "Possibilités de progression vers chef d'équipe, conducteur de travaux." },
 ];
 
-const buildBody = (form: { nom: string; email: string; telephone: string; poste: string; message: string }) => {
-  return `Bonjour,
+const MAX_SIZE = 5 * 1024 * 1024;
+const ALLOWED_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+const ALLOWED_EXT = [".pdf", ".doc", ".docx"];
 
-Je vous adresse ma candidature pour le poste : ${form.poste || "Candidature spontanée"}.
-
-Mes coordonnées :
-- Nom complet : ${form.nom}
-- Téléphone : ${form.telephone}
-- Email : ${form.email}
-
-Mon message :
-${form.message}
-
-⚠️ N'oubliez pas de joindre votre CV en pièce jointe à ce mail avant de l'envoyer.
-
-Cordialement,
-${form.nom}`;
+const formatBytes = (b: number) => {
+  if (b < 1024) return `${b} o`;
+  if (b < 1024 * 1024) return `${Math.round(b / 1024)} Ko`;
+  return `${(b / 1024 / 1024).toFixed(1)} Mo`;
 };
 
 const Recrutement = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", poste: "", message: "" });
   const [postes, setPostes] = useState<JobOffer[]>([]);
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     supabase
@@ -55,21 +55,83 @@ const Recrutement = () => {
       .then(({ data }) => setPostes(data || []));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (!form.nom || !form.telephone || !form.email || !form.message) {
+    const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+    const typeOk = ALLOWED_TYPES.includes(file.type) || ALLOWED_EXT.includes(ext);
+    if (!typeOk) {
+      toast.error("Format non autorisé. Acceptés : PDF, DOC, DOCX");
+      e.target.value = "";
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      toast.error("Fichier trop volumineux (max 5 Mo)");
+      e.target.value = "";
+      return;
+    }
+    setCvFile(file);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    if (!form.nom.trim() || !form.telephone.trim() || !form.email.trim() || !form.message.trim()) {
       toast.error("Veuillez remplir tous les champs requis");
       return;
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      toast.error("Adresse email invalide");
+      return;
+    }
+    if (form.message.trim().length < 20) {
+      toast.error("Le message doit contenir au moins 20 caractères");
+      return;
+    }
+    if (!cvFile) {
+      toast.error("Veuillez joindre votre CV");
+      return;
+    }
 
-    const subject = `Candidature - ${form.poste || "Spontanée"} - ${form.nom}`;
-    const body = buildBody(form);
-    const mailtoUrl = `mailto:info@etanche.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSubmitting(true);
+    try {
+      const id = crypto.randomUUID();
+      const safeName = cvFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const path = `${id}/${Date.now()}_${safeName}`;
 
-    window.location.href = mailtoUrl;
+      const { error: uploadError } = await supabase.storage
+        .from("cv-candidats")
+        .upload(path, cvFile, { contentType: cvFile.type, upsert: false });
 
-    toast("Votre client mail s'ouvre. Pensez à joindre votre CV.");
+      if (uploadError) throw uploadError;
+
+      const { error: insertError } = await supabase.from("job_applications").insert({
+        id,
+        full_name: form.nom.trim(),
+        phone: form.telephone.trim(),
+        email: form.email.trim().toLowerCase(),
+        position: form.poste || "Candidature spontanée",
+        message: form.message.trim(),
+        cv_url: path,
+        cv_filename: cvFile.name,
+        cv_size_bytes: cvFile.size,
+      });
+
+      if (insertError) throw insertError;
+
+      // Notification email — fire-and-forget, n'empêche pas la candidature
+      supabase.functions
+        .invoke("notify-new-application", { body: { applicationId: id } })
+        .catch((err) => console.warn("Notification email a échoué:", err));
+
+      navigate("/recrutement/merci");
+    } catch (err) {
+      console.error(err);
+      toast.error("Une erreur est survenue. Merci de réessayer ou de nous contacter directement.");
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -86,7 +148,6 @@ const Recrutement = () => {
       />
       <Breadcrumbs items={[{ label: "Recrutement" }]} />
 
-      {/* Intro */}
       <section className="container-main section-padding">
         <ScrollReveal>
           <div className="max-w-3xl mx-auto text-center">
@@ -100,7 +161,6 @@ const Recrutement = () => {
         </ScrollReveal>
       </section>
 
-      {/* Avantages */}
       <section className="bg-secondary/30 section-padding">
         <div className="container-main">
           <ScrollReveal>
@@ -122,7 +182,6 @@ const Recrutement = () => {
         </div>
       </section>
 
-      {/* Postes */}
       <section className="container-main section-padding">
         <ScrollReveal>
           <h2 className="text-center text-foreground mb-12">Postes à pourvoir</h2>
@@ -145,7 +204,6 @@ const Recrutement = () => {
         </div>
       </section>
 
-      {/* Formulaire */}
       <section id="candidature" className="bg-secondary/30 section-padding">
         <div className="container-main max-w-3xl">
           <ScrollReveal>
@@ -177,27 +235,68 @@ const Recrutement = () => {
               <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Poste recherché</label>
               <select value={form.poste} onChange={(e) => setForm({ ...form, poste: e.target.value })}
                 className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-background text-foreground focus:ring-2 focus:ring-primary outline-none">
-                <option value="">— Choisissez —</option>
+                <option value="">Candidature spontanée</option>
                 {postes.map((p) => <option key={p.id} value={p.title}>{p.title}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Votre message *</label>
-              <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+              <label className="block text-sm font-subtitle font-medium text-foreground mb-1">Votre message * <span className="text-xs text-muted-foreground font-normal">(min 20 caractères)</span></label>
+              <textarea required rows={5} minLength={20} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                 placeholder="Parlez-nous de votre parcours, vos motivations, vos disponibilités…"
                 className="w-full border border-border rounded-lg px-4 py-3 font-body text-sm bg-background text-foreground focus:ring-2 focus:ring-primary outline-none" />
             </div>
 
-            <button type="submit" className="btn-bordeaux w-full inline-flex items-center justify-center gap-2 py-3 rounded-lg">
-              <Send className="w-4 h-4" /> Envoyer ma candidature
-            </button>
+            <div>
+              <label className="block text-sm font-subtitle font-medium text-foreground mb-2">CV *</label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              {!cvFile ? (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full border-2 border-dashed border-border hover:border-primary hover:bg-primary/5 transition-colors rounded-lg px-4 py-6 flex flex-col items-center gap-2 text-muted-foreground hover:text-primary"
+                >
+                  <Paperclip className="w-6 h-6" />
+                  <span className="text-sm font-subtitle font-medium">Joindre mon CV</span>
+                  <span className="text-xs font-body">PDF, DOC, DOCX — max 5 Mo</span>
+                </button>
+              ) : (
+                <div className="border border-border rounded-lg px-4 py-3 flex items-center justify-between gap-3 bg-background">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Paperclip className="w-5 h-5 text-primary flex-shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-sm font-subtitle font-medium text-foreground truncate">{cvFile.name}</p>
+                      <p className="text-xs font-body text-muted-foreground">{formatBytes(cvFile.size)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button type="button" onClick={() => fileInputRef.current?.click()} className="text-xs font-subtitle text-primary hover:underline">
+                      Changer
+                    </button>
+                    <button type="button" onClick={() => { setCvFile(null); if (fileInputRef.current) fileInputRef.current.value = ""; }} className="text-muted-foreground hover:text-destructive">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
-            <p className="text-sm font-body text-muted-foreground leading-relaxed">
-              Au clic sur « Envoyer ma candidature », votre client mail va s'ouvrir avec un message pré-rempli.
-              Pensez à joindre votre CV en pièce jointe avant d'envoyer. Si votre client mail ne s'ouvre pas,
-              contactez-nous directement au <a href="tel:0473875350" className="text-primary hover:underline">04 73 87 53 50</a> ou
-              à <a href="mailto:info@etanche.com" className="text-primary hover:underline">info@etanche.com</a>.
-            </p>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-bordeaux w-full inline-flex items-center justify-center gap-2 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {submitting ? (
+                <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours…</>
+              ) : (
+                <><Send className="w-4 h-4" /> Envoyer ma candidature</>
+              )}
+            </button>
           </form>
 
           <div className="mt-10 text-center">
