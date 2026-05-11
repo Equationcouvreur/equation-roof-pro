@@ -233,7 +233,7 @@ const Users = () => {
         </div>
       )}
 
-      <TempPasswordDialog target={tempPwTarget} onClose={() => setTempPwTarget(null)} />
+      
     </div>
   );
 };
