@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children, requireAdmin = false }: Props) => {
-  const { user, isEditor, isAdmin, loading } = useAuth();
+  const { user, isEditor, isAdmin, roles, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -27,7 +27,9 @@ const ProtectedRoute = ({ children, requireAdmin = false }: Props) => {
     return <Navigate to="/admin" replace />;
   }
 
-  if (!isEditor && !isAdmin) {
+  // Allow any user holding at least one role (admin, editor or any partial editor role)
+  const hasAnyRole = isAdmin || isEditor || roles.length > 0;
+  if (!hasAnyRole) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6 text-center">
         <div>
