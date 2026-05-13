@@ -198,7 +198,7 @@ const PhotoGallery = ({
       )}
 
       {lightboxIdx !== null && renderLightbox()}
-    </div>
+    </figure>
   );
 
   function renderLightbox() {
