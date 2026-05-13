@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadImage } from "@/lib/uploadImage";
 import YouTubeUrlField from "@/components/admin/YouTubeUrlField";
+import PhotoSeoFields from "@/components/admin/PhotoSeoFields";
+import { useKeywordSuggestions } from "@/hooks/useKeywordSuggestions";
 import { toast } from "sonner";
 import { ArrowDown, ArrowLeft, ArrowUp, Save, Send, Star, Trash2, Upload, GripVertical } from "lucide-react";
 import { z } from "zod";
@@ -35,6 +37,8 @@ interface Photo {
   id: string;
   url: string;
   caption: string | null;
+  alt_text: string | null;
+  keywords: string[] | null;
   is_favorite: boolean;
   display_order: number;
 }
