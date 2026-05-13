@@ -52,7 +52,7 @@ const Counter = ({ target, suffix = "", label }: { target: number; suffix?: stri
       <div className="text-4xl md:text-5xl font-heading font-bold text-primary">
         {count.toLocaleString("fr-FR")}{suffix}
       </div>
-      <p className="text-primary-foreground/70 mt-2 font-body text-sm">{label}</p>
+      <p className="text-primary-foreground/85 mt-2 font-body text-sm">{label}</p>
     </div>
   );
 };
@@ -323,7 +323,7 @@ const HomePage = () => {
                     <r.icon className="w-8 h-8 text-primary shrink-0 mt-1" />
                     <div>
                       <h3 className="text-lg font-heading text-primary-foreground">{r.title}</h3>
-                      <p className="text-primary-foreground/70 text-sm font-body mt-1">{r.desc}</p>
+                      <p className="text-primary-foreground/85 text-sm font-body mt-1">{r.desc}</p>
                     </div>
                   </div>
                 </ScrollReveal>

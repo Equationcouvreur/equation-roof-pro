@@ -57,7 +57,7 @@ const AvisClientsPage = () => (
           <ScrollReveal key={s.label} delay={i * 100}>
             <div className="text-center">
               <div className="text-5xl md:text-6xl font-heading font-bold text-primary">{s.value}</div>
-              <p className="text-primary-foreground/70 mt-3 font-body">{s.label}</p>
+              <p className="text-primary-foreground/85 mt-3 font-body">{s.label}</p>
             </div>
           </ScrollReveal>
         ))}
