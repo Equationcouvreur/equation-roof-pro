@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://www.etanche.com";
-const DEFAULT_OG_IMAGE = `${SITE_URL}/favicon.png`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 export interface BreadcrumbCrumb {
   name: string;
