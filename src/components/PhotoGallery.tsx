@@ -108,7 +108,7 @@ const PhotoGallery = ({
 
   // CAROUSEL layout
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn("w-full max-w-full min-w-0 overflow-hidden", className)}>
       <div
         className={cn("relative group rounded-xl overflow-hidden bg-muted", mainHeightClass)}
         onTouchStart={onTouchStart}
@@ -168,17 +168,17 @@ const PhotoGallery = ({
       </div>
 
       {images[activeIdx].caption && (
-        <p className="mt-3 text-sm font-body text-muted-foreground italic border-l-2 border-primary pl-3">
+        <p className="mt-3 max-w-full break-words text-sm font-body text-muted-foreground italic border-l-2 border-primary pl-3">
           {images[activeIdx].caption}
         </p>
       )}
 
       {hasMultiple && (
         <div
-          className="mt-3 flex gap-2 overflow-x-auto pb-2"
+          className="mt-3 flex max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-2"
           style={{ scrollbarWidth: "thin" }}
         >
-          {images.slice(0, Math.max(maxThumbnails, total)).map((img, i) => (
+          {images.slice(0, Math.min(maxThumbnails, total)).map((img, i) => (
             <button
               key={i}
               type="button"
