@@ -44,7 +44,10 @@ const HomeCarousel = () => {
             key={i}
             src={s.src}
             alt={s.alt}
-            loading="lazy"
+            width={1600}
+            height={900}
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "auto"}
             decoding="async"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
           />
