@@ -6,6 +6,7 @@ export type GalleryImage = {
   src: string;
   alt: string;
   caption?: string;
+  keywords?: string[];
 };
 
 type PhotoGalleryProps = {
@@ -108,7 +109,7 @@ const PhotoGallery = ({
 
   // CAROUSEL layout
   return (
-    <div className={cn("w-full max-w-full min-w-0 overflow-hidden", className)}>
+    <figure className={cn("w-full max-w-full min-w-0 overflow-hidden m-0", className)}>
       <div
         className={cn("relative group rounded-xl overflow-hidden bg-muted", mainHeightClass)}
         onTouchStart={onTouchStart}
@@ -122,6 +123,7 @@ const PhotoGallery = ({
           decoding="async"
           width={1408}
           height={768}
+          data-keywords={images[activeIdx].keywords?.join(",") || undefined}
           className="w-full h-full object-cover animate-in fade-in duration-300"
         />
 
@@ -168,9 +170,9 @@ const PhotoGallery = ({
       </div>
 
       {images[activeIdx].caption && (
-        <p className="mt-3 max-w-full break-words text-sm font-body text-muted-foreground italic border-l-2 border-primary pl-3">
+        <figcaption className="mt-3 max-w-full break-words text-sm font-body text-muted-foreground italic border-l-2 border-primary pl-3">
           {images[activeIdx].caption}
-        </p>
+        </figcaption>
       )}
 
       {hasMultiple && (
