@@ -89,6 +89,12 @@ const BlogArticlePage = () => {
   if (dbArticle) {
     return (
       <>
+        <SEO
+          title={buildTitle(`${dbArticle.title} | EQUATION`)}
+          description={truncate(dbArticle.html) || `${dbArticle.title} — actualité EQUATION étanchéité Auvergne.`}
+          path={`/blog/${slug}`}
+          ogType="article"
+        />
         <PageHero title={dbArticle.title} />
         <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: dbArticle.title }]} />
         <section className="container-main section-padding">
