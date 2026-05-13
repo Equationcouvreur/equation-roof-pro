@@ -199,6 +199,33 @@ const ArticleEditor = () => {
                 />
               </label>
             )}
+            {coverUrl && (
+              <div className="mt-3 space-y-2">
+                <div>
+                  <Label className="text-xs">Texte alternatif (SEO) *</Label>
+                  <input
+                    value={coverAlt}
+                    onChange={(e) => setCoverAlt(e.target.value)}
+                    placeholder="Décrivez l'image en une phrase courte"
+                    className={`mt-1 w-full h-9 rounded-md border bg-background px-2 text-sm ${
+                      !coverAlt.trim() ? "border-destructive/60" : "border-input"
+                    }`}
+                  />
+                  <p className="text-[10px] text-muted-foreground mt-0.5">
+                    Important pour Google et l'accessibilité
+                  </p>
+                </div>
+                <div>
+                  <Label className="text-xs">Mots-clés</Label>
+                  <KeywordsInput
+                    value={coverKeywords}
+                    onChange={setCoverKeywords}
+                    suggestions={keywordSuggestions}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="bg-card border rounded-xl p-4 space-y-3">
