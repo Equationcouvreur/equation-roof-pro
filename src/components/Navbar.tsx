@@ -167,7 +167,7 @@ const Navbar = () => {
                       <Link
                         key={sub.label}
                         to={sub.href}
-                        className="text-primary-foreground/70 text-sm font-body hover:text-primary transition-colors"
+                        className="text-primary-foreground/85 text-sm font-body hover:text-primary transition-colors"
                       >
                         {sub.label}
                       </Link>

@@ -161,7 +161,7 @@ const EntreprisePage = () => (
               <div className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-xl p-6">
                 <c.icon className="w-8 h-8 text-primary mb-3" />
                 <h3 className="text-primary-foreground font-heading text-lg">{c.label}</h3>
-                <p className="text-primary-foreground/60 font-body text-sm mt-1">{c.desc}</p>
+                <p className="text-primary-foreground/85 font-body text-sm mt-1">{c.desc}</p>
               </div>
             </ScrollReveal>
           ))}

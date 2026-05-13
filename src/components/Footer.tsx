@@ -29,7 +29,7 @@ const Footer = () => (
             <a href="mailto:info@etanche.com" className="flex items-center gap-2 text-primary-foreground/80 hover:text-primary transition-colors">
               <Mail className="w-4 h-4 shrink-0" /> info@etanche.com
             </a>
-            <Link to="/espace-client" className="text-xs text-primary-foreground/60 hover:text-primary transition-colors mt-2">
+            <Link to="/espace-client" className="text-xs text-primary-foreground/85 hover:text-primary transition-colors mt-2">
               Accès Espace Client →
             </Link>
           </div>
@@ -48,7 +48,7 @@ const Footer = () => (
               { l: "Sécurité & Désenfumage", h: "/coeur-de-metier#securite-desenfumage" },
               { l: "Recherche de Fuite", h: "/coeur-de-metier#fuite" },
             ].map((e) => (
-              <Link key={e.l} to={e.h} className="text-primary-foreground/70 hover:text-primary transition-colors">{e.l}</Link>
+              <Link key={e.l} to={e.h} className="text-primary-foreground/85 hover:text-primary transition-colors">{e.l}</Link>
             ))}
           </div>
         </div>
@@ -57,13 +57,13 @@ const Footer = () => (
         <div>
           <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">L'Entreprise</h4>
           <div className="flex flex-col gap-2 text-sm font-body">
-            <Link to="/entreprise" className="text-primary-foreground/70 hover:text-primary transition-colors">Qui sommes-nous</Link>
-            <Link to="/solutions-innovantes" className="text-primary-foreground/70 hover:text-primary transition-colors">Solutions Innovantes</Link>
-            <Link to="/realisations" className="text-primary-foreground/70 hover:text-primary transition-colors">Réalisations</Link>
-            <Link to="/blog" className="text-primary-foreground/70 hover:text-primary transition-colors">Blog</Link>
-            <Link to="/avis-clients" className="text-primary-foreground/70 hover:text-primary transition-colors">Avis Clients</Link>
-            <Link to="/recrutement" className="text-primary-foreground/70 hover:text-primary transition-colors">Recrutement / Nous rejoindre</Link>
-            <Link to="/contact" className="text-primary-foreground/70 hover:text-primary transition-colors">Contact</Link>
+            <Link to="/entreprise" className="text-primary-foreground/85 hover:text-primary transition-colors">Qui sommes-nous</Link>
+            <Link to="/solutions-innovantes" className="text-primary-foreground/85 hover:text-primary transition-colors">Solutions Innovantes</Link>
+            <Link to="/realisations" className="text-primary-foreground/85 hover:text-primary transition-colors">Réalisations</Link>
+            <Link to="/blog" className="text-primary-foreground/85 hover:text-primary transition-colors">Blog</Link>
+            <Link to="/avis-clients" className="text-primary-foreground/85 hover:text-primary transition-colors">Avis Clients</Link>
+            <Link to="/recrutement" className="text-primary-foreground/85 hover:text-primary transition-colors">Recrutement / Nous rejoindre</Link>
+            <Link to="/contact" className="text-primary-foreground/85 hover:text-primary transition-colors">Contact</Link>
           </div>
         </div>
 
@@ -71,8 +71,8 @@ const Footer = () => (
         <div>
           <h4 className="font-subtitle font-semibold text-sm uppercase tracking-wider mb-4 text-primary">Informations</h4>
           <div className="flex flex-col gap-2 text-sm font-body">
-            <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Mentions légales</Link>
-            <Link to="/mentions-legales" className="text-primary-foreground/70 hover:text-primary transition-colors">Politique de confidentialité</Link>
+            <Link to="/mentions-legales" className="text-primary-foreground/85 hover:text-primary transition-colors">Mentions légales</Link>
+            <Link to="/mentions-legales" className="text-primary-foreground/85 hover:text-primary transition-colors">Politique de confidentialité</Link>
           </div>
           <div className="mt-6 flex justify-center md:justify-start">
             <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-16 w-auto max-w-[300px] md:max-w-[280px] object-contain opacity-70" loading="lazy" decoding="async" width={312} height={159} />
@@ -81,7 +81,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="border-t border-primary-foreground/10 py-4">
-      <div className="container-main text-center text-xs text-primary-foreground/50 font-body">
+      <div className="container-main text-center text-xs text-primary-foreground/85 font-body">
         © 2001–2026 EQUATION SARL — Tous droits réservés — SIRET 435 378 567 00042
       </div>
     </div>
