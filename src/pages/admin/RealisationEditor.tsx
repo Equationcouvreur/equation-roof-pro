@@ -219,8 +219,8 @@ const RealisationEditor = () => {
   };
 
   const commitPhoto = async (photoId: string, patch: Partial<Photo>) => {
-    const update: Record<string, unknown> = {};
-    if ("caption" in patch) update.caption = patch.caption;
+    const update: { caption?: string | null; alt_text?: string; keywords?: string[] } = {};
+    if ("caption" in patch) update.caption = patch.caption ?? null;
     if ("alt_text" in patch) update.alt_text = patch.alt_text || "";
     if ("keywords" in patch) update.keywords = patch.keywords || [];
     if (!Object.keys(update).length) return;
@@ -341,17 +341,18 @@ const RealisationEditor = () => {
                 <SortableContext items={photos.map((p) => p.id)} strategy={rectSortingStrategy}>
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
                     {photos.map((p, index) => (
-                      <div key={p.id} onBlur={() => saveCaption(p.id, p.caption || "")}>
-                        <SortablePhoto
-                          photo={p}
-                          canMoveUp={index > 0}
-                          canMoveDown={index < photos.length - 1}
-                          onSetFavorite={setFavorite}
-                          onUpdateCaption={updateCaption}
-                          onDelete={deletePhoto}
-                          onMove={movePhoto}
-                        />
-                      </div>
+                      <SortablePhoto
+                        key={p.id}
+                        photo={p}
+                        canMoveUp={index > 0}
+                        canMoveDown={index < photos.length - 1}
+                        suggestions={keywordSuggestions}
+                        onSetFavorite={setFavorite}
+                        onUpdateField={updatePhoto}
+                        onCommitField={commitPhoto}
+                        onDelete={deletePhoto}
+                        onMove={movePhoto}
+                      />
                     ))}
                   </div>
                 </SortableContext>
