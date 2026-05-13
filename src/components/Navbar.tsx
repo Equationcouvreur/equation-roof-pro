@@ -118,16 +118,6 @@ const Navbar = () => {
               </div>
             ))}
 
-            <Link
-              to="/espace-client"
-              rel="nofollow"
-              className={`flex items-center gap-1 text-sm font-subtitle font-medium transition-colors hover:text-primary ${
-                location.pathname.startsWith("/espace-client") ? "text-primary" : textColor
-              }`}
-            >
-              <User className="w-4 h-4" /> Espace Client
-            </Link>
-
             <Link to="/contact" className="btn-bordeaux text-sm py-2 px-5 rounded-lg">
               Demander un Devis
             </Link>
