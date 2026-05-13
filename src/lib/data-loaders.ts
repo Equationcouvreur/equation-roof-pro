@@ -21,6 +21,8 @@ export type BlogArticleData = {
   category: string;
   excerpt: string;
   coverImageUrl: string | null;
+  coverAltText: string | null;
+  coverKeywords: string[];
   publishedAt: string | null;
 };
 
@@ -38,7 +40,7 @@ export async function fetchPublishedRealisations(): Promise<RealisationCardData[
   const ids = reals.map((r) => r.id);
   const { data: photos } = await supabase
     .from("realisation_photos")
-    .select("realisation_id,url,alt_text,caption,display_order,is_favorite")
+    .select("realisation_id,url,alt_text,caption,keywords,display_order,is_favorite")
     .in("realisation_id", ids)
     .order("is_favorite", { ascending: false })
     .order("display_order", { ascending: true });
@@ -50,6 +52,7 @@ export async function fetchPublishedRealisations(): Promise<RealisationCardData[
         src: p.url,
         alt: p.alt_text || r.title,
         caption: p.caption || undefined,
+        keywords: (p as { keywords?: string[] | null }).keywords || undefined,
       }));
     return {
       id: r.id,
@@ -70,7 +73,7 @@ export async function fetchPublishedRealisations(): Promise<RealisationCardData[
 export async function fetchPublishedBlogArticles(): Promise<BlogArticleData[]> {
   const { data, error } = await supabase
     .from("blog_articles")
-    .select("slug,title,category,excerpt,cover_image_url,published_at")
+    .select("slug,title,category,excerpt,cover_image_url,cover_alt_text,cover_keywords,published_at")
     .eq("status", "published")
     .order("published_at", { ascending: false });
   if (error || !data) return [];
@@ -80,6 +83,8 @@ export async function fetchPublishedBlogArticles(): Promise<BlogArticleData[]> {
     category: a.category,
     excerpt: a.excerpt || "",
     coverImageUrl: a.cover_image_url || null,
+    coverAltText: (a as { cover_alt_text?: string | null }).cover_alt_text || null,
+    coverKeywords: ((a as { cover_keywords?: string[] | null }).cover_keywords) || [],
     publishedAt: a.published_at || null,
   }));
 }
