@@ -150,6 +150,12 @@ const BlogArticlePage = () => {
   const article = articleContent[slug || ""] || defaultContent;
   return (
     <>
+      <SEO
+        title={buildTitle(`${article.title} | EQUATION`)}
+        description={truncate(article.content.join(" ")) || `${article.title} — actualité EQUATION étanchéité Auvergne.`}
+        path={`/blog/${slug}`}
+        ogType="article"
+      />
       <PageHero title={article.title} />
       <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: article.title }]} />
 
