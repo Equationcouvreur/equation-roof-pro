@@ -94,7 +94,7 @@ ${message ? `<h2 style="margin:28px 0 12px;font-size:15px;color:#971C30;border-b
 <p style="margin:0 0 18px;">En cas d'urgence, vous pouvez nous joindre directement au <strong style="color:#971C30;">04 73 87 53 50</strong>.</p>
 <p style="margin:28px 0 0;">À très bientôt,<br/><strong>L'équipe EQUATION</strong></p>
 <div style="margin:32px 0 0;padding:18px 0 0;border-top:2px solid #971C30;font-size:13px;color:#6b6b6b;line-height:1.6;">
-<strong style="color:#971C30;">EQUATION</strong> — Étanchéité &amp; Couverture<br/>
+<strong style="color:#971C30;">EQUATION</strong><br/>
 📞 04 73 87 53 50 &nbsp;·&nbsp; ✉ info@etanche.com</div>
 </td></tr></table></td></tr></table></body></html>`;
 
