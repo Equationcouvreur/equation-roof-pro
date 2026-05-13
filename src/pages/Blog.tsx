@@ -8,7 +8,16 @@ import { PAGE_SEO } from "@/lib/seo-config";
 import { fetchPublishedBlogArticles, type BlogArticleData } from "@/lib/data-loaders";
 import bitumenImg from "@/assets/bitumen-work.jpg";
 
-type Article = { slug: string; cat: string; date: string; img: string; title: string; excerpt: string };
+type Article = {
+  slug: string;
+  cat: string;
+  date: string;
+  img: string;
+  title: string;
+  excerpt: string;
+  alt: string;
+  keywords: string[];
+};
 
 const formatDate = (iso: string | null) => {
   if (!iso) return "";
@@ -23,6 +32,8 @@ const toArticles = (db: BlogArticleData[]): Article[] =>
     img: a.coverImageUrl || bitumenImg,
     title: a.title,
     excerpt: a.excerpt,
+    alt: a.coverAltText || a.title,
+    keywords: a.coverKeywords || [],
   }));
 
 type LoaderData = { articles?: BlogArticleData[] };
@@ -62,7 +73,16 @@ const BlogPage = () => {
                 {articles.map((a, i) => (
                   <ScrollReveal key={a.slug} delay={i * 80}>
                     <Link to={`/blog/${a.slug}`} className="card-equation overflow-hidden block h-full">
-                      <img src={a.img} alt={a.title} className="w-full h-44 object-cover" loading="lazy" decoding="async" width={400} height={250} />
+                      <img
+                        src={a.img}
+                        alt={a.alt}
+                        data-keywords={a.keywords.length ? a.keywords.join(",") : undefined}
+                        className="w-full h-44 object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        width={400}
+                        height={250}
+                      />
                       <div className="p-5">
                         <div className="flex items-center gap-3 mb-2">
                           <span className="bg-primary text-primary-foreground text-xs font-subtitle font-semibold px-2 py-0.5 rounded">{a.cat}</span>
