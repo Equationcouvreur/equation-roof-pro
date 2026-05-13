@@ -57,7 +57,7 @@ const RealisationDetailPage = () => {
 
       const { data: photos } = await supabase
         .from("realisation_photos")
-        .select("url,alt_text,caption,display_order,is_favorite")
+        .select("url,alt_text,caption,keywords,display_order,is_favorite")
         .eq("realisation_id", row.id)
         .order("is_favorite", { ascending: false })
         .order("display_order", { ascending: true });
@@ -66,6 +66,7 @@ const RealisationDetailPage = () => {
         src: p.url,
         alt: p.alt_text || row.title,
         caption: p.caption || undefined,
+        keywords: (p as { keywords?: string[] | null }).keywords || undefined,
       }));
 
       setData({
