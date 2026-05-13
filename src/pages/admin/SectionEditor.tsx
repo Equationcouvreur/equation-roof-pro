@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadImage } from "@/lib/uploadImage";
 import YouTubeUrlField from "@/components/admin/YouTubeUrlField";
+import PhotoSeoFields from "@/components/admin/PhotoSeoFields";
+import { useKeywordSuggestions } from "@/hooks/useKeywordSuggestions";
 import { toast } from "sonner";
 import { ArrowDown, ArrowLeft, ArrowUp, Save, Star, Trash2, Upload, GripVertical, Plus, X } from "lucide-react";
 import {
@@ -27,6 +29,7 @@ interface Photo {
   url: string;
   caption: string | null;
   alt_text: string | null;
+  keywords: string[] | null;
   is_favorite: boolean;
   display_order: number;
 }
@@ -35,19 +38,21 @@ const SortablePhoto = ({
   photo,
   canMoveDown,
   canMoveUp,
+  suggestions,
   onSetFavorite,
-  onUpdateCaption,
+  onUpdateField,
+  onCommitField,
   onDelete,
-  onBlurCaption,
   onMove,
 }: {
   photo: Photo;
   canMoveDown: boolean;
   canMoveUp: boolean;
+  suggestions: string[];
   onSetFavorite: (id: string) => void;
-  onUpdateCaption: (id: string, c: string) => void;
+  onUpdateField: (id: string, patch: Partial<Photo>) => void;
+  onCommitField: (id: string, patch: Partial<Photo>) => void;
   onDelete: (id: string) => void;
-  onBlurCaption: (id: string, c: string) => void;
   onMove: (id: string, direction: -1 | 1) => void;
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: photo.id });
@@ -56,7 +61,7 @@ const SortablePhoto = ({
   return (
     <div ref={setNodeRef} style={style} className="bg-card border rounded-lg overflow-hidden group">
       <div className="relative h-40 bg-muted">
-        <img src={photo.url} alt={photo.caption || ""} className="w-full h-full object-cover pointer-events-none" />
+        <img src={photo.url} alt={photo.alt_text || photo.caption || ""} className="w-full h-full object-cover pointer-events-none" />
         <div
           {...attributes}
           {...listeners}
@@ -115,12 +120,17 @@ const SortablePhoto = ({
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
-      <Input
-        value={photo.caption || ""}
-        onChange={(e) => onUpdateCaption(photo.id, e.target.value)}
-        onBlur={(e) => onBlurCaption(photo.id, e.target.value)}
-        placeholder="Légende (optionnel)"
-        className="border-0 rounded-none text-sm"
+      <PhotoSeoFields
+        altText={photo.alt_text || ""}
+        keywords={photo.keywords || []}
+        caption={photo.caption || ""}
+        suggestions={suggestions}
+        onAltChange={(v) => onUpdateField(photo.id, { alt_text: v })}
+        onAltBlur={(v) => onCommitField(photo.id, { alt_text: v })}
+        onKeywordsChange={(v) => onUpdateField(photo.id, { keywords: v })}
+        onKeywordsCommit={(v) => onCommitField(photo.id, { keywords: v })}
+        onCaptionChange={(v) => onUpdateField(photo.id, { caption: v })}
+        onCaptionBlur={(v) => onCommitField(photo.id, { caption: v })}
       />
     </div>
   );
