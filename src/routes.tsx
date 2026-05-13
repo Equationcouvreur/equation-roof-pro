@@ -31,6 +31,7 @@ const lazyDefault =
 export const routes: RouteRecord[] = [
   {
     Component: RootLayout,
+    ErrorBoundary: RouteErrorBoundary,
     children: [
       {
         path: "/",
