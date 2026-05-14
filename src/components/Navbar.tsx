@@ -61,18 +61,18 @@ const Navbar = () => {
   return (
     <>
       {/* Urgency bar */}
-      <div className="bg-primary text-primary-foreground text-xs sm:text-sm py-1.5 fixed top-0 left-0 right-0 z-50 font-subtitle font-medium w-full max-w-[100vw] mx-auto overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-[400px]:flex-row items-center justify-center gap-1.5 min-[400px]:gap-3 text-center">
-          <div className="text-center">
+      <div className="bg-primary text-primary-foreground text-[11px] sm:text-sm py-1.5 fixed top-0 left-0 right-0 z-50 font-subtitle font-medium w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex flex-row items-center justify-center gap-2 sm:gap-3 text-center min-w-0">
+          <div className="text-center truncate min-w-0">
             <span className="hidden sm:inline">⚡ Urgence infiltration ? Appelez le </span>
             <a href="tel:0473875350" className="underline font-bold whitespace-nowrap">04 73 87 53 50</a>
             <span className="hidden md:inline"> — Intervention rapide en Auvergne</span>
           </div>
           <Link
             to="/contact"
-            className="bg-primary-foreground text-primary text-[11px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded hover:bg-primary-foreground/90 transition-colors whitespace-nowrap"
+            className="bg-primary-foreground text-primary text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded hover:bg-primary-foreground/90 transition-colors whitespace-nowrap shrink-0"
           >
-            <span className="sm:hidden">Prendre RDV</span>
+            <span className="sm:hidden">RDV</span>
             <span className="hidden sm:inline">Je prends rendez-vous</span>
           </Link>
         </div>
