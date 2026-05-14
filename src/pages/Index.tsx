@@ -188,7 +188,7 @@ const HomePage = () => {
       />
       {/* Hero */}
       <section className="relative bg-noir flex flex-col">
-        <div className="flex-1 flex items-center pt-32 pb-10 md:pb-16">
+        <div className="flex-1 flex items-center pt-28 sm:pt-32 pb-10 md:pb-16">
           <div className="container-main">
             <ScrollReveal>
               <h1 className="text-primary-foreground max-w-3xl">
