@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { AlertTriangle, Download, Search, Image as ImageIcon } from "lucide-react";
+import { AlertTriangle, Download, Search, Image as ImageIcon, Tag } from "lucide-react";
+import { Link } from "react-router-dom";
 import KeywordsInput from "@/components/admin/KeywordsInput";
 import { useKeywordSuggestions } from "@/hooks/useKeywordSuggestions";
 
@@ -201,9 +202,16 @@ const AdminMedias = () => {
             )}
           </p>
         </div>
-        <Button variant="outline" onClick={exportCsv}>
-          <Download className="w-4 h-4 mr-1" /> Exporter CSV
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild>
+            <Link to="/admin/medias/mots-cles">
+              <Tag className="w-4 h-4 mr-1" /> Gérer les mots-clés
+            </Link>
+          </Button>
+          <Button variant="outline" onClick={exportCsv}>
+            <Download className="w-4 h-4 mr-1" /> Exporter CSV
+          </Button>
+        </div>
       </header>
 
       <div className="flex flex-wrap gap-2 mb-4 items-center">

@@ -1,6 +1,7 @@
 import { useState, useRef, KeyboardEvent } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { normalizeKeyword, foldKeyword, dedupeKeywords } from "@/lib/keywords";
 
 type Props = {
   value: string[];
@@ -10,8 +11,6 @@ type Props = {
   placeholder?: string;
   className?: string;
 };
-
-const normalize = (s: string) => s.trim().replace(/\s+/g, " ");
 
 const KeywordsInput = ({
   value,
@@ -25,13 +24,21 @@ const KeywordsInput = ({
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const add = (raw: string) => {
-    const v = normalize(raw);
-    if (!v) return;
-    if (value.includes(v)) return;
-    const next = [...value, v];
+  const valueFolds = new Set(value.map(foldKeyword));
+
+  const addAndCommit = (raw: string) => {
+    const norm = normalizeKeyword(raw);
+    if (!norm) return value;
+    const fold = foldKeyword(norm);
+    if (valueFolds.has(fold)) {
+      setDraft("");
+      return value;
+    }
+    const next = dedupeKeywords([...value, norm]);
     onChange(next);
+    onCommit?.(next);
     setDraft("");
+    return next;
   };
 
   const remove = (idx: number) => {
@@ -43,16 +50,22 @@ const KeywordsInput = ({
   const onKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
-      add(draft);
-      onCommit?.(normalize(draft) && !value.includes(normalize(draft)) ? [...value, normalize(draft)] : value);
+      addAndCommit(draft);
     } else if (e.key === "Backspace" && !draft && value.length) {
       remove(value.length - 1);
     }
   };
 
+  const draftFold = foldKeyword(draft);
   const filteredSuggestions = suggestions
-    .filter((s) => s && !value.includes(s) && (!draft || s.toLowerCase().includes(draft.toLowerCase())))
-    .slice(0, 6);
+    .filter((s) => {
+      if (!s) return false;
+      const f = foldKeyword(s);
+      if (valueFolds.has(f)) return false;
+      if (!draftFold) return true;
+      return f.includes(draftFold);
+    })
+    .sort((a, b) => a.localeCompare(b, "fr"));
 
   return (
     <div className={cn("relative", className)}>
@@ -87,23 +100,25 @@ const KeywordsInput = ({
           onFocus={() => setFocused(true)}
           onBlur={() => {
             setTimeout(() => setFocused(false), 150);
-            if (draft) add(draft);
-            onCommit?.(value);
+            if (draft) {
+              addAndCommit(draft);
+            } else {
+              onCommit?.(value);
+            }
           }}
           placeholder={value.length === 0 ? placeholder : ""}
           className="flex-1 min-w-[8ch] bg-transparent outline-none text-sm"
         />
       </div>
       {focused && filteredSuggestions.length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-popover border rounded-md shadow-md max-h-48 overflow-auto">
+        <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-popover border rounded-md shadow-md max-h-64 overflow-y-auto">
           {filteredSuggestions.map((s) => (
             <button
               key={s}
               type="button"
               onMouseDown={(e) => {
                 e.preventDefault();
-                add(s);
-                onCommit?.(value.includes(s) ? value : [...value, s]);
+                addAndCommit(s);
               }}
               className="block w-full text-left px-3 py-1.5 text-sm hover:bg-accent"
             >

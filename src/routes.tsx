@@ -198,6 +198,10 @@ export const routes: RouteRecord[] = [
             lazy: lazyDefault(() => import("./pages/admin/AdminMedias")),
           },
           {
+            path: "medias/mots-cles",
+            lazy: lazyDefault(() => import("./pages/admin/AdminKeywords")),
+          },
+          {
             path: "securite",
             lazy: lazyDefault(() => import("./pages/admin/Security")),
           },
