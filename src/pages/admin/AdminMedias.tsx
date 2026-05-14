@@ -202,9 +202,16 @@ const AdminMedias = () => {
             )}
           </p>
         </div>
-        <Button variant="outline" onClick={exportCsv}>
-          <Download className="w-4 h-4 mr-1" /> Exporter CSV
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild>
+            <Link to="/admin/medias/mots-cles">
+              <Tag className="w-4 h-4 mr-1" /> Gérer les mots-clés
+            </Link>
+          </Button>
+          <Button variant="outline" onClick={exportCsv}>
+            <Download className="w-4 h-4 mr-1" /> Exporter CSV
+          </Button>
+        </div>
       </header>
 
       <div className="flex flex-wrap gap-2 mb-4 items-center">
