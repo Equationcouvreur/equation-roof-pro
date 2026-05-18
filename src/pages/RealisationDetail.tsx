@@ -6,6 +6,7 @@ import PhotoGallery, { GalleryImage } from "@/components/PhotoGallery";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
+import { withCacheBust } from "@/lib/image-url";
 import { Phone } from "lucide-react";
 
 type Realisation = {
@@ -38,7 +39,7 @@ const RealisationDetailPage = () => {
       const isUuid = UUID_RE.test(param);
       let query = supabase
         .from("realisations")
-        .select("id,slug,title,category,description,surface,technique,year,location,video_url")
+        .select("id,slug,title,category,description,surface,technique,year,location,video_url,updated_at")
         .eq("status", "published");
       query = isUuid ? query.eq("id", param) : query.eq("slug", param);
       const { data: row } = await query.maybeSingle();
@@ -57,17 +58,23 @@ const RealisationDetailPage = () => {
 
       const { data: photos } = await supabase
         .from("realisation_photos")
-        .select("url,alt_text,caption,keywords,display_order,is_favorite")
+        .select("url,alt_text,caption,keywords,display_order,is_favorite,updated_at,created_at")
         .eq("realisation_id", row.id)
         .order("is_favorite", { ascending: false })
         .order("display_order", { ascending: true });
 
-      const images: GalleryImage[] = (photos || []).map((p) => ({
-        src: p.url,
-        alt: p.alt_text || row.title,
-        caption: p.caption || undefined,
-        keywords: (p as { keywords?: string[] | null }).keywords || undefined,
-      }));
+      const images: GalleryImage[] = (photos || []).map((p) => {
+        const version =
+          (p as { updated_at?: string | null }).updated_at ||
+          (p as { created_at?: string | null }).created_at ||
+          (row as { updated_at?: string | null }).updated_at;
+        return {
+          src: withCacheBust(p.url, version),
+          alt: p.alt_text || row.title,
+          caption: p.caption || undefined,
+          keywords: (p as { keywords?: string[] | null }).keywords || undefined,
+        };
+      });
 
       setData({
         id: row.id,

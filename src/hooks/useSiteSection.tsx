@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { withCacheBust } from "@/lib/image-url";
 import type { GalleryImage } from "@/components/PhotoGallery";
 
 export interface SectionContent {
@@ -46,18 +47,23 @@ export const useSiteSection = (slug: string, defaults: SectionDefaults): Section
 
       const { data: photos } = await supabase
         .from("section_photos")
-        .select("url, caption, alt_text, is_favorite, display_order")
+        .select("url, caption, alt_text, is_favorite, display_order, updated_at, created_at")
         .eq("section_id", section.id)
         .order("is_favorite", { ascending: false })
         .order("display_order");
 
       if (cancelled) return;
 
-      const dbImages: GalleryImage[] = (photos || []).map((p) => ({
-        src: p.url,
-        alt: p.alt_text || p.caption || "",
-        caption: p.caption || undefined,
-      }));
+      const dbImages: GalleryImage[] = (photos || []).map((p) => {
+        const version =
+          (p as { updated_at?: string | null }).updated_at ||
+          (p as { created_at?: string | null }).created_at;
+        return {
+          src: withCacheBust(p.url, version),
+          alt: p.alt_text || p.caption || "",
+          caption: p.caption || undefined,
+        };
+      });
 
       setContent({
         title: section.title || defaults.title,

@@ -341,6 +341,7 @@ export type Database = {
           is_favorite: boolean
           keywords: string[]
           realisation_id: string
+          updated_at: string
           url: string
         }
         Insert: {
@@ -352,6 +353,7 @@ export type Database = {
           is_favorite?: boolean
           keywords?: string[]
           realisation_id: string
+          updated_at?: string
           url: string
         }
         Update: {
@@ -363,6 +365,7 @@ export type Database = {
           is_favorite?: boolean
           keywords?: string[]
           realisation_id?: string
+          updated_at?: string
           url?: string
         }
         Relationships: [
@@ -436,6 +439,7 @@ export type Database = {
           is_favorite: boolean
           keywords: string[]
           section_id: string
+          updated_at: string
           url: string
         }
         Insert: {
@@ -447,6 +451,7 @@ export type Database = {
           is_favorite?: boolean
           keywords?: string[]
           section_id: string
+          updated_at?: string
           url: string
         }
         Update: {
@@ -458,6 +463,7 @@ export type Database = {
           is_favorite?: boolean
           keywords?: string[]
           section_id?: string
+          updated_at?: string
           url?: string
         }
         Relationships: [
