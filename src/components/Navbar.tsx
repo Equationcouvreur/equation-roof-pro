@@ -85,7 +85,9 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden xl:flex items-center gap-5">
-            {navLinks.map((link) => (
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
               <div
                 key={link.label}
                 className="relative group"
@@ -94,12 +96,19 @@ const Navbar = () => {
               >
                 <Link
                   to={link.href}
-                  className={`flex items-center gap-1 text-sm font-subtitle font-medium transition-colors hover:text-primary ${
-                    location.pathname === link.href ? "text-primary" : textColor
+                  className={`relative flex items-center justify-center gap-1 whitespace-nowrap text-sm font-subtitle font-medium transition-colors duration-200 ease-in-out hover:text-primary py-2 ${
+                    isActive ? "text-primary" : textColor
                   }`}
                 >
-                  {link.label}
-                  {link.submenu && <ChevronDown className="w-3 h-3" />}
+                  <span className="inline-flex items-center gap-1">
+                    {link.label}
+                    {link.submenu && <ChevronDown className="w-3 h-3" />}
+                  </span>
+                  <span
+                    className={`pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] bg-primary rounded-full transition-all duration-200 ease-in-out ${
+                      isActive ? "w-6 opacity-100" : "w-0 opacity-0 group-hover:w-4 group-hover:opacity-70"
+                    }`}
+                  />
                 </Link>
 
                 {link.submenu && openDropdown === link.label && (
