@@ -20,7 +20,7 @@ type Realisation = {
   year?: string | null;
   location?: string | null;
   videoUrl?: string | null;
-  images: GalleryImage[];
+  images: (GalleryImage & { description?: string })[];
 };
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -58,7 +58,7 @@ const RealisationDetailPage = () => {
 
       const { data: photos } = await supabase
         .from("realisation_photos")
-        .select("url,alt_text,caption,keywords,display_order,is_favorite,updated_at,created_at")
+        .select("url,alt_text,caption,description,keywords,display_order,is_favorite,updated_at,created_at")
         .eq("realisation_id", row.id)
         .order("is_favorite", { ascending: false })
         .order("display_order", { ascending: true });
@@ -72,6 +72,7 @@ const RealisationDetailPage = () => {
           src: withCacheBust(p.url, version),
           alt: p.alt_text || row.title,
           caption: p.caption || undefined,
+          description: (p as { description?: string | null }).description || undefined,
           keywords: (p as { keywords?: string[] | null }).keywords || undefined,
         };
       });
@@ -118,14 +119,23 @@ const RealisationDetailPage = () => {
 
   const imagesJsonLd = data.images
     .filter((i) => i.src && !i.src.endsWith("/placeholder.svg"))
-    .map((i) => ({
-      "@context": "https://schema.org",
-      "@type": "ImageObject",
-      name: i.caption || i.alt,
-      description: i.alt,
-      keywords: i.keywords && i.keywords.length ? i.keywords.join(", ") : undefined,
-      contentUrl: i.src,
-    }));
+    .map((i) => {
+      const absoluteUrl = i.src.startsWith("http") ? i.src : `https://equation-roof-pro.lovable.app${i.src}`;
+      return {
+        "@context": "https://schema.org",
+        "@type": "ImageObject",
+        name: i.caption || i.alt,
+        description: i.description || i.alt,
+        keywords: i.keywords && i.keywords.length ? i.keywords.join(", ") : undefined,
+        contentUrl: absoluteUrl,
+        thumbnailUrl: absoluteUrl,
+        creditText: "EQUATION - Étanchéité Auvergne",
+        creator: {
+          "@type": "Organization",
+          name: "EQUATION",
+        },
+      };
+    });
 
   return (
     <>
