@@ -11,7 +11,7 @@ import ThierryCarousel from "@/components/ThierryCarousel";
 import csfeLogo from "@/assets/logos/csfe-logo.png";
 import nrcaLogo from "@/assets/logos/nrca-logo.png";
 import qualibatLogo from "@/assets/logos/qualibat-logo.png";
-import rgeLogo from "@/assets/logos/rge-logo.png";
+import rgeLogo from "@/assets/logos/rge-logo.jpg";
 import ffbLogo from "@/assets/logos/ffb-logo.png";
 
 const certifications = [
