@@ -5,15 +5,13 @@ import img2 from "@/assets/carrousel-2.jpg";
 import img3 from "@/assets/carrousel-3.jpg";
 import img4 from "@/assets/carrousel-4.jpg";
 import img5 from "@/assets/carrousel-5.jpg";
-import img6 from "@/assets/carrousel-6.jpg";
 
 const slides = [
-  { src: img1, alt: "Terrasse en lames IPE installée par EQUATION Auvergne" },
-  { src: img2, alt: "Toiture terrasse étanchéité bitumineuse avec garde-corps ODCO sécurisés - chantier EQUATION" },
-  { src: img3, alt: "Logistique chantier EQUATION : camion grue et chariot élévateur pour acheminement matériel" },
-  { src: img4, alt: "Schéma technique d'un complexe d'étanchéité multicouche avec isolation thermique" },
-  { src: img5, alt: "Pose d'étanchéité bitumineuse soudée au chalumeau - technique conforme DTU 43.1" },
-  { src: img6, alt: "Toiture terrasse en résine blanche réfléchissante avec garde-corps - rénovation EQUATION en Auvergne" },
+  { src: img1, alt: "Pose d'étanchéité bitumineuse soudée au chalumeau - signature EQUATION L'efficacité en Action" },
+  { src: img2, alt: "Toiture végétalisée réalisée par EQUATION avec vue sur les volcans d'Auvergne" },
+  { src: img3, alt: "Pose manuelle d'étanchéité bitumineuse sur dalles - savoir-faire EQUATION" },
+  { src: img4, alt: "Terrasse carrelée effet bois en bord de piscine - réalisation EQUATION" },
+  { src: img5, alt: "Chantier d'étanchéité de toiture terrasse industrielle avec isolation - EQUATION Auvergne" },
 ];
 
 const HomeCarousel = () => {
@@ -49,7 +47,7 @@ const HomeCarousel = () => {
             loading={i === 0 ? "eager" : "lazy"}
             fetchPriority={i === 0 ? "high" : "auto"}
             decoding="async"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
           />
         ))}
 
