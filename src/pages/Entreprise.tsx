@@ -8,9 +8,19 @@ import { PAGE_SEO } from "@/lib/seo-config";
 import signatureImg from "@/assets/signature-efficacite.png";
 import thierryImg from "@/assets/thierry-meylan.jpg";
 import ThierryCarousel from "@/components/ThierryCarousel";
-import certificationsImg from "@/assets/certifications.png";
+import csfeLogo from "@/assets/logos/csfe-logo.png";
+import nrcaLogo from "@/assets/logos/nrca-logo.png";
+import qualibatLogo from "@/assets/logos/qualibat-logo.png";
+import rgeLogo from "@/assets/logos/rge-logo.png";
+import ffbLogo from "@/assets/logos/ffb-logo.png";
 
-// Certifications affichées via une image unique (cohérence avec la page d'accueil)
+const certifications = [
+  { src: csfeLogo, alt: "CSFE — Chambre Syndicale Française de l'Étanchéité", href: "https://www.etancheite.com" },
+  { src: nrcaLogo, alt: "NRCA — National Roofing Contractors Association Member", href: "https://www.nrca.net" },
+  { src: qualibatLogo, alt: "Qualibat — Votre label de fiabilité", href: "https://www.qualibat.com" },
+  { src: rgeLogo, alt: "Reconnu Grenelle Environnement (RGE)", href: "https://www.francerenov.gouv.fr" },
+  { src: ffbLogo, alt: "FFB — Fédération Française du Bâtiment", href: "https://www.ffbatiment.fr" },
+];
 
 const reasons = [
   { icon: Clock, title: "25 Ans d'Expérience", desc: "Depuis 2001, plus de 2 000 chantiers réalisés sur tous types de bâtiments en Auvergne." },
