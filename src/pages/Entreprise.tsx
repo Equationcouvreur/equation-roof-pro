@@ -8,9 +8,19 @@ import { PAGE_SEO } from "@/lib/seo-config";
 import signatureImg from "@/assets/signature-efficacite.png";
 import thierryImg from "@/assets/thierry-meylan.jpg";
 import ThierryCarousel from "@/components/ThierryCarousel";
-import certificationsImg from "@/assets/certifications.png";
+import csfeLogo from "@/assets/logos/csfe-logo.png";
+import nrcaLogo from "@/assets/logos/nrca-logo.png";
+import qualibatLogo from "@/assets/logos/qualibat-logo.png";
+import rgeLogo from "@/assets/logos/rge-logo.png";
+import ffbLogo from "@/assets/logos/ffb-logo.png";
 
-// Certifications affichées via une image unique (cohérence avec la page d'accueil)
+const certifications = [
+  { src: csfeLogo, alt: "CSFE — Chambre Syndicale Française de l'Étanchéité", href: "https://www.etancheite.com" },
+  { src: nrcaLogo, alt: "NRCA — National Roofing Contractors Association Member", href: "https://www.nrca.net" },
+  { src: qualibatLogo, alt: "Qualibat — Votre label de fiabilité", href: "https://www.qualibat.com" },
+  { src: rgeLogo, alt: "Reconnu Grenelle Environnement (RGE)", href: "https://www.francerenov.gouv.fr" },
+  { src: ffbLogo, alt: "FFB — Fédération Française du Bâtiment", href: "https://www.ffbatiment.fr" },
+];
 
 const reasons = [
   { icon: Clock, title: "25 Ans d'Expérience", desc: "Depuis 2001, plus de 2 000 chantiers réalisés sur tous types de bâtiments en Auvergne." },
@@ -58,15 +68,20 @@ const EntreprisePage = () => (
             <p className="text-muted-foreground font-body leading-relaxed mt-4">
               Thierry MEYLAN est membre de la Fédération Française du Bâtiment et de la Chambre Syndicale Française de l'Étanchéité depuis plus de vingt ans. Afin de connaître les techniques utilisées dans d'autres pays, il est également membre de la National Roofing Contractors Association.
             </p>
-            <img
-              src={certificationsImg}
-              alt="Certifications CSFE, NRCA Member, Qualibat, Reconnu Grenelle Environnement"
-              className="mt-8 max-w-md w-full h-auto"
-              loading="lazy"
-              decoding="async"
-              width={973}
-              height={178}
-            />
+            <div className="mt-8 grid grid-cols-3 sm:grid-cols-5 gap-4 items-center">
+              {certifications.map((c) => (
+                <a
+                  key={c.alt}
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center p-2 hover:opacity-80 transition-opacity"
+                  aria-label={c.alt}
+                >
+                  <img src={c.src} alt={c.alt} className="max-h-16 w-auto object-contain" loading="lazy" decoding="async" />
+                </a>
+              ))}
+            </div>
             <img src={signatureImg} alt="Équation - L'efficacité en Action" className="h-14 w-auto mt-6 opacity-80" loading="lazy" decoding="async" width={312} height={159} />
           </div>
         </ScrollReveal>
