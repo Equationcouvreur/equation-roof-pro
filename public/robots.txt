@@ -6,4 +6,4 @@ Disallow: /espace-client/
 Disallow: /espace-client
 Disallow: /api/
 
-Sitemap: https://equation-roof-pro.vercel.app/sitemap.xml
+Sitemap: https://equation-roof-pro.lovable.app/sitemap.xml
