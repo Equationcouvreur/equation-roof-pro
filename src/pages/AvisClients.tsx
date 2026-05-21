@@ -110,32 +110,42 @@ const AvisClientsPage = () => {
               Mis à jour automatiquement depuis notre fiche Google Business
             </p>
           </ScrollReveal>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {google.reviews.map((r, i) => (
-              <ScrollReveal key={`${r.author}-${i}`} delay={i * 80}>
-                <div className="card-equation p-6 h-full flex flex-col">
-                  <div className="flex items-center gap-3 mb-4">
-                    {r.photo ? (
-                      <img src={r.photo} alt={r.author} className="w-12 h-12 rounded-full object-cover" loading="lazy" />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-heading font-bold">
-                        {r.author.charAt(0)}
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <p className="font-heading font-semibold text-foreground text-sm">{r.author}</p>
-                      <div className="flex">
-                        {[...Array(5)].map((_, idx) => (
-                          <Star key={idx} className={`w-3.5 h-3.5 ${idx < r.rating ? "fill-primary text-primary" : "text-muted-foreground/30"}`} />
-                        ))}
+          <Carousel opts={{ align: "start", loop: google.reviews.length > 3 }} className="w-full">
+            <CarouselContent className="-ml-4">
+              {google.reviews.map((r, i) => (
+                <CarouselItem key={`${r.author}-${i}`} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <div className="card-equation p-6 h-full flex flex-col">
+                    <div className="flex items-center gap-3 mb-4">
+                      {r.photo ? (
+                        <img src={r.photo} alt={r.author} className="w-12 h-12 rounded-full object-cover" loading="lazy" referrerPolicy="no-referrer" />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-heading font-bold">
+                          {r.author.charAt(0)}
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <p className="font-heading font-semibold text-foreground text-sm">{r.author}</p>
+                        <div className="flex">
+                          {[...Array(5)].map((_, idx) => (
+                            <Star key={idx} className={`w-3.5 h-3.5 ${idx < r.rating ? "fill-primary text-primary" : "text-muted-foreground/30"}`} />
+                          ))}
+                        </div>
                       </div>
                     </div>
+                    <Quote className="w-5 h-5 text-primary/30 mb-2" />
+                    <p className="text-foreground font-body text-sm italic flex-1 line-clamp-6">"{r.text}"</p>
+                    <p className="text-muted-foreground font-body text-xs mt-4 pt-4 border-t border-border">{r.relativeTime}</p>
                   </div>
-                  <p className="text-foreground font-body text-sm italic flex-1 line-clamp-6">"{r.text}"</p>
-                  <p className="text-muted-foreground font-body text-xs mt-4 pt-4 border-t border-border">{r.relativeTime}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+          <div className="text-center mt-10">
+            <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="btn-bordeaux inline-block">
+              Voir tous les avis sur Google
+            </a>
           </div>
         </div>
       </section>
