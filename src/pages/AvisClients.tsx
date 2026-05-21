@@ -212,7 +212,7 @@ const AvisClientsPage = () => {
           Votre retour compte. Laissez-nous un avis sur Google pour aider d'autres professionnels à faire le bon choix.
         </p>
         <a
-          href="https://www.google.com/search?q=EQUATION+étanchéité+Cournon-d'Auvergne"
+          href={googleUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-bordeaux inline-block"
