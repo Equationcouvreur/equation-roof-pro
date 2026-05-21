@@ -39,4 +39,3 @@ export function useGoogleReviews() {
   const reviewUrl = REVIEW_URL;
   return { data, googleUrl, reviewUrl };
 }
-}
