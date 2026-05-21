@@ -16,9 +16,8 @@ export type GoogleData = {
   reviews: GoogleReview[];
 };
 
-const PLACE_ID = "ChIJz8r4IDEd90cR1ycormghd-s";
-const PLACE_URL = `https://www.google.com/maps/place/?q=place_id:${PLACE_ID}`;
-const REVIEW_URL = `https://search.google.com/local/writereview?placeid=${PLACE_ID}`;
+const PLACE_URL = "https://share.google/gzbbMMOG3ENd5qnbt";
+const REVIEW_URL = "https://share.google/gzbbMMOG3ENd5qnbt";
 
 let cache: { data: GoogleData; at: number } | null = null;
 
