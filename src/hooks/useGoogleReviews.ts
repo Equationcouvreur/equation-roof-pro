@@ -16,7 +16,9 @@ export type GoogleData = {
   reviews: GoogleReview[];
 };
 
-const FALLBACK_URL = "https://www.google.com/maps/place/?q=place_id:ChIJz8r4IDEd90cR1ycormghd-s";
+const PLACE_ID = "ChIJz8r4IDEd90cR1ycormghd-s";
+const PLACE_URL = `https://www.google.com/maps/place/?q=place_id:${PLACE_ID}`;
+const REVIEW_URL = `https://search.google.com/local/writereview?placeid=${PLACE_ID}`;
 
 let cache: { data: GoogleData; at: number } | null = null;
 
@@ -33,6 +35,7 @@ export function useGoogleReviews() {
     });
   }, []);
 
-  const googleUrl = data?.googleMapsUri ?? FALLBACK_URL;
-  return { data, googleUrl };
+  const googleUrl = PLACE_URL;
+  const reviewUrl = REVIEW_URL;
+  return { data, googleUrl, reviewUrl };
 }

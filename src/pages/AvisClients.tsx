@@ -48,7 +48,7 @@ const testimonials = [
 ];
 
 const AvisClientsPage = () => {
-  const { data: google, googleUrl } = useGoogleReviews();
+  const { data: google, googleUrl, reviewUrl } = useGoogleReviews();
 
 
   return (
@@ -207,7 +207,7 @@ const AvisClientsPage = () => {
           Votre retour compte. Laissez-nous un avis sur Google pour aider d'autres professionnels à faire le bon choix.
         </p>
         <a
-          href={googleUrl}
+          href={reviewUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-bordeaux inline-block"
