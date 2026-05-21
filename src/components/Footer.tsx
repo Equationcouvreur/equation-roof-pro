@@ -19,7 +19,7 @@ const Footer = () => (
             <img src={logoMain} alt="EQUATION Étanchéité" className="h-14 w-auto mb-4" loading="lazy" decoding="async" width={1920} height={566} />
           </Link>
           <div className="flex flex-col gap-3 text-sm font-body">
-            <a href="https://maps.google.com/?q=74+avenue+du+Midi+63800+Cournon-d'Auvergne" target="_blank" rel="noopener" className="flex items-start gap-2 text-primary-foreground/80 hover:text-primary transition-colors">
+            <a href="https://share.google/gzbbMMOG3ENd5qnbt" target="_blank" rel="noopener" className="flex items-start gap-2 text-primary-foreground/80 hover:text-primary transition-colors">
               <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
               74 avenue du Midi, 63800 Cournon-d'Auvergne
             </a>
