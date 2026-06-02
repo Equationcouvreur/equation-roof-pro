@@ -18,7 +18,7 @@ const PROJECT_ROOT = dirname(__dirname);
 const PUBLIC_DIR = join(PROJECT_ROOT, "public");
 const OUTPUT = join(PUBLIC_DIR, "sitemap.xml");
 
-const SITE_BASE = "https://equation-roof-pro.vercel.app";
+const SITE_BASE = "https://www.etanche.com";
 
 const STATIC_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
