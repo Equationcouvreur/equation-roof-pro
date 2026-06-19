@@ -10,6 +10,8 @@ export function getOrganizationJsonLd() {
     "@id": `${ORGANIZATION_URL}/#organization`,
     name: "EQUATION SARL",
     url: ORGANIZATION_URL,
+    logo: `${ORGANIZATION_URL}/logo.png`,
+    image: `${ORGANIZATION_URL}/logo.png`,
     telephone: "+33473875350",
     email: "info@etanche.com",
     address: {
